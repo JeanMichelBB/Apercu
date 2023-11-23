@@ -1,23 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import ContactPage from './pages/ContactPage';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
+import {Route, Routes, BrowserRouter } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
+import NoPage from './pages/NoPage'
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <Navigation />
-      <Footer />
-      <Routes>
-        <Route path="/" exact component={HomePage} />
-        <Route path="/about" component={AboutPage} />
-        <Route path="/contact" component={ContactPage} />
-      </Routes>
-    </Router>
-  );
+    <div>
+    <BrowserRouter>
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+    </BrowserRouter>
+    </div>
+  )
 }
-
-export default App;
