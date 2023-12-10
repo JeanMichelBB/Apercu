@@ -9,6 +9,7 @@ const Header = () => {
         <a href = "/" style={linkStyle} >Bérubé et Associés Avocats</a>
       </div>
       <div style={rightContainerStyle}>
+        <Link to="/" style={linkStyle}>Accueil</Link>
         <Link to="/about" style={linkStyle}>À propos de nous</Link>
         <Link to="/contact" style={linkStyle}>Contactez-nous</Link>
       </div>
@@ -21,7 +22,7 @@ const headerStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '2rem',
+  padding: '3rem 4rem 3rem 4rem',
   background: '#fff', // Set your desired background color
 };
 

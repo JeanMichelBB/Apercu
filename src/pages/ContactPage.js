@@ -22,7 +22,7 @@ function ContactPage() {
 
 // Styles
 const infoTextStyle = {
-  padding: '5rem 20rem', // Adjust the padding as needed
+  padding: '2rem 20rem', // Adjust the padding as needed
   textAlign: 'center',
   // text size and line height
   fontSize: '1.2rem',

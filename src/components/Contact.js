@@ -1,5 +1,4 @@
 import React from 'react';
-import backgroundphone from '../backgroundphone.jpg';
 
 const Home = () => {
   return (
@@ -16,11 +15,10 @@ const homeStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '25vh', // Adjust the height as needed
-  background: 'url(' + backgroundphone + ') center no-repeat',
+  height: '10vh', // Adjust the height as needed
   backgroundSize: 'cover',
   backgroundPosition: '100% 55%',
-  color: '#fff',
+  color: '#000',
 };
 
 export default Home;

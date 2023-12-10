@@ -4,7 +4,6 @@ import React from 'react';
 const IntroductionAboutUs = () => {
     return (
         <section style={introductionStyle}>
-            <h2>À propos de nous</h2>
             <p>
                 Dans notre cabinet d'avocats, nous sommes dévoués à fournir des services juridiques exceptionnels adaptés
                 aux besoins uniques de nos clients. Notre mission est de respecter les normes les plus élevées
@@ -21,8 +20,9 @@ const IntroductionAboutUs = () => {
 
 // Styles
 const introductionStyle = {
-    padding: '20px',
+    padding: '2rem 15rem',
     textAlign: 'center',
+    fontSize: '1.2rem',
 };
 
 export default IntroductionAboutUs;

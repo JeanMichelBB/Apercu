@@ -1,24 +1,29 @@
 // TeamSection.js
 import React from 'react';
+import profileIcon from '../profile-icon.jpg';
 
 const TeamSection = () => {
   // You can replace the dummy data with actual employee information
   const teamMembers = [
-    { name: 'Employée 1', imageUrl: '/path-to-image1.jpg' },
-    { name: 'Employée 2', imageUrl: '/path-to-image2.jpg' },
-    { name: 'Employée 3', imageUrl: '/path-to-image3.jpg' },
-    { name: 'Employée 4', imageUrl: '/path-to-image4.jpg' },
-    { name: 'Employée 5', imageUrl: '/path-to-image5.jpg' },
+    //profileIcon used for the image
+    { name: 'Employée 1', imageUrl:  profileIcon, role: 'Roles', description: 'Description' },
+    { name: 'Employée 2', imageUrl: profileIcon, role: 'Roles', description: 'Description' },
+    { name: 'Employée 3', imageUrl: profileIcon, role: 'Roles', description: 'Description' },
+    { name: 'Employée 4', imageUrl: profileIcon, role: 'Roles', description: 'Description' },
+    { name: 'Employée 5', imageUrl: profileIcon, role: 'Roles', description: 'Description' },
   ];
 
   return (
     <section style={teamSectionStyle}>
-      <h2>Note équipe</h2>
+      <h2>Notre équipe</h2>
       <div style={teamMembersContainerStyle}>
         {teamMembers.map((member, index) => (
           <div key={index} style={teamMemberStyle}>
             <img src={member.imageUrl} alt={member.name} style={teamMemberImageStyle} />
             <p>{member.name}</p>
+            {/* role */}
+            <p>{member.role}</p>
+            <p>{member.description}</p>
           </div>
         ))}
       </div>
@@ -28,8 +33,9 @@ const TeamSection = () => {
 
 // Styles
 const teamSectionStyle = {
-  padding: '20px',
+  padding: '0 100px',
   textAlign: 'center',
+  fontSize: '1.2rem',
 };
 
 const teamMembersContainerStyle = {

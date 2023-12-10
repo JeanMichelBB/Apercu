@@ -1,6 +1,6 @@
 // Home.js
 import React from 'react';
-import background from '../background.jpg';
+import background from '../back-unsplash.jpg';
 
 const Home = () => {
   return (
@@ -17,11 +17,12 @@ const homeStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '25vh', // Adjust the height as needed
-  background: 'url(' + background + ') center no-repeat',
+  height: '40vh', // Adjust the height as needed
+  background: 'url(' + background + ') ',
   backgroundSize: 'cover',
-  backgroundPosition: '100% 40%',
+  backgroundPosition: '50% 50%',
   color: '#fff',
+  fontSize: '2rem', // Set your desired font size
 };
 
 export default Home;

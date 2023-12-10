@@ -6,7 +6,6 @@ const Home = () => {
     <div style={homeStyle}>
       {/* Add your home page content here */}
       <h1>À propos de nous</h1>
-      
     </div>
   );
 };
@@ -16,10 +15,9 @@ const homeStyle = {
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  height: '25vh', // Adjust the height as needed
-  background: 'url(' + backgroundabout + ') center no-repeat',
+  height: '10vh', // Adjust the height as needed
   backgroundSize: 'cover',
-  color: '#fff',
+  color: '#000',
 };
 
 export default Home;

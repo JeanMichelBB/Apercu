@@ -19,17 +19,19 @@ const ContactForm = () => {
   return (
     <div style={contactContainerStyle}>
       <div style={leftInfoStyle}>
-        <h2>Cordonnées</h2>
+        <h2>Heures d'ouverture</h2>
         <p>
-          <strong>Adresse:</strong> 123 rue de la rue, 75000 Montréal
+          Lundi - Vendredi: 9h - 17h
         </p>
         <p>
-          <strong>Téléphone:</strong> 555-555-5555
+          Samedi: 10h - 14h
         </p>
         <p>
-          <strong>Email:</strong>
-          <a href="mailto:example.com">example.com</a>
+          Dimanche: Fermé
         </p>
+
+        
+        
 
       </div>
 
@@ -72,7 +74,7 @@ const ContactForm = () => {
             </label>
           </div>
 
-          <div style={formGroupStyle}>
+          <div style={formButtonStyle}>
             <button type="submit" style={submitButtonStyle}>Submit</button>
           </div>
         </form>
@@ -123,8 +125,15 @@ const inputTextStyle = {
   fontStyle: 'italic', // Set font style to italic
 };
 
+const formButtonStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '10px ',
+};
 const submitButtonStyle = {
-  backgroundColor: '#007BFF',
+  //blakc background
+  backgroundColor: '#000',
   color: '#fff',
   padding: '10px',
   cursor: 'pointer',
@@ -132,20 +141,21 @@ const submitButtonStyle = {
   borderRadius: '5px',
   fontSize: '1.2rem',
   fontWeight: 'bold',
+  width: '100%',
   
 };
 
 // textarea styles
-const textareaStyle = {
-  textAlign: 'justify', // Justify the text inside the input
-  border: 'none', // Remove the default border
-  borderBottom: '1px solid #ddd', // Add a bottom border
-  borderRadius: '0', // Remove the default rounded corners
-  background: 'transparent', // Remove the default background
-  width: '100%', // Set the width of the input
-  fontSize: '1.2rem', // Set your desired font size
-  fontStyle: 'italic', // Set font style to italic
-};
+// const textareaStyle = {
+//   textAlign: 'justify', // Justify the text inside the input
+//   border: 'none', // Remove the default border
+//   borderBottom: '1px solid #ddd', // Add a bottom border
+//   borderRadius: '0', // Remove the default rounded corners
+//   background: 'transparent', // Remove the default background
+//   width: '100%', // Set the width of the input
+//   fontSize: '1.2rem', // Set your desired font size
+//   fontStyle: 'italic', // Set font style to italic
+// };
 
 export default ContactForm;
 

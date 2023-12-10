@@ -3,7 +3,6 @@ import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Home from '../components/Home';
-import ContactForm from '../components/ContactForm';
 
 function HomePage() {
   return (
@@ -25,7 +24,6 @@ function HomePage() {
         </ul>
 
       </div>
-      <ContactForm />
       <Footer />
     </div>
   );
@@ -35,7 +33,6 @@ function HomePage() {
 const infoTextStyle = {
   padding: '5rem 20rem', // Adjust the padding as needed
   textAlign: 'center',
-  // text size and line height
   fontSize: '1.2rem',
   lineHeight: '2rem',
 
