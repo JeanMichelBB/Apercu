@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  react-app:
+    build:
+      context: ./react-app
+    ports:
+      - "3000:3000"
+
+  fastapi-backend:
+    build:
+      context: ./fastapi-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://sysadm:sysadm@mysql/law_db
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: sysadm
+      MYSQL_DATABASE: law_db
+      MYSQL_USER: sysadm
+      MYSQL_PASSWORD: sysadm
+    ports:
+      - "3306:3306"  
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
