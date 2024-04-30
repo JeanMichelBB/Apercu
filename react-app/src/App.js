@@ -5,7 +5,7 @@ import ContactPage from './pages/ContactPage'
 import NoPage from './pages/NoPage'
 import DB from './pages/DB'
 import LoginPage from './pages/LoginPage'
-import ProtectedRoute from './components/ProtectedRoute'
+import './global.css'
 
 export default function App() {
   return (

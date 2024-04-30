@@ -45,8 +45,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# Allow requests 
-# ADD http://localhost:3000/ to the allow_origins list
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -163,9 +161,11 @@ async def send_email(form_data: EmailForm):
 @app.delete("/delete-email/{email_id}")
 async def delete_email(email_id: str):
     db = SessionLocal
-    
-    
-    
+    email = db.query(Email).filter(Email.id == email_id).first()
+    db.delete(email)
+    db.commit()
+    db.close()
+    return {"message": "Email deleted successfully"}
     
     
 SECRET_KEY = "3e7e7b1"

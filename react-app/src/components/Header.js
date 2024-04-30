@@ -23,7 +23,7 @@ const headerStyle = {
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '3rem 4rem 3rem 4rem',
-  background: '#fff', // Set your desired background color
+  background: '#F9F7F7', // Set your desired background color
 };
 
 const leftContainerStyle = {
