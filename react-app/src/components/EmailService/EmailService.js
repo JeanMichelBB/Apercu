@@ -1,6 +1,7 @@
 // src/components/EmailService.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './EmailService.css';
 
 const EmailService = () => {
   const [email, setEmail] = useState('');

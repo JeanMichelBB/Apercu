@@ -1,10 +1,10 @@
 import {Route, Routes, BrowserRouter } from 'react-router-dom'
-import HomePage from './pages/HomePage'
-import AboutPage from './pages/AboutPage'
-import ContactPage from './pages/ContactPage'
-import NoPage from './pages/NoPage'
-import DB from './pages/DB'
-import LoginPage from './pages/LoginPage'
+import HomePage from './pages/HomePage/HomePage'
+import AboutPage from './pages/AboutPage/AboutPage'
+import ContactPage from './pages/ContactPage/ContactPage'
+import NoPage from './pages/NoPage/NoPage'
+import DB from './pages/DB/DB'
+import LoginPage from './pages/LoginPage/LoginPage'
 import './global.css'
 
 export default function App() {

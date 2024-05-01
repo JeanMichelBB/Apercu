@@ -1,12 +1,13 @@
 // AboutPage.js
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import About from '../components/About';
-import TeamSection from '../components/TeamSection';
-import IntroductionAboutUs from '../components/IntroductionAboutUs';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import About from '../../components/About/About';
+import TeamSection from '../../components/TeamSection/TeamSection';
+import IntroductionAboutUs from '../../components/IntroductionAboutUs/IntroductionAboutUs';
 import 'leaflet/dist/leaflet.css';
-import LocationMap from '../components/LocationMap';
+import LocationMap from '../../components/LocationMap/LocationMap';
+import './AboutPage.css';
 
 function AboutPage() {
   return (

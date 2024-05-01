@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./EditPassword.css";
 
 const EditPassword = () => {
     const [oldPassword, setOldPassword] = useState("");

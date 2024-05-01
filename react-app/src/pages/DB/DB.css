@@ -1,0 +1,23 @@
+/* DB.css */
+.container {
+    padding: 2rem 20rem; /* Adjust the padding as needed */
+    text-align: center;
+    font-size: 1.2rem; /* Set the font size */
+    line-height: 2rem; /* Set the line height */
+  }
+  
+  .contact-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .contact {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .contact-details {
+    display: block;
+  }
+  

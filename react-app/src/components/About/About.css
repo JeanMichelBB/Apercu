@@ -1,0 +1,10 @@
+/* About.css */
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    color: #000;
+  }
+  

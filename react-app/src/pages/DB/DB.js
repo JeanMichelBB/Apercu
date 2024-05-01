@@ -1,8 +1,10 @@
+// DB.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import EmailService from '../components/EmailService'
-import EditPassword from '../components/EditPassword'
+import EmailService from '../../components/EmailService/EmailService';
+import EditPassword from '../../components/EditPassword/EditPassword';
 import { useNavigate } from 'react-router-dom';
+import './DB.css'; // Import the CSS file
 
 function DB() {
   const [contacts, setContacts] = useState([]);
@@ -104,19 +106,21 @@ function DB() {
   const handleContactClick = (id) => {
     setActiveContact(prevId => prevId === id ? null : id);
   };
-  
+
   if (loading) {
     return <div>Loading...</div>;
-}
+  }
+  
   return (
-    <div style={infoTextStyle}>
+    <div className="container"> {/* Use className instead of inline styles */}
       <EditPassword />
       <EmailService />
       {/* Display the fetched contacts */}
       <h2>Contacts</h2>
-      <div style={{ listStyleType: 'none', padding: 0 }} className="contact-list">
+      <div className="contact-list">
         {contacts.map((contact) => (
-          <div style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px', cursor: 'pointer' }} className="contact" key={contact.id} onClick={() => handleContactClick(contact.id)}>            {/* Display contact details or edit form */}
+          <div className="contact" key={contact.id} onClick={() => handleContactClick(contact.id)}>
+            {/* Display contact details or edit form */}
             {editedContact && editedContact.id === contact.id ? (
               <div>
                 <input type="text" name="subject" value={editedContact.subject} onChange={handleInputChange} />
@@ -133,7 +137,7 @@ function DB() {
               <div>
                 <p>{contact.subject} - {contact.first_name} {contact.last_name}</p>
                 {activeContact === contact.id && (
-                  <div style={{ display: 'block' }} className="contact-details">
+                  <div className="contact-details">
                     <p>Email: {contact.email}</p>
                     <p>Phone Number: {contact.phone_number}</p>
                     <p>Additional Info: {contact.additional_info}</p>
@@ -150,20 +154,8 @@ function DB() {
       </div>
       {/* Button to delete all contacts */}
       <button onClick={deleteAllContacts}>Delete All Contacts</button>
-
     </div>
   );
 }
-
-// Styles
-const infoTextStyle = {
-  padding: '2rem 20rem', // Adjust the padding as needed
-  textAlign: 'center',
-  // text size and line height
-  fontSize: '1.2rem',
-  lineHeight: '2rem',
-
-
-};
 
 export default DB;
