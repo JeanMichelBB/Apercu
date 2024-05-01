@@ -2,27 +2,52 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './ContactForm.css'; // Import the CSS file
 
+const useCharacterLimit = (initialValue, limit) => {
+  const [value, setValue] = useState(initialValue);
+
+  const handleChange = (newValue) => {
+    // Limit the input to the specified character limit
+    if (newValue.length <= limit) {
+      setValue(newValue);
+    }
+  };
+  
+
+  const getValue = () => value;
+
+  return [getValue, handleChange];
+};
+
 const ContactForm = () => {
   // State variables for form fields
-  const [subject, setSubject] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [additionalInfo, setAdditionalInfo] = useState('');
+  const [getSubject, setSubject] = useCharacterLimit('', 50);
+  const [getFirstName, setFirstName] = useCharacterLimit('', 50);
+  const [getLastName, setLastName] = useCharacterLimit('', 50);
+  const [getEmail, setEmail] = useCharacterLimit('', 50);
+  const [getPhoneNumber, setPhoneNumber] = useCharacterLimit('', 20);
+  const [getAdditionalInfo, setAdditionalInfo] = useCharacterLimit('', 250);
+  const [honeypot, setHoneypot] = useState(''); // State for the honeypot field
+  const [loading, setLoading] = useState(false); // State for loading effect
+  const [submissionMessage, setSubmissionMessage] = useState(null); // State for submission message
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Check if the honeypot field is empty (indicating a human user)
+    if (honeypot) {
+      console.log('Bot detected. Ignoring form submission.');
+      return;
+    }
+    setLoading(true); // Set loading to true when submitting
     try {
       // Format the form data object
       const formData = {
-        subject: subject,
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        phone_number: phoneNumber,
-        additional_info: additionalInfo,
+        subject: getSubject(),
+        first_name: getFirstName(),
+        last_name: getLastName(),
+        email: getEmail(),
+        phone_number: getPhoneNumber(),
+        additional_info: getAdditionalInfo(),
       };
 
       // Make a POST request with the formatted form data
@@ -35,20 +60,17 @@ const ContactForm = () => {
       setEmail('');
       setPhoneNumber('');
       setAdditionalInfo('');
+      setSubmissionMessage('Formulaire soumis avec succès');
     } catch (error) {
       console.error('Form submission error:', error);
-      if (error.response) {
-        const { data } = error.response;
-        const errorDetails = data.detail;
-        console.log("Error details:", errorDetails);
-      } else {
-        console.log("Network error:", error.message);
-      }
+      setSubmissionMessage("Échec de l'envoi du formulaire");
+    } finally {
+      setLoading(false); // Reset loading to false after submission
     }
   };
 
   return (
-    <div className="contact-container"> {/* Update inline style to className */}
+    <div className="contact-container">
       <div className="left-info">
         <h2>Heures d'ouverture</h2>
         <p>Lundi - Vendredi: 9h - 17h</p>
@@ -61,42 +83,50 @@ const ContactForm = () => {
         <form className="form-style" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>
-              <input placeholder='Subject' type="text" value={subject} onChange={(e) => setSubject(e.target.value)} className="input-text-style" />
+              <input placeholder='Subject' type="text" value={getSubject()} onChange={(e) => setSubject(e.target.value)} required className="input-text-style" />
             </label>
           </div>
 
           <div className="form-group">
             <label>
-              <input placeholder='Prénom' type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="input-text-style" />
+              <input placeholder='Prénom' type="text" value={getFirstName()} onChange={(e) => setFirstName(e.target.value)} required className="input-text-style" />
             </label>
           </div>
 
           <div className="form-group">
             <label>
-              <input placeholder='Nom' type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} className="input-text-style" />
+              <input placeholder='Nom' type="text" value={getLastName()} onChange={(e) => setLastName(e.target.value)} required className="input-text-style" />
             </label>
           </div>
 
           <div className="form-group">
             <label>
-              <input placeholder='Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input-text-style" />
+              <input placeholder='Email' type="email" value={getEmail()} onChange={(e) => setEmail(e.target.value)} required className="input-text-style" />
             </label>
           </div>
 
           <div className="form-group">
             <label>
-              <input placeholder='Numéro de téléphone' type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} className="input-text-style" />
+              <input placeholder='Numéro de téléphone' type="tel" value={getPhoneNumber()} onChange={(e) => setPhoneNumber(e.target.value)} required className="input-text-style" />
             </label>
           </div>
 
           <div className="form-group">
             <label>
-              <textarea placeholder='Notes' value={additionalInfo} onChange={(e) => setAdditionalInfo(e.target.value)} className="input-text-style" />
+              <textarea placeholder='Notes' value={getAdditionalInfo()} onChange={(e) => setAdditionalInfo(e.target.value)} required className="input-text-style" />
+            </label>
+          </div>
+          {/* Add the honeypot field */}
+          <div className="form-group" style={{ display: 'none' }}>
+            <label>
+              <input type="text" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
             </label>
           </div>
 
           <div className="form-button">
-            <button type="submit" className="submit-button-style">Submit</button>
+            <button type="submit" className="submit-button-style" disabled={loading}>
+              {loading ? 'Sending...' : submissionMessage ? submissionMessage : 'Submit'}
+            </button>
           </div>
         </form>
       </div>

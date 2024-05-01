@@ -184,6 +184,18 @@ async def get_admin_users():
     db.close()
     return admin_users
 
+@app.post("/create-admin-user")
+async def create_admin_user(form_data: AdminForm):
+    db = SessionLocal()
+    admin_user = AdminUser(
+        username=form_data.username,
+        password=form_data.password
+    )
+    db.add(admin_user)
+    db.commit()
+    db.close()
+    return {"message": "Admin user created successfully"}
+
 @app.put("/update-admin-user")
 async def update_admin_user(username: str, old_password: str, new_password: str):
     db = SessionLocal()

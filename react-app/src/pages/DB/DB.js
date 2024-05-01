@@ -5,6 +5,8 @@ import EmailService from '../../components/EmailService/EmailService';
 import EditPassword from '../../components/EditPassword/EditPassword';
 import { useNavigate } from 'react-router-dom';
 import './DB.css'; // Import the CSS file
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 function DB() {
   const [contacts, setContacts] = useState([]);
@@ -113,6 +115,7 @@ function DB() {
 
   return (
     <div className="container">
+      <Header />
       <EditPassword />
       <EmailService />
       <h2>Contacts</h2>
@@ -156,6 +159,7 @@ function DB() {
         ))}
       </div>
       <button onClick={deleteAllContacts}>Delete All Contacts</button>
+      <Footer />
     </div>
   );
 }

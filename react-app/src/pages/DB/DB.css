@@ -1,10 +1,10 @@
 /* DB.css */
 
 .container {
-  padding: 2rem 20rem;
   text-align: center;
   font-size: 1.2rem;
   line-height: 2rem;
+  word-wrap: break-word; /* Add word-wrap property */
 }
 
 .contact-list {
@@ -13,24 +13,23 @@
 }
 
 .contact {
-  width: 20hv;
-  padding: 10px;
+  height: 10hv;
   margin-bottom: 10px;
   cursor: pointer;
-  border: 1px solid #ccc; /* Add border to each contact */
-  transition: height 0.5s ease; /* Add transition for height change */
   overflow: hidden; /* Hide overflow to prevent content from showing when closed */
+  border-bottom: 1px solid #ccc; /* Add border between contacts */
+  transition: background-color 0.5s ease; /* Add transition for background color change */
+  transition: height 0.5s ease; /* Add transition for height change */
 }
 
 .contact.active {
   background-color: #f0f0f0; /* Change background color when contact is active */
-  height: 50vh;
+  height: auto; /* Set height to auto when contact is active */
 }
 
 .contact-details {
   margin-top: 10px; /* Add margin to contact details */
   padding: 10px; /* Add padding to contact details */
-  border: 1px solid #ccc; /* Add border to contact details */
   transition: opacity 0.5s ease; /* Add transition for opacity change */
   opacity: 0; /* Hide contact details by default */
 }
@@ -45,4 +44,14 @@
 
 .button-container button {
   margin-right: 10px; /* Add margin between buttons */
+}
+
+.contact-list p {
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    width: 100%;
+  }
 }

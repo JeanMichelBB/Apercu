@@ -3,7 +3,7 @@ import './Contact.css'; // Import the CSS file
 
 const Contact = () => {
   return (
-    <div className="contact"> {/* Apply the home class */}
+    <div className="contactTitle"> {/* Apply the home class */}
       {/* Add your home page content here */}
       <h1>Contactez-nous</h1>
     </div>

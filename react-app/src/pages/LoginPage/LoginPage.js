@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Import the CSS file
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 function LoginPage() {
     const [username, setUsername] = useState('');
@@ -31,13 +33,19 @@ function LoginPage() {
     };
 
     return (
-        <div className="container"> {/* Use className instead of style */}
-            <h1 className="heading">Page de connexion</h1>
-            <p className="text">Connectez-vous pour accéder à votre compte</p>
-            <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={handleUsernameChange} className="input" />
-            <input type="password" placeholder="Mot de passe" value={password} onChange={handlePasswordChange} className="input" />
-            <button onClick={handleLogin} className="button">Se connecter</button>
-            {error && <p className="error">{error}</p>}
+        <div>
+            <Header />
+            <div className="login">
+                <div className="container">
+                    <h1 className="heading">Page de connexion</h1>
+                    <p className="text">Connectez-vous pour accéder à votre compte</p>
+                    <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={handleUsernameChange} className="input" />
+                    <input type="password" placeholder="Mot de passe" value={password} onChange={handlePasswordChange} className="input" />
+                    <button onClick={handleLogin} className="button">Se connecter</button>
+                    {error && <p className="error">{error}</p>}
+                </div>
+            </div>
+            <Footer />
         </div>
     );
 }
