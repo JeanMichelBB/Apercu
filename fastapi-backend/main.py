@@ -9,11 +9,15 @@ from starlette.responses import JSONResponse
 import jwt
 from uuid import uuid4
 from text_mail import sendEmail
+from sqlalchemy.dialects.postgresql import VARCHAR
 
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://sysadm:sysadm@mysql/law_db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+
 
 Base = declarative_base()
 
@@ -25,7 +29,7 @@ class Contact(Base):
     last_name = Column(String(50))
     email = Column(String(100))
     phone_number = Column(String(20))
-    additional_info = Column(String(255))
+    additional_info = Column(VARCHAR(1000)) 
     created_at = Column(DateTime, default=func.now())
     
 class Email(Base):
@@ -47,7 +51,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -160,12 +164,15 @@ async def send_email(form_data: EmailForm):
 
 @app.delete("/delete-email/{email_id}")
 async def delete_email(email_id: str):
-    db = SessionLocal
+    db = SessionLocal() 
     email = db.query(Email).filter(Email.id == email_id).first()
-    db.delete(email)
-    db.commit()
-    db.close()
-    return {"message": "Email deleted successfully"}
+    if email:
+        db.delete(email)
+        db.commit()
+        db.close()
+        return {"message": "Email deleted successfully"}
+    else:
+        return {"message": "Email not found"}, 404
     
     
 SECRET_KEY = "3e7e7b1"

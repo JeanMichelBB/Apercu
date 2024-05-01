@@ -104,23 +104,21 @@ function DB() {
   };
 
   const handleContactClick = (id) => {
-    setActiveContact(prevId => prevId === id ? null : id);
+    setActiveContact(prevId => (prevId === id ? null : id));
   };
 
   if (loading) {
     return <div>Loading...</div>;
   }
-  
+
   return (
-    <div className="container"> {/* Use className instead of inline styles */}
+    <div className="container">
       <EditPassword />
       <EmailService />
-      {/* Display the fetched contacts */}
       <h2>Contacts</h2>
       <div className="contact-list">
         {contacts.map((contact) => (
-          <div className="contact" key={contact.id} onClick={() => handleContactClick(contact.id)}>
-            {/* Display contact details or edit form */}
+          <div className={`contact ${activeContact === contact.id ? 'active' : ''}`} key={contact.id} onClick={() => handleContactClick(contact.id)}>
             {editedContact && editedContact.id === contact.id ? (
               <div>
                 <input type="text" name="subject" value={editedContact.subject} onChange={handleInputChange} />
@@ -135,7 +133,7 @@ function DB() {
               </div>
             ) : (
               <div>
-                <p>{contact.subject} - {contact.first_name} {contact.last_name}</p>
+                <p>{contact.subject} - {contact.first_name} {contact.last_name} </p>
                 {activeContact === contact.id && (
                   <div className="contact-details">
                     <p>Email: {contact.email}</p>
@@ -144,15 +142,19 @@ function DB() {
                     <p>Created At: {contact.created_at}</p>
                   </div>
                 )}
-                {/* Add buttons to delete and edit contacts */}
-                <button onClick={() => deleteContact(contact.id)}>Delete</button>
-                <button onClick={() => editContact(contact)}>Edit</button>
+                <div className="button-container">
+                  {activeContact === contact.id && (
+                    <>
+                      <button onClick={() => deleteContact(contact.id)}>Delete</button>
+                      <button onClick={() => editContact(contact)}>Edit</button>
+                    </>
+                  )}
+                </div>
               </div>
             )}
           </div>
         ))}
       </div>
-      {/* Button to delete all contacts */}
       <button onClick={deleteAllContacts}>Delete All Contacts</button>
     </div>
   );
