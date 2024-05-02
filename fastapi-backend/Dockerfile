@@ -1,6 +1,9 @@
 # Use the official Python image as the base image
 FROM python:3.9
 
+# Install the default MySQL client
+RUN apt-get update && apt-get install -y default-mysql-client
+
 # Set the working directory inside the container
 WORKDIR /app
 

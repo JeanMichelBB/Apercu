@@ -1,41 +1,34 @@
-// DB.js
+// Admin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EmailService from '../../components/EmailService/EmailService';
 import EditPassword from '../../components/EditPassword/EditPassword';
 import { useNavigate } from 'react-router-dom';
-import './DB.css'; // Import the CSS file
+import './Admin.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-function DB() {
+const Admin = ({ token }) => {
+  const [message, setMessage] = useState('');
   const [contacts, setContacts] = useState([]);
   const [editedContact, setEditedContact] = useState(null);
   const [activeContact, setActiveContact] = useState(null); // Define activeContact state
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        navigate('/login');
-        return;
-      }
+    const fetchData = async () => {
       try {
-        await axios.get('http://localhost:8000/protected-page', {
-          headers: { token: token },
+        const response = await axios.get('http://localhost:8000/protected-page', {
+          headers: { token: token }
         });
-        setLoading(false);
+        setMessage(response.data.message);
       } catch (error) {
-        console.error('Error validating token:', error.response.data);
-        navigate('/login');
+        setMessage('Unauthorized');
       }
     };
-
-    checkAuth();
+    fetchData();
     fetchContacts();
-  }, [navigate]);
+  }, [token]);
 
   const fetchContacts = async () => {
     try {
@@ -109,10 +102,6 @@ function DB() {
     setActiveContact(prevId => (prevId === id ? null : id));
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="container">
       <Header />
@@ -164,4 +153,4 @@ function DB() {
   );
 }
 
-export default DB;
+export default Admin;

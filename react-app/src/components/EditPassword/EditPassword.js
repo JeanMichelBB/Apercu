@@ -21,10 +21,6 @@ const EditPassword = () => {
         setConfirmPassword(e.target.value);
     };
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
-
     const validateInputs = () => {
         if (!oldPassword || !newPassword || !confirmPassword || !username) {
             setMessage("All fields are required");

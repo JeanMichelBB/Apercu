@@ -14,5 +14,8 @@
             "database": "law_db",
             "name": "law_db"
         }
+    ],
+    "cSpell.words": [
+        "sessionmaker"
     ]
 }

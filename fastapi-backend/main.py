@@ -7,17 +7,17 @@ from sqlalchemy.orm import sessionmaker
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
 import jwt
+import datetime
 from uuid import uuid4
 from text_mail import sendEmail
 from sqlalchemy.dialects.postgresql import VARCHAR
+from typing import Optional
+from jwt import PyJWTError
 
 SQLALCHEMY_DATABASE_URL = "mysql+pymysql://sysadm:sysadm@mysql/law_db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-
-
 
 Base = declarative_base()
 
@@ -47,13 +47,23 @@ class AdminUser(Base):
 # Create all tables in the engine
 Base.metadata.create_all(bind=engine)
 
+Session = sessionmaker(bind=engine)
+session = Session()
+admin_user = session.query(AdminUser).filter_by(username='admin').first()
+if admin_user is None:
+    admin_user = AdminUser(username='admin', password='admin')
+    session.add(admin_user)
+    session.commit()
+session.close()
+
+
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:3000/"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["post", "get", "delete", "put"],
     allow_headers=["*"],
 )
 
@@ -174,27 +184,12 @@ async def delete_email(email_id: str):
     else:
         return {"message": "Email not found"}, 404
     
-    
-SECRET_KEY = "3e7e7b1"
-
 @app.get("/admin-users")
 async def get_admin_users():
     db = SessionLocal()
     admin_users = db.query(AdminUser).all()
     db.close()
     return admin_users
-
-@app.post("/create-admin-user")
-async def create_admin_user(form_data: AdminForm):
-    db = SessionLocal()
-    admin_user = AdminUser(
-        username=form_data.username,
-        password=form_data.password
-    )
-    db.add(admin_user)
-    db.commit()
-    db.close()
-    return {"message": "Admin user created successfully"}
 
 @app.put("/update-admin-user")
 async def update_admin_user(username: str, old_password: str, new_password: str):
@@ -209,33 +204,50 @@ async def update_admin_user(username: str, old_password: str, new_password: str)
     else:
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
-@app.post("/login")
-async def login(form_data: AdminForm):
-    db = SessionLocal()
-    admin_user = db.query(AdminUser).filter(AdminUser.username == form_data.username).first()
-    db.close()
-    if admin_user and admin_user.password == form_data.password:
-        token = jwt.encode({"username": admin_user.username}, SECRET_KEY, algorithm="HS256")
-        return {"token": token}
-    else:
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+SECRET_KEY = 'b1e7e7'
 
-async def verify_token(token: str = Header(...)):
+# Authentication
+def authenticate(username, password):
+    db = SessionLocal()
+    user = db.query(AdminUser).filter(AdminUser.username == username, AdminUser.password == password).first()
+    db.close()
+    if user:
+        return True
+    return False
+
+# Token Generation
+def generate_token(username):
+    payload = {
+        'username': username,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30) # Token expiration time
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    return token
+
+# Define a dependency function to verify the token
+async def get_current_user(token: Optional[str] = Header(...)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         username = payload.get("username")
         if not username:
             raise HTTPException(status_code=401, detail="Invalid token")
+        # You can add additional checks here if needed
         return username
-    except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token has expired")
-    except jwt.InvalidTokenError:
+    except PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
-    
+
+@app.post("/login")
+async def login(username: str, password: str):
+    # Check if the username and password are correct
+    if authenticate(username, password):
+        # Generate a token for the authenticated user
+        token = generate_token(username)
+        return {"token": token}
+    else:
+        # Return an error if authentication fails
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+
+# Use the dependency function in your protected endpoints
 @app.get("/protected-page")
-async def protected_page(username: str = Depends(verify_token)):
-    try:
-        return {"message": f"Welcome, {username}!"}
-    except HTTPException as e:
-        print(e.detail)
-        return JSONResponse(status_code=e.status_code, content={"detail": e.detail})
+async def protected_page(current_user: str = Depends(get_current_user)):
+    return {"message": f"Welcome, {current_user}!"}

@@ -1,13 +1,37 @@
-import {Route, Routes, BrowserRouter } from 'react-router-dom'
-import HomePage from './pages/HomePage/HomePage'
-import AboutPage from './pages/AboutPage/AboutPage'
-import ContactPage from './pages/ContactPage/ContactPage'
-import NoPage from './pages/NoPage/NoPage'
-import DB from './pages/DB/DB'
-import LoginPage from './pages/LoginPage/LoginPage'
-import './global.css'
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, BrowserRouter, useNavigate, Outlet } from 'react-router-dom';
+import HomePage from './pages/HomePage/HomePage';
+import AboutPage from './pages/AboutPage/AboutPage';
+import ContactPage from './pages/ContactPage/ContactPage';
+import NoPage from './pages/NoPage/NoPage';
+import Admin from './pages/Admin/Admin';
+import LoginPage from './pages/LoginPage/LoginPage';
+import './global.css';
+
+function AdminLayout({ token }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+  if (!token) {
+    // If token is missing, return null to prevent rendering the admin page
+    return null;
+  } 
+
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
+}
 
 export default function App() {
+  const [token, setToken] = useState('');
+
   return (
     <div>
       <BrowserRouter>
@@ -17,10 +41,12 @@ export default function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/db" element={<DB />} />
+          <Route path="/login" element={<LoginPage setToken={setToken} />} />
+          <Route path="/admin" element={<AdminLayout token={token} />}>
+            <Route index element={<Admin token={token} />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
-  )
+  );
 }
