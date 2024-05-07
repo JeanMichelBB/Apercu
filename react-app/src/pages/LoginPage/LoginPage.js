@@ -1,4 +1,3 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +8,7 @@ import Footer from '../../components/Footer/Footer';
 const LoginPage = ({ setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [honeypot, setHoneypot] = useState(''); // Add honeypot state
 
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -21,8 +21,17 @@ const LoginPage = ({ setToken }) => {
         setPassword(e.target.value);
     };
 
+    const handleHoneypotChange = (e) => { // Add handler for honeypot field
+        setHoneypot(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Check if honeypot field is filled
+        if (honeypot) {
+            // If honeypot field is filled, assume it's a bot submission and return without further processing
+            return;
+        }
         try {
             const response = await axios.post('http://localhost:8000/login', null, {
                 params: {
@@ -52,6 +61,7 @@ const LoginPage = ({ setToken }) => {
                     <p className="text">Connectez-vous pour accéder à votre compte</p>
                     <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={handleUsernameChange} className="input" />
                     <input type="password" placeholder="Mot de passe" value={password} onChange={handlePasswordChange} className="input" />
+                    <input type="text" placeholder="Honeypot" value={honeypot} onChange={handleHoneypotChange} className="honeypot" /> {/* Add honeypot field */}
                     <a href="/forget-password" className="link">Mot de passe oublié ?</a>
                     <button onClick={handleSubmit} className="button">Se connecter</button>
                     {error && <p className="error">{error}</p>}

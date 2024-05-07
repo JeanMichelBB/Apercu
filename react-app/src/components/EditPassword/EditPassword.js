@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import "./EditPassword.css";
 
@@ -10,21 +10,6 @@ const EditPassword = () => {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [message, setMessage] = useState("");
-    const [isAdmin, setIsAdmin] = useState(false);
-
-    useEffect(() => {
-        const fetchAdmin = async () => {
-            try {
-                const response = await axios.get("http://localhost:8000/admin-users");
-                const adminUser = response.data.find(user => user.email === 'admin');
-                setIsAdmin(adminUser ? true : false);
-            } catch (error) {
-                console.error("Error fetching admin user:", error);
-            }
-        };
-
-        fetchAdmin();
-    }, []);
 
     const handleOldEmailChange = (e) => {
         setOldEmail(e.target.value);
@@ -74,17 +59,23 @@ const EditPassword = () => {
         return true;
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         if (!validateInputs()) {
             return;
         }
 
         try {
-            const response = await axios.put("http://localhost:8000/update-admin-user", {
-                old_email: oldEmail,
-                old_password: oldPassword,
-                new_email: newEmail,
-                new_password: newPassword
+            const response = await axios.put("http://localhost:8000/update-admin-user", null, {
+                params: {
+                    old_username: oldEmail,
+                    old_password: oldPassword,
+                    new_password: newPassword,
+                    new_username: newEmail,
+                },
+                headers: {
+                    'Accept': 'application/json'
+                }
             });
             setMessage(response.data.message);
         } catch (error) {
@@ -92,10 +83,6 @@ const EditPassword = () => {
             console.error("Error updating admin user:", error);
         }
     };
-
-    if (!isAdmin) {
-        return <div>Welcome!</div>;
-    }
 
     return (
         <div>

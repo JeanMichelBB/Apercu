@@ -13,20 +13,28 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=mysql+pymysql://sysadm:sysadm@mysql/law_db
+      - SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - FROM_EMAIL=${FROM_EMAIL}
+      - FROM_PASSWORD=${FROM_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+
+    volumes:
+      - ./.env:/app/.env
     depends_on:
       - mysql
-    command: ["./wait-for-mysql.sh", "mysql:3306", "--", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    command: ["sh", "-c", "sleep 10 && uvicorn main:app --host 0.0.0.0 --port 8000"]
 
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: sysadm
-      MYSQL_DATABASE: law_db
-      MYSQL_USER: sysadm
-      MYSQL_PASSWORD: sysadm
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
-      - "3306:3306"  
+      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 

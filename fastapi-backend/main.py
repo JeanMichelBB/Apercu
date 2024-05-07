@@ -13,8 +13,15 @@ from text_mail import sendEmail
 from sqlalchemy.dialects.postgresql import VARCHAR
 from typing import Optional
 from jwt import PyJWTError
+import os
+import bcrypt 
 
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://sysadm:sysadm@mysql/law_db"
+SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -49,21 +56,28 @@ Base.metadata.create_all(bind=engine)
 
 Session = sessionmaker(bind=engine)
 session = Session()
-admin_user = session.query(AdminUser).filter_by(username='admin').first()
-if admin_user is None:
-    admin_user = AdminUser(username='admin', password='admin')
+
+# Check if the AdminUser table is empty
+existing_admin_users = session.query(AdminUser).all()
+
+if not existing_admin_users:
+    # If the AdminUser table is empty, add the admin user
+    hashed_password = bcrypt.hashpw(ADMIN_PASSWORD.encode(), bcrypt.gensalt())  # Hash the password
+    admin_user = AdminUser(username=ADMIN_USERNAME, password=hashed_password)
     session.add(admin_user)
     session.commit()
+
 session.close()
+
 
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000/"],
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["post", "get", "delete", "put"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -117,7 +131,6 @@ async def submit_form(request: Request, form_data: ContactForm):
             print("Something went wrong...", e)
 
     return {"message": "Form submission successful"}
-
 
 @app.delete("/delete-contact/{contact_id}")
 async def delete_contact(contact_id: str):
@@ -194,40 +207,47 @@ async def get_admin_users():
 @app.put("/update-admin-user")
 async def update_admin_user(old_username: str, old_password: str, new_password: str, new_username: str):
     db = SessionLocal()
-    admin_user = db.query(AdminUser).filter(AdminUser.username == old_username, AdminUser.password == old_password).first()
-    if admin_user:
+    admin_user = db.query(AdminUser).filter(AdminUser.username == old_username).first()
+    if admin_user and bcrypt.checkpw(old_password.encode(), admin_user.password.encode()):
         admin_user.username = new_username
-        admin_user.password = new_password
+        hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt())  # Hash the new password
+        admin_user.password = hashed_password.decode()  # Store the hashed password as a string
         db.commit()
         db.close()
         return {"message": "Admin user updated successfully"}
     else:
-        return {"message": "Admin user not found"}, 404
+        return {"message": "Admin user not found or password incorrect"}, 404
     
-# forget password
 @app.post("/forget-password")
 async def forget_password(username: str):
     db = SessionLocal()
     admin_user = db.query(AdminUser).filter(AdminUser.username == username).first()
-    db.close()
     if admin_user:
-        message = f"Subject: Forget Password\n\nYou requested a password reset. Your password is: {admin_user.password}"
+        # Generate a temporary password
+        temp_password = str(uuid4())[:8]
+        # Hash the temporary password and store it
+        hashed_password = bcrypt.hashpw(temp_password.encode(), bcrypt.gensalt())
+        admin_user.password = hashed_password.decode()
+        db.commit()  # Commit the changes to the database
+        db.close()
+        # Send the temporary password to the user's email
+        message = f"Subject: Forget Password\n\nYou requested a password reset. Your temporary password is: {temp_password}"
         sendEmail(username, "Forget Password", message)
-        return {"message": "Password sent to your email"}
+        return {"message": "Temporary password sent to your email"}
     else:
+        db.close()
         return {"message": "Admin user not found"}, 404
-    
-    
 
-SECRET_KEY = 'b1e7e7'
+
 
 # Authentication
 def authenticate(username, password):
-    db = SessionLocal()
-    user = db.query(AdminUser).filter(AdminUser.username == username, AdminUser.password == password).first()
-    db.close()
-    if user:
-        return True
+    with SessionLocal() as db:
+        user = db.query(AdminUser).filter(AdminUser.username == username).first()
+        if user:
+            hashed_password = user.password.encode()
+            if bcrypt.checkpw(password.encode(), hashed_password):
+                return True
     return False
 
 # Token Generation

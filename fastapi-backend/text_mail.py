@@ -1,13 +1,16 @@
 # text_mail.py
 import smtplib  
-
+import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+FROM_EMAIL = os.getenv("FROM_EMAIL")
+FROM_PASSWORD = os.getenv("FROM_PASSWORD")
+
 
 def sendEmail(to_email, subject, message):
-    from_email = "berube.et.associes@outlook.com" 
-    from_password = "MyPassord123#"
+    from_email = FROM_EMAIL
+    from_password = FROM_PASSWORD
     
     msg = MIMEMultipart()
     msg["From"] = from_email
