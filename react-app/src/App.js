@@ -6,6 +6,7 @@ import ContactPage from './pages/ContactPage/ContactPage';
 import NoPage from './pages/NoPage/NoPage';
 import Admin from './pages/Admin/Admin';
 import LoginPage from './pages/LoginPage/LoginPage';
+import ForgetPasswordPage from './pages/ForgetPasswordPage/ForgetPasswordPage';
 import './global.css';
 
 function AdminLayout({ token }) {
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/forget-password" element={<ForgetPasswordPage />} />
           <Route path="/login" element={<LoginPage setToken={setToken} />} />
           <Route path="/admin" element={<AdminLayout token={token} />}>
             <Route index element={<Admin token={token} />} />

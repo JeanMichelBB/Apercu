@@ -52,6 +52,7 @@ const LoginPage = ({ setToken }) => {
                     <p className="text">Connectez-vous pour accéder à votre compte</p>
                     <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={handleUsernameChange} className="input" />
                     <input type="password" placeholder="Mot de passe" value={password} onChange={handlePasswordChange} className="input" />
+                    <a href="/forget-password" className="link">Mot de passe oublié ?</a>
                     <button onClick={handleSubmit} className="button">Se connecter</button>
                     {error && <p className="error">{error}</p>}
                 </div>

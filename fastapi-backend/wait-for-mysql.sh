@@ -1,4 +1,4 @@
 #!/bin/sh
 # wait-for-mysql.sh
 
-sleep 10
+# sleep 10

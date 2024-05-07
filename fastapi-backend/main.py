@@ -192,17 +192,32 @@ async def get_admin_users():
     return admin_users
 
 @app.put("/update-admin-user")
-async def update_admin_user(username: str, old_password: str, new_password: str):
+async def update_admin_user(old_username: str, old_password: str, new_password: str, new_username: str):
     db = SessionLocal()
-    admin_user = db.query(AdminUser).filter(AdminUser.username == username).first()
-    if admin_user and admin_user.password == old_password:
-        admin_user.username = username
+    admin_user = db.query(AdminUser).filter(AdminUser.username == old_username, AdminUser.password == old_password).first()
+    if admin_user:
+        admin_user.username = new_username
         admin_user.password = new_password
         db.commit()
         db.close()
         return {"message": "Admin user updated successfully"}
     else:
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+        return {"message": "Admin user not found"}, 404
+    
+# forget password
+@app.post("/forget-password")
+async def forget_password(username: str):
+    db = SessionLocal()
+    admin_user = db.query(AdminUser).filter(AdminUser.username == username).first()
+    db.close()
+    if admin_user:
+        message = f"Subject: Forget Password\n\nYou requested a password reset. Your password is: {admin_user.password}"
+        sendEmail(username, "Forget Password", message)
+        return {"message": "Password sent to your email"}
+    else:
+        return {"message": "Admin user not found"}, 404
+    
+    
 
 SECRET_KEY = 'b1e7e7'
 
