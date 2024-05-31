@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import './Admin.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import { apiKey, apiUrl } from '../api';
+
 
 const Admin = ({ token }) => {
   const [message, setMessage] = useState('');
@@ -18,8 +20,10 @@ const Admin = ({ token }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/protected-page', {
-          headers: { token: token }
+        const response = await axios.get(`${apiUrl}/protected-page`, {
+          headers: { token: token,
+            "access-token": apiKey,
+           }
         });
         setMessage(response.data.message);
       } catch (error) {
@@ -33,7 +37,11 @@ const Admin = ({ token }) => {
   const fetchContacts = async () => {
     try {
       // Make a GET request to fetch contacts from the backend
-      const response = await axios.get('http://localhost:8000/contacts');
+      const response = await axios.get(`${apiUrl}/contacts`, {
+        headers: { token: token,
+          "access-token": apiKey,
+         }
+      });
       // Update the state with the fetched contacts
       setContacts(response.data);
     } catch (error) {
@@ -46,7 +54,11 @@ const Admin = ({ token }) => {
     if (confirmDelete) {
       try {
         // Make a DELETE request to delete a contact
-        await axios.delete(`http://localhost:8000/delete-contact/${contactId}`);
+        await axios.delete(`${apiUrl}/delete-contact/${contactId}`, {
+          headers: {
+            "access-token": apiKey,
+           }
+        });
         // Refetch contacts after deletion
         fetchContacts();
       } catch (error) {
@@ -60,7 +72,11 @@ const Admin = ({ token }) => {
     if (confirmDeleteAll) {
       try {
         // Make a DELETE request to delete all contacts
-        await axios.delete('http://localhost:8000/delete-all-contacts');
+        await axios.delete(`${apiUrl}/delete-all-contacts`, {
+          headers: {
+            "access-token": apiKey,
+           }
+        });
         // Refetch contacts after deletion
         fetchContacts();
       } catch (error) {
@@ -82,7 +98,11 @@ const Admin = ({ token }) => {
   const updateContact = async () => {
     try {
       // Make a PUT request to update the edited contact
-      await axios.put(`http://localhost:8000/update-contact/${editedContact.id}`, editedContact);
+      await axios.put(`${apiUrl}/update-contact/${editedContact.id}`, editedContact, {
+        headers: {
+          "access-token": apiKey,
+          }
+      });
       // Refetch contacts after update
       fetchContacts();
       // Reset editedContact state

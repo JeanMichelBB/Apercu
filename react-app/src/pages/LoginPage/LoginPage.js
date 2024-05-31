@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import { apiKey, apiUrl } from '../api';
+
 
 const LoginPage = ({ setToken }) => {
     const [username, setUsername] = useState('');
@@ -33,14 +35,15 @@ const LoginPage = ({ setToken }) => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8000/login', null, {
+            const response = await axios.post(`${apiUrl}/login`, null, {
                 params: {
                     username: username,
                     password: password
                 },
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'access-token': apiKey,
                 }
             });
             const token = response.data.token;

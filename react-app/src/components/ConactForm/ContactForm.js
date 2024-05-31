@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ContactForm.css'; // Import the CSS file
+import { apiKey, apiUrl } from '../api';
 
 const useCharacterLimit = (initialValue, limit) => {
   const [value, setValue] = useState(initialValue);
@@ -51,7 +52,11 @@ const ContactForm = () => {
       };
 
       // Make a POST request with the formatted form data
-      const response = await axios.post('http://localhost:8000/submit-form', formData);
+      const response = await axios.post(`${apiUrl}/submit-form`, formData, {
+        headers: {
+          'access-token': apiKey,
+        },
+      });
       console.log('Form submission successful:', response.data);
       // Optionally, reset the form fields after successful submission
       setSubject('');

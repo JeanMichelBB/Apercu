@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./EditPassword.css";
+import { apiKey, apiUrl } from '../api';
 
 const EditPassword = () => {
     const [oldEmail, setOldEmail] = useState("");
@@ -66,7 +67,7 @@ const EditPassword = () => {
         }
 
         try {
-            const response = await axios.put("http://localhost:8000/update-admin-user", null, {
+            const response = await axios.put(`${apiUrl}/update-admin-user`, null, {
                 params: {
                     old_username: oldEmail,
                     old_password: oldPassword,
@@ -74,7 +75,9 @@ const EditPassword = () => {
                     new_username: newEmail,
                 },
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'access-token': apiKey,
                 }
             });
             setMessage(response.data.message);

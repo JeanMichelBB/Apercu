@@ -3,12 +3,15 @@ import axios from 'axios';
 import './ForgetPasswordPage.css'; 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import { apiKey, apiUrl } from '../api';
+
 
 const ForgetPasswordPage = () => {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [honeypot, setHoneypot] = useState(''); 
     const [error, setError] = useState('');
+
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -24,13 +27,14 @@ const ForgetPasswordPage = () => {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:8000/forget-password', null, {
+            const response = await axios.post(`${apiUrl}/forget-password`, null, {
                 params: {
                     username: email,
                 },
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'access-token': apiKey,
                 }
             });
             setMessage(response.data.message);

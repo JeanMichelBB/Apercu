@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './EmailService.css';
+import { apiKey, apiUrl } from '../api';
+
 
 const EmailService = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +17,11 @@ const EmailService = () => {
 
   const fetchEmails = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/emails');
+      const response = await axios.get(`${apiUrl}/emails`, {
+        headers: { 
+          'access-token': apiKey 
+        }
+      });
       setEmails(response.data);
     } catch (error) {
       console.error('Error fetching emails:', error);
@@ -28,7 +34,10 @@ const EmailService = () => {
 
   const sendEmail = async () => {
     try {
-      await axios.post('http://localhost:8000/send-email', {
+      await axios.post(`${apiUrl}/send-email`, {
+        headers: {
+          'access-token': apiKey,
+        },
         email 
       });
       setSuccessMessage('Email sent successfully!');
@@ -47,7 +56,11 @@ const EmailService = () => {
     }
   
     try {
-      await axios.delete(`http://localhost:8000/delete-email/${emailId}`);
+      await axios.delete(`${apiUrl}/delete-email/${emailId}`, {
+        headers: {
+          'access-token': apiKey,
+        },
+      });
       setSuccessMessage('Email deleted successfully!');
       fetchEmails(); // Refresh the list of emails after deletion
     } catch (error) {
