@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./EditPassword.css";
-import { apiKey, apiUrl } from '../api';
+import { apiKey, apiUrl } from '../../api';
 
 const EditPassword = () => {
     const [oldEmail, setOldEmail] = useState("");

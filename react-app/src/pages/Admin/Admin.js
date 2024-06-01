@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import './Admin.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiKey, apiUrl } from '../api';
+import { apiKey, apiUrl } from '../../api';
 
 
 const Admin = ({ token }) => {

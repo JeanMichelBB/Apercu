@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './ContactForm.css'; // Import the CSS file
-import { apiKey, apiUrl } from '../api';
+import { apiKey, apiUrl } from '../../api';
 
 const useCharacterLimit = (initialValue, limit) => {
   const [value, setValue] = useState(initialValue);

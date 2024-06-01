@@ -3,7 +3,7 @@ import axios from 'axios';
 import './ForgetPasswordPage.css'; 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiKey, apiUrl } from '../api';
+import { apiKey, apiUrl } from '../../api';
 
 
 const ForgetPasswordPage = () => {
@@ -17,9 +17,9 @@ const ForgetPasswordPage = () => {
         setEmail(e.target.value);
     };
 
-    const handleHoneypotChange = (e) => { // Add handler for honeypot field
-        setHoneypot(e.target.value);
-    };
+    // const handleHoneypotChange = (e) => { // Add handler for honeypot field
+    //     setHoneypot(e.target.value);
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();

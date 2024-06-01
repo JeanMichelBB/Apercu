@@ -1,4 +1,5 @@
-from fastapi import FastAPI, Request, Depends, HTTPException, Header
+from fastapi import FastAPI, Request, Depends, HTTPException, Header, Security
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, String, DateTime, func
 from sqlalchemy.ext.declarative import declarative_base
@@ -6,6 +7,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import sessionmaker
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import JSONResponse
+from fastapi.openapi.utils import get_openapi
 import jwt
 import datetime
 from uuid import uuid4
@@ -16,10 +18,12 @@ from jwt import PyJWTError
 import os
 import bcrypt 
 
+
 SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
 SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
@@ -72,6 +76,47 @@ session.close()
 
 
 app = FastAPI()
+
+api_key_header = APIKeyHeader(name="access-token", auto_error=False)
+
+def get_api_key(api_key_header: str = Security(api_key_header)):
+    if api_key_header == SECRET_KEY:
+        return api_key_header
+    else:
+        raise HTTPException(status_code=403, detail="Could not validate credentials")
+
+@app.middleware("http")
+async def api_key_middleware(request: Request, call_next):
+    if request.url.path not in ["/docs", "/openapi.json", "/login"]:
+        api_key = request.headers.get("access-token")
+        if api_key != SECRET_KEY:
+            return JSONResponse(status_code=403, content={"detail": "Could not validate credentials"})
+    response = await call_next(request)
+    return response
+
+# Custom OpenAPI schema
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="FastAPI",
+        version="1.0.0",
+        description="API for Twitter Clone",
+        routes=app.routes,
+    )
+    api_key_security_scheme = {
+        "type": "apiKey",
+        "name": "access-token",
+        "in": "header",
+    }
+    openapi_schema["components"]["securitySchemes"] = {
+        "access-token": api_key_security_scheme
+    }
+    openapi_schema["security"] = [{"access-token": []}]
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
 
 app.add_middleware(
     CORSMiddleware,
