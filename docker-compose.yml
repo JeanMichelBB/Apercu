@@ -4,13 +4,13 @@ services:
     build:
       context: ./react-app
     ports:
-      - "3000:3000"
+      - "3001:3001"
 
   fastapi-backend:
     build:
       context: ./fastapi-backend
     ports:
-      - "8000:8000"
+      - "8001:8001"
     environment:
       - SQLALCHEMY_DATABASE_URL=${SQLALCHEMY_DATABASE_URL}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
@@ -23,7 +23,7 @@ services:
       - ./.env:/app/.env
     depends_on:
       - mysql
-    command: ["sh", "-c", "sleep 10 && uvicorn main:app --host 0.0.0.0 --port 8000"]
+    command: ["sh", "-c", "sleep 10 && uvicorn main:app --host 0.0.0.0 --port 8001"]
 
   mysql:
     image: mysql:latest

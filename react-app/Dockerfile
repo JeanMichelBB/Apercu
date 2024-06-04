@@ -32,7 +32,7 @@ ENV REACT_APP_API_URL=$REACT_APP_API_URL
 ENV REACT_APP_API_KEY=$REACT_APP_API_KEY
 
 # Expose port 80 to the outside world
-EXPOSE 3000
+EXPOSE 3001
 
 # Start Nginx server
 CMD ["nginx", "-g", "daemon off;"]
