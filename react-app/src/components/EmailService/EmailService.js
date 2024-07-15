@@ -34,12 +34,18 @@ const EmailService = () => {
 
   const sendEmail = async () => {
     try {
-      await axios.post(`${apiUrl}/send-email`, {
-        headers: {
-          'access-token': apiKey,
+      await axios.post(`${apiUrl}/send-email`, 
+        {
+          email 
         },
-        email 
-      });
+        {
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'access-token': apiKey,
+          }
+        }
+      );
       setSuccessMessage('Email sent successfully!');
       setEmail('');
       fetchEmails(); // Refresh the list of emails after sending
