@@ -1,11 +1,11 @@
 # Use the official Node.js image as the base image
-FROM node:14-alpine
+FROM node:16 as build
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and package-lock.json into the container
-COPY package*.json ./
+COPY package.json package-lock.json ./
 
 # Install dependencies
 RUN npm install
@@ -21,6 +21,7 @@ FROM nginx:1.21
 
 # Copy the build output from the previous stage into the Nginx server
 COPY --from=build /app/dist /usr/share/nginx/html
+
 
 # Copy the Nginx configuration file
 COPY default.conf /etc/nginx/conf.d/default.conf

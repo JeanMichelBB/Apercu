@@ -1,10 +1,10 @@
 
 services:
-  react-app:
+  first-look:
     build:
-      context: ./react-app
+      context: ./first-look
     ports:
-      - "3001:3001"
+      - "3001:3000"
 
   fastapi-backend:
     build:

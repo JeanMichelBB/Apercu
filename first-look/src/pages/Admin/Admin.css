@@ -1,0 +1,57 @@
+/* Admin.css */
+
+.container {
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 2rem;
+  word-wrap: break-word; /* Add word-wrap property */
+}
+
+.contact-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.contact {
+  height: 10hv;
+  margin-bottom: 10px;
+  cursor: pointer;
+  overflow: hidden; /* Hide overflow to prevent content from showing when closed */
+  border-bottom: 1px solid #ccc; /* Add border between contacts */
+  transition: background-color 0.5s ease; /* Add transition for background color change */
+  transition: height 0.5s ease; /* Add transition for height change */
+}
+
+.contact.active {
+  background-color: #f0f0f0; /* Change background color when contact is active */
+  height: auto; /* Set height to auto when contact is active */
+}
+
+.contact-details {
+  margin-top: 10px; /* Add margin to contact details */
+  padding: 10px; /* Add padding to contact details */
+  transition: opacity 0.5s ease; /* Add transition for opacity change */
+  opacity: 0; /* Hide contact details by default */
+}
+
+.contact.active .contact-details {
+  opacity: 1; /* Show contact details when contact is active */
+}
+
+.button-container {
+  margin-top: 10px; /* Add margin to button container */
+}
+
+.button-container button {
+  margin-right: 10px; /* Add margin between buttons */
+}
+
+.contact-list p {
+  word-break: break-word;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    width: 100%;
+  }
+}

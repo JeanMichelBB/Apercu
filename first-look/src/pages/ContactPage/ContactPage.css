@@ -1,0 +1,28 @@
+/* ContactPage.css */
+.info-text {
+    text-align: center;
+    font-size: 1.2rem; /* Set the font size */
+    line-height: 2rem; /* Set the line height */
+    padding: 5rem; /* Set the padding */
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .info-text {
+      padding: 2rem; /* Adjust the padding for smaller screens */
+      font-size: 1rem; /* Adjust the font size for smaller screens */
+    }
+  }
+
+  /* Media query for medium screens */
+  @media only screen and (min-width: 769px) and (max-width: 1024px) {
+    .info-text {
+      padding: 3rem; /* Adjust the padding for medium screens */
+    }
+  }
+
+  /* Media query for larger screens */
+
+  @media only screen and (min-width: 1025px) {
+    .info-text {
+      padding: 5rem;    }
+  }

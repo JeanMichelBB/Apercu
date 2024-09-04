@@ -10,6 +10,7 @@ from starlette.responses import JSONResponse
 from fastapi.openapi.utils import get_openapi
 import jwt
 import datetime
+from dotenv import load_dotenv
 from uuid import uuid4
 from text_mail import sendEmail
 from sqlalchemy.dialects.postgresql import VARCHAR
@@ -18,6 +19,7 @@ from jwt import PyJWTError
 import os
 import bcrypt 
 
+load_dotenv()  # Load environment variables from a .env file
 
 SQLALCHEMY_DATABASE_URL = os.getenv("SQLALCHEMY_DATABASE_URL")
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
