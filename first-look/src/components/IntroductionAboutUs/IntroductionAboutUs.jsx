@@ -6,13 +6,10 @@ const IntroductionAboutUs = () => {
     return (
         <section className="info-text"> {/* Use className instead of inline styles */}
             <p>
-                Dans notre cabinet d'avocats, nous sommes dévoués à fournir des services juridiques exceptionnels adaptés
-                aux besoins uniques de nos clients. Notre mission est de respecter les normes les plus élevées
-                de professionnalisme, d'intégrité et de satisfaction du client.
+                À propos de nous 
             </p>
             <p>
-                Notre équipe d'avocats expérimentés s'engage à fournir des solutions efficaces
-                et à guider les clients à travers les défis juridiques avec expertise et compassion.
+                Bienvenue sur notre site Web! Nous sommes heureux de vous accueillir.
             </p>
         </section>
     );

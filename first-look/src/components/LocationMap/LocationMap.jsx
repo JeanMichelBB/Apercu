@@ -6,7 +6,7 @@ import './LocationMap.css';
 
 
 const LocationMap = () => {
-  const position = [45.31540891901562, -73.25911247116375]; // Replace with the actual coordinates
+  const position = [45.50444953071843, -73.59579748691141]; // Replace with the actual coordinates , 
 
   return (
     <MapContainer center={position} zoom={14} style={{ height: '400px', width: '80%', margin: 'auto' }}>

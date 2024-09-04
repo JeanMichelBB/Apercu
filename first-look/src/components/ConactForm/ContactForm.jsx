@@ -84,7 +84,7 @@ const ContactForm = () => {
       </div>
 
       <div className="contact-box">
-        <h2>Contact Us</h2>
+        <h2>Contactez-nous</h2>
         <form className="form-style" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>
@@ -130,7 +130,7 @@ const ContactForm = () => {
 
           <div className="form-button">
             <button type="submit" className="submit-button-style" disabled={loading}>
-              {loading ? 'Sending...' : submissionMessage ? submissionMessage : 'Submit'}
+              {loading ? 'Envoyer...' : submissionMessage ? submissionMessage : 'Envoyer'}
             </button>
           </div>
         </form>

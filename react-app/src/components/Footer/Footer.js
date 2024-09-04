@@ -12,7 +12,7 @@ const scrollToTop = () => {
 const Footer = () => {
   return (
     <footer className="footer"> {/* Apply the footer class */}
-      <h2 className="title">Bérubé et Associés Avocats</h2>
+      <h2 className="title">Aperçu</h2>
       <div className="content"> {/* Apply the content class */}
         <div className="left-content"> {/* Apply the left-content class */}
           <p><strong>Coordonnées</strong></p>

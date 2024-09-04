@@ -9,18 +9,18 @@ function HomePage() {
       <div >
         <Header />
         <Home />
+        {/* Aperçu demo site web */}
         <div className="info-text">
-          <h2>Bienvenue dans notre cabinet d'avocats</h2>
+          <h2>Bienvenue dans  notre site Web!</h2>
           <p>
-            Dans notre cabinet d'avocats, nous nous consacrons à fournir des services juridiques de première classe
-            en mettant l'accent sur la satisfaction du client et l'excellence. Voici quelques points clés à notre sujet :
+            Nous sommes heureux de vous accueillir. et nous sommes là pour vous aider.
           </p>
           <ul className='key-points'>
-            <li>Équipe expérimentée de professionnels du droit</li>
-            <li>Solutions juridiques personnalisées et adaptées</li>
-            <li>Engagement envers le professionnalisme et l'intégrité</li>
-            <li>Guidage des clients à travers les défis juridiques</li>
-            <li>Passionnés par l'obtention des meilleurs résultats</li>
+            <li>Des informations sur notre entreprise</li>
+            <li>Des informations sur nos produits et services</li>
+            <li>Des informations de contact</li>
+            <li>Un formulaire de contact</li>
+            <li>Des liens vers nos pages de médias sociaux</li>
           </ul>
         </div>
         <Footer />

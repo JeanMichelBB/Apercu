@@ -13,7 +13,7 @@ function ContactPage() {
       <Contact />
       <div className="info-text"> {/* Use className instead of inline styles */}
         Bienvenue sur notre page de contact. N'hésitez pas à nous contacter pour toute question,
-        demande d'information ou assistance juridique. Nous sommes là pour vous aider.
+        demande d'information ou assistance. Nous sommes là pour vous aider.
       </div>
       <ContactForm />
       <Footer />

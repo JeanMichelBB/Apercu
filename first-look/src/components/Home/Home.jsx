@@ -5,8 +5,8 @@ import './Home.css'; // Import the CSS file
 const Home = () => {
   return (
     <div className="home"> {/* Use className instead of inline styles */}
-      <h1>Bérubé et Associés Avocats</h1>
-      <p>Avocat généraliste à Saint-Jean-sur-Richelieu, Québec.</p>
+      <h1>Aperçu</h1>
+      <p>Bienvenue sur notre site Web! Nous sommes heureux de vous accueillir.</p>
     </div>
   );
 };
