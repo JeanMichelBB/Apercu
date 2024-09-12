@@ -15,14 +15,12 @@ const Footer = () => {
       <h2 className="title">Aperçu</h2> 
       <div className="content"> 
         <div className="left-content"> 
-          <p><strong>Coordonnées</strong></p>
-          <p><strong>Phone:</strong> (555) 555-5555</p>
-          <p><strong>Email:</strong> <a href="mailto:your-email@example.com">your-email@example.com</a></p>
-          <p><strong>Address:</strong> 1234 rue de la rue, Ville, Province, Pays</p>
+          <p><Link to="/" className="link" onClick={scrollToTop}>Accueil</Link></p>
+          <p><Link to="/service" className="link" onClick={scrollToTop}>Services</Link></p>
+          <p><Link to="/pricing" className="link" onClick={scrollToTop}>Tarification</Link></p>
         </div>
         <span className="section"></span> 
         <div className="right-content"> 
-          <p><Link to="/" className="link" onClick={scrollToTop}>Accueil</Link></p>
           <p><Link to="/about" className="link" onClick={scrollToTop}>À propos de nous</Link></p>
           <p><Link to="/contact" className="link" onClick={scrollToTop}>Contactez-nous</Link></p>
         </div>

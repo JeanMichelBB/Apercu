@@ -1,0 +1,75 @@
+/* Pricing.css */
+
+.pricing-container {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.pricing-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.pricing-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column; /* Added to enable the button placement */
+    justify-content: space-between; /* Spacing between content and button */
+}
+
+.pricing-card h2 {
+    margin-top: 0;
+}
+
+.pricing-card .price {
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.pricing-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pricing-card ul li {
+    margin: 5px 0;
+}
+
+/* New styles to push the button to the bottom */
+.pricing-btn {
+    margin-top: auto; /* This ensures the button stays at the bottom */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.pricing-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Align pricing cards in a row for wider screens */
+@media (min-width: 768px) {
+    .pricing-grid {
+        flex-direction: row;
+    }
+}
+
+/* Stack cards for smaller screens */
+@media (max-width: 768px) {
+    .pricing-grid {
+        flex-direction: column;
+    }
+}

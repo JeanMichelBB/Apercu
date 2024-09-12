@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div className="about-container">
       {/* Add your about page content here */}
-      <h1>À propos de nous</h1>
+      <h1>À propos</h1>
     </div>
   );
 };
