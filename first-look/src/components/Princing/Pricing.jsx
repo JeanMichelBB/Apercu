@@ -11,7 +11,7 @@ const Pricing = () => {
                     <div className="pricing-card">
                         <h2>Basic</h2>
                         <div className="pricing-contract">
-                            <p className="price">$500 - $1000/project</p>
+                            <p className="price">$500 - $1000</p>
                             <p className="contract-duration">1-month contract</p>
                         </div>
                         <button className="pricing-btn">Get Started</button>
@@ -23,7 +23,7 @@ const Pricing = () => {
                         </ul>
                         <div className="support-details">
                             <h4>Support:</h4>
-                            <p>Email support during business hours, 1-month post-launch maintenance.</p>
+                            <p>Email support during business hours,<br /> 1-month post-launch maintenance.</p>
                         </div>
                     </div>
 
@@ -31,7 +31,7 @@ const Pricing = () => {
                     <div className="pricing-card">
                         <h2>Intermediate</h2>
                         <div className="pricing-contract">
-                            <p className="price">$1000 - $3000/project</p>
+                            <p className="price">$1000 - $3000</p>
                             <p className="contract-duration">2-3 month contract</p>
                         </div>
                         <button className="pricing-btn">Get Started</button>
@@ -43,7 +43,7 @@ const Pricing = () => {
                         </ul>
                         <div className="support-details">
                             <h4>Support:</h4>
-                            <p>Priority support during business hours, 3-month post-launch maintenance.</p>
+                            <p>Priority support during business hours,<br /> 3-month post-launch maintenance.</p>
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ const Pricing = () => {
                     <div className="pricing-card">
                         <h2>Advanced</h2>
                         <div className="pricing-contract">
-                            <p className="price">$3000 - $5000/project</p>
+                            <p className="price">$3000 - $5000</p>
                             <p className="contract-duration">3-6 month contract</p>
                         </div>
                         <button className="pricing-btn">Get Started</button>
@@ -63,7 +63,7 @@ const Pricing = () => {
                         </ul>
                         <div className="support-details">
                             <h4>Support:</h4>
-                            <p>Full support during business hours, 6-month post-launch maintenance.</p>
+                            <p>Full support during business hours,<br /> 6-month post-launch maintenance.</p>
                         </div>
                     </div>
 
@@ -83,7 +83,7 @@ const Pricing = () => {
                         </ul>
                         <div className="support-details">
                             <h4>Support:</h4>
-                            <p>24/7 support and full post-launch maintenance for the entire contract duration.</p>
+                            <p>24/7 support and full post-launch maintenance for the contract duration.</p>
                         </div>
                     </div>
                 </div>

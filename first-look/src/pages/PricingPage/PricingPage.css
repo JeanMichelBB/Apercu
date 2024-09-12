@@ -30,6 +30,7 @@ h1 {
     width: 300px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
 }
 
 .pricing-card h2 {
@@ -40,4 +41,23 @@ h1 {
 .pricing-card p {
     font-size: 1.1rem;
     color: #555;
+}
+
+.pricing-cta {
+    margin-top: 20px;
+}
+
+.pricing-cta a {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.pricing-info {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 90%;
 }
