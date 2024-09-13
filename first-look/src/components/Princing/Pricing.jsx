@@ -2,6 +2,10 @@ import React from 'react';
 import './Pricing.css';
 
 const Pricing = () => {
+    const handleClick = (planName) => {
+        alert(`You selected the ${planName} plan!`);
+    };
+
     return (
         <div className="pricing-container">
             <h1>Our Pricing Plans</h1>
@@ -14,7 +18,7 @@ const Pricing = () => {
                             <p className="price">$500 - $1000</p>
                             <p className="contract-duration">1-month contract</p>
                         </div>
-                        <button className="pricing-btn">Get Started</button>
+                        <button className="pricing-btn" onClick={() => handleClick('Basic')}>Get Started</button>
                         <ul>
                             <li>Small scale projects</li>
                             <li>Essential features and functionality</li>
@@ -34,7 +38,7 @@ const Pricing = () => {
                             <p className="price">$1000 - $3000</p>
                             <p className="contract-duration">2-3 month contract</p>
                         </div>
-                        <button className="pricing-btn">Get Started</button>
+                        <button className="pricing-btn" onClick={() => handleClick('Intermediate')}>Get Started</button>
                         <ul>
                             <li>Medium scale projects</li>
                             <li>Advanced features and integrations</li>
@@ -54,7 +58,7 @@ const Pricing = () => {
                             <p className="price">$3000 - $5000</p>
                             <p className="contract-duration">3-6 month contract</p>
                         </div>
-                        <button className="pricing-btn">Get Started</button>
+                        <button className="pricing-btn" onClick={() => handleClick('Advanced')}>Get Started</button>
                         <ul>
                             <li>Large scale projects</li>
                             <li>Custom features, integrations, and design</li>
@@ -74,7 +78,7 @@ const Pricing = () => {
                             <p className="price">Custom pricing</p>
                             <p className="contract-duration">Custom contract duration</p>
                         </div>
-                        <button className="pricing-btn">Get Started</button>
+                        <button className="pricing-btn" onClick={() => handleClick('Enterprise')}>Get Started</button>
                         <ul>
                             <li>Enterprise-level projects</li>
                             <li>Full-stack development and consulting</li>
@@ -90,6 +94,6 @@ const Pricing = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Pricing;
