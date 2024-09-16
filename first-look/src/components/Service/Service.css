@@ -69,6 +69,11 @@
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
+    border-bottom: 2px solid #007bff;
+    transition: border-color 0.3s ease;
+    border-radius: 2px;
+    padding: 2px;
+    background-color: #f8f9fa;
 }
 
 .pricing-link:hover {

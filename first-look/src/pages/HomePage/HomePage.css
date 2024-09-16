@@ -1,10 +1,78 @@
 /* HomePage.css */
 
-.home-page {
-    padding: 0 2rem;
+/* Existing styles for the intro-section */
+.home-intro-section {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
 }
 
-.home-page .info-text {
+.home-intro-section h1 {
+    margin-bottom: 20px;
+}
+
+.home-intro-section p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* New styles for service-details */
+.home-service-details {
+    padding: 20px;
+    background-color: #fff;
+    max-width: 80%;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.home-service-details h2 {
+    margin-top: 0;
+}
+
+.home-service-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* New styles for contact-info */
+.home-contact-info {
+    padding: 20px;
+    background-color: #f9f9f9;
+    max-width: 80%;
+    margin: 20px auto;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.home-contact-info h2 {
+    margin-top: 0;
+}
+
+.home-contact-details {
+    list-style-type: none;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.home-contact-details li {
+    margin: 10px 0;
+}
+
+.home-contact-details a {
+    text-decoration: none;
+}
+
+.home-contact-details a:hover {
+    text-decoration: underline;
+}
+
+/* Styles for info-text and key-points */
+.home-info-text {
     text-align: center;
     font-size: 1.2rem;
     line-height: 2rem;
@@ -13,5 +81,18 @@
 }
 
 .key-points {
+    list-style-type: disc;
     padding-left: 1rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.link-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 2rem;
+}
+.link-buttons a {
+    margin: 0 1rem;
+
 }

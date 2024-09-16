@@ -1,0 +1,40 @@
+.no-page-container {
+    min-height: 100vh; /* Ensure the container takes up full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+.no-page-content {
+    flex: 1; /* Allow this section to expand and take up available space */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.no-page-content h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.no-page-content p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.no-page-content a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.no-page-content a:hover {
+    text-decoration: underline;
+}
+
+.footer {
+    padding: 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+}

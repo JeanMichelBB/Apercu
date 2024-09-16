@@ -45,15 +45,18 @@
 /* Language Button */
 .language-button {
   font-size: 1.5rem; 
-  text-decoration: none;
   border: none;
   background-color: #F9F7F7;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Hover effect for language button */
 .language-button:hover {
   color: #007bff;
+  background-color: #e0e0e0;
 }
 
 /* Media queries for responsiveness */
@@ -73,6 +76,9 @@
 
   .header .link {
     padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    
   }
 }
 
@@ -87,8 +93,11 @@
   }
 
   .right-container {
-    flex-direction: column;
+    flex-direction: row;
+    /* wrap */
+    flex-wrap: wrap;
     gap: 1rem; /* More space between links on smaller screens */
+
   }
 
   .header .link {

@@ -11,10 +11,10 @@ const Basic = () => {
                     The Basic Plan is designed for individuals or small projects needing fundamental features.
                     It provides essential tools to get you started with a streamlined approach.
                 </p>
-                <img src={basicImage} alt="Basic Plan" className="basic-image" />
+                <img src={basicImage} alt="Basic Plan" className="basic-image-1" />
             </div>
             <div className="content-wrapper">
-                <img src={basicImage} alt="Basic Plan" className="basic-image" />
+                <img src={basicImage} alt="Basic Plan" className="basic-image-2" />
                 <p className="intro-text">
                     The Basic Plan is designed for individuals or small projects needing fundamental features.
                     It provides essential tools to get you started with a streamlined approach.

@@ -1,7 +1,8 @@
 // src/components/Advanced/Advanced.jsx
 import React from 'react';
 import './Advanced.css';
-import basicImage from '../../image.png'; // Path to your image
+import advanced from '../../advanced.png'; // Path to your image
+import advanced2 from '../../advanced2.png'; // Path to your image
 
 const Advanced = () => {
     return (
@@ -12,10 +13,10 @@ const Advanced = () => {
                     The Basic Plan is designed for individuals or small projects needing fundamental features.
                     It provides essential tools to get you started with a streamlined approach.
                 </p>
-                <img src={basicImage} alt="Basic Plan" className="basic-image" />
+                <img src={advanced} alt="Basic Plan" className="basic-image-1" />
             </div>
             <div className="content-wrapper">
-                <img src={basicImage} alt="Basic Plan" className="basic-image" />
+                <img src={advanced2} alt="Basic Plan" className="basic-image-2" />
                 <p className="intro-text">
                     The Basic Plan is designed for individuals or small projects needing fundamental features.
                     It provides essential tools to get you started with a streamlined approach.

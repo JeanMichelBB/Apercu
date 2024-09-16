@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; // Import the useTranslation hook
 import './Service.css';
 import Basic from '../../components/Basic/Basic';
 import Intermediate from '../../components/Intermediate/Intermediate';
@@ -6,6 +7,7 @@ import Advanced from '../../components/Advanced/Advanced';
 import Enterprise from '../../components/Enterprise/Enterprise';
 
 const Service = () => {
+    const { t } = useTranslation();
     const [activeService, setActiveService] = useState(null);
     const detailsContainerRef = useRef(null);
 
@@ -33,29 +35,29 @@ const Service = () => {
                     className={`service-card ${activeService === 'basic' ? 'active' : ''}`} 
                     onClick={() => handleCardClick('basic')}
                 >
-                    <h2>Basic</h2>
-                    <p>For small projects and personal use. Includes essential features.</p>
+                    <h2>{t('service.basicTitle')}</h2>
+                    <p>{t('service.basicDescription')}</p>
                 </div>
                 <div 
                     className={`service-card ${activeService === 'intermediate' ? 'active' : ''}`} 
                     onClick={() => handleCardClick('intermediate')}
                 >
-                    <h2>Intermediate</h2>
-                    <p>Perfect for growing businesses needing more resources and flexibility.</p>
+                    <h2>{t('service.intermediateTitle')}</h2>
+                    <p>{t('service.intermediateDescription')}</p>
                 </div>
                 <div 
                     className={`service-card ${activeService === 'advanced' ? 'active' : ''}`} 
                     onClick={() => handleCardClick('advanced')}
                 >
-                    <h2>Advanced</h2>
-                    <p>Advanced tools and customization for larger applications.</p>
+                    <h2>{t('service.advancedTitle')}</h2>
+                    <p>{t('service.advancedDescription')}</p>
                 </div>
                 <div 
                     className={`service-card ${activeService === 'enterprise' ? 'active' : ''}`} 
                     onClick={() => handleCardClick('enterprise')}
                 >
-                    <h2>Enterprise</h2>
-                    <p>Full-scale solutions for businesses requiring a dedicated team.</p>
+                    <h2>{t('service.enterpriseTitle')}</h2>
+                    <p>{t('service.enterpriseDescription')}</p>
                 </div>
             </div>
             <div 
@@ -75,8 +77,7 @@ const Service = () => {
                     <Enterprise />
                 </div>
             </div>
-            {/* see pricing */}
-            <a href="/pricing" className="pricing-link">See Pricing</a>
+            <a href="/pricing" className="pricing-link">{t('service.seePricing')}</a>
         </div>
     );
 }

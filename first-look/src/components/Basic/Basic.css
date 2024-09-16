@@ -9,7 +9,6 @@
 
 .basic-container h2 {
     margin-top: 0;
-    color: #007bff;
 }
 
 .content-wrapper {
@@ -24,13 +23,21 @@
     margin-right: 20px;
     font-size: 16px;
     line-height: 1.6;
+    padding: 40px;
 }
 
-.basic-image {
-    width: 40%;
+.basic-image-1 {
+    width: 50%;
     height: auto;
     border-radius: 8px;
 }
+
+.basic-image-2 {
+    width: 20%;
+    height: auto;
+    border-radius: 8px;
+}
+
 
 .features {
     margin: 20px 0;

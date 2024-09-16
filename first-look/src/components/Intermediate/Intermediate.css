@@ -8,7 +8,6 @@
 
 .basic-container h2 {
     margin-top: 0;
-    color: #007bff;
 }
 
 .content-wrapper {
@@ -25,8 +24,14 @@
     line-height: 1.6;
 }
 
-.basic-image {
-    width: 40%;
+.basic-image-1 {
+    width: 50%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.basic-image-2 {
+    width: 20%;
     height: auto;
     border-radius: 8px;
 }

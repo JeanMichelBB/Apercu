@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import './ContactForm.css'; // Import the CSS file
 import { apiKey, apiUrl } from '../../api';
+import { useTranslation } from 'react-i18next'; // Import the hook for translation
 
 const useCharacterLimit = (initialValue, limit) => {
   const [value, setValue] = useState(initialValue);
@@ -22,6 +23,8 @@ const useCharacterLimit = (initialValue, limit) => {
 const ContactForm = () => {
   const location = useLocation();
   const [planName, setPlanName] = useState('');
+  const { t } = useTranslation(); // Use translation hook
+
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -45,7 +48,7 @@ const ContactForm = () => {
   // Set initial subject value with plan name if available
   useEffect(() => {
     if (planName) {
-      setSubject(`Inquiry about ${planName}`);
+      setSubject(t('contactForm.inquirySubject', { planName })); // Use translation with dynamic value
     }
   }, [planName, setSubject]);
 
@@ -94,67 +97,65 @@ const ContactForm = () => {
 
   return (
     <div className="contact-container">
-  <div className="left-info">
-    <h2>Contact</h2>
-    <p>
-      You can also connect with me through my social media profiles:
-    </p>
-    <p>
-      <a href="https://github.com/jeanmichelbb" target="_blank" rel="noopener noreferrer">GitHub</a> | 
-      <a href="https://www.linkedin.com/in/jeanmichelbb" target="_blank" rel="noopener noreferrer">LinkedIn</a> | 
-      <a href="https://jeanmichelbb.github.io/" target="_blank" rel="noopener noreferrer">Portfolio</a>
-    </p>
-    <p>Location: Montréal, Quebec</p>
-  </div>
-
+      <div className="left-info">
+        <h2>{t('contactForm.contactTitle')}</h2>
+        <p>{t('contactForm.description')}</p>
+        <p>
+          <a href="https://github.com/jeanmichelbb" target="_blank" rel="noopener noreferrer">{t('contactForm.socialLinks.github')}</a> | 
+          <a href="https://www.linkedin.com/in/jeanmichelbb" target="_blank" rel="noopener noreferrer">{t('contactForm.socialLinks.linkedin')}</a> | 
+          <a href="https://jeanmichelbb.github.io/" target="_blank" rel="noopener noreferrer">{t('contactForm.socialLinks.portfolio')}</a>
+        </p>
+        <p>{t('contactForm.location')}</p>
+      </div>
+  
       <div className="contact-box">
-        <h2>Contactez-nous</h2>
+        <h2>{t('contactForm.formTitle')}</h2>
         <form className="form-style" onSubmit={handleSubmit}>
           <div className="form-group">
             <label>
-              <input placeholder='Subject' type="text" value={getSubject()} onChange={(e) => setSubject(e.target.value)} required className="input-text-style" />
+              <input placeholder={t('contactForm.subjectPlaceholder')} type="text" value={getSubject()} onChange={(e) => setSubject(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-
+  
           <div className="form-group">
             <label>
-              <input placeholder='Prénom' type="text" value={getFirstName()} onChange={(e) => setFirstName(e.target.value)} required className="input-text-style" />
+              <input placeholder={t('contactForm.firstNamePlaceholder')} type="text" value={getFirstName()} onChange={(e) => setFirstName(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-
+  
           <div className="form-group">
             <label>
-              <input placeholder='Nom' type="text" value={getLastName()} onChange={(e) => setLastName(e.target.value)} required className="input-text-style" />
+              <input placeholder={t('contactForm.lastNamePlaceholder')} type="text" value={getLastName()} onChange={(e) => setLastName(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-
+  
           <div className="form-group">
             <label>
-              <input placeholder='Email' type="email" value={getEmail()} onChange={(e) => setEmail(e.target.value)} required className="input-text-style" />
+              <input placeholder={t('contactForm.emailPlaceholder')} type="email" value={getEmail()} onChange={(e) => setEmail(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-
+  
           <div className="form-group">
             <label>
-              <input placeholder='Numéro de téléphone' type="tel" value={getPhoneNumber()} onChange={(e) => setPhoneNumber(e.target.value)} required className="input-text-style" />
+              <input placeholder={t('contactForm.phonePlaceholder')} type="tel" value={getPhoneNumber()} onChange={(e) => setPhoneNumber(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-
+  
           <div className="form-group">
             <label>
-              <textarea placeholder='Notes' value={getAdditionalInfo()} onChange={(e) => setAdditionalInfo(e.target.value)} required className="input-text-style" />
+              <textarea placeholder={t('contactForm.notesPlaceholder')} value={getAdditionalInfo()} onChange={(e) => setAdditionalInfo(e.target.value)} required className="input-text-style" />
             </label>
           </div>
-          {/* Add the honeypot field */}
+  
           <div className="form-group" style={{ display: 'none' }}>
             <label>
               <input type="text" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
             </label>
           </div>
-
+  
           <div className="form-button">
             <button type="submit" className="submit-button-style" disabled={loading}>
-              {loading ? 'Envoyer...' : submissionMessage ? submissionMessage : 'Envoyer'}
+              {loading ? t('contactForm.sending') : submissionMessage ? submissionMessage : t('contactForm.submitButton')}
             </button>
           </div>
         </form>

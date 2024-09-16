@@ -1,30 +1,31 @@
-// ServicePage.jsx
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Service from '../../components/Service/Service';
 import './ServicePage.css';
 
 function ServicePage() {
+    const { t } = useTranslation();
+
     return (
         <div>
             <Header />
-            <h1>Our Services</h1>
+            <h1>{t('servicePage.title')}</h1>
             <p className="service-intro">
-                Welcome to our service page! We offer a range of solutions to help you build and maintain your digital presence. Whether you need a basic website or a full-scale enterprise application, our team is ready to assist you at every step.
+                {t('servicePage.intro')}
             </p>
             <Service />
             <div className="service-intro">
-                Need a custom solution? <a href="/contact">Contact us</a> to discuss your project requirements. Our team will work with you to create a custom plan that fits your budget and timeline.
-                <h2>Custom Solutions</h2>
-                <p>Our custom solutions are tailored to your specific needs. We offer:</p>
+                {t('servicePage.customSolutionsIntro')} <a href="/contact">{t('contact')}</a>
+                <h2>{t('servicePage.customSolutionsTitle')}</h2>
+                <p>{t('servicePage.customSolutionsDescription')}</p>
                 <ul>
-                    <li>Custom pricing based on your project requirements</li>
-                    <li>Flexible contract terms</li>
-                    <li>Priority support and maintenance</li>
-                    <li>Custom features and integrations</li>
+                    {t('servicePage.customSolutionsList', { returnObjects: true }).map((item, index) => (
+                        <li key={index}>{item}</li>
+                    ))}
                 </ul>
-                <p>Get in touch with us today to get started on your custom solution.</p>
+                <p>{t('servicePage.contactCTA')}</p>
             </div>
 
             <Footer />

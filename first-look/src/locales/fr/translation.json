@@ -1,0 +1,221 @@
+{
+    "home": {
+        "title": "Aperçu",
+        "welcome": "Bienvenue sur notre site Web! Nous sommes heureux de vous accueillir."
+    },
+    "header": {
+        "logo": "Aperçu",
+        "services": "Services",
+        "pricing": "Tarification",
+        "portfolio": "Portfolio",
+        "about": "À propos",
+        "contact": "Contactez-nous"
+    },
+    "footer": {
+        "title": "Aperçu",
+        "home": "Accueil",
+        "services": "Services",
+        "pricing": "Tarification",
+        "about": "À propos de nous",
+        "contact": "Contactez-nous",
+        "copyright": "© {{year}} Tous droits réservés."
+    },
+    "contactForm": {
+        "contactTitle": "Contact",
+        "description": "Vous pouvez également me contacter via mes réseaux sociaux :",
+        "socialLinks": {
+            "github": "GitHub",
+            "linkedin": "LinkedIn",
+            "portfolio": "Portfolio"
+        },
+        "location": "Localisation : Montréal, Québec",
+        "formTitle": "Contactez-nous",
+        "subjectPlaceholder": "Sujet",
+        "firstNamePlaceholder": "Prénom",
+        "lastNamePlaceholder": "Nom",
+        "emailPlaceholder": "Email",
+        "phonePlaceholder": "Numéro de téléphone",
+        "notesPlaceholder": "Notes",
+        "submitButton": "Envoyer",
+        "sending": "Envoi...",
+        "successMessage": "Formulaire soumis avec succès",
+        "errorMessage": "Échec de l'envoi du formulaire",
+        "inquirySubject": "Demande concernant {{planName}}"
+    },
+    "Contact": {
+        "contactTitle": "Contactez-nous"
+    },
+    "homePage": {
+        "welcomeTitle": "Bienvenue dans nos services de développement full-stack",
+        "welcomeText1": "Nous nous spécialisons dans la création d'applications full-stack personnalisées adaptées aux besoins de votre entreprise. Notre équipe d'experts est dédiée à fournir des solutions de haute qualité, du concept au déploiement.",
+        "welcomeText2": "Que vous cherchiez à créer une nouvelle application ou à améliorer une application existante, nous offrons une gamme de services pour vous aider à atteindre vos objectifs de manière efficace et efficiente.",
+        "servicesTitle": "Nos Services",
+        "service1": "Développement Full-Stack Personnalisé: Solutions adaptées pour les applications web et mobiles.",
+        "service2": "Consultation: Conseils d'experts pour définir les exigences et les objectifs de votre projet.",
+        "service3": "Conception UI/UX: Création d'interfaces conviviales et visuellement attrayantes.",
+        "service4": "Intégration: Connexion transparente de votre application avec des services tiers.",
+        "service5": "Support Continu: Maintenance et support continus pour assurer le bon fonctionnement de votre application.",
+        "getStartedTitle": "Commencez",
+        "getStartedText": "Prêt à commencer votre projet ? Contactez-nous aujourd'hui pour discuter de vos besoins et obtenir une consultation gratuite.",
+        "contactButton": "Contactez-nous",
+        "serviceButton": "Nos Services",
+        "pricingButton": "Tarification"
+    },
+    "servicePage": {
+        "title": "Nos Services",
+        "intro": "Bienvenue sur notre page de services ! Nous proposons une gamme de solutions pour vous aider à construire et maintenir votre présence numérique. Que vous ayez besoin d'un site web simple ou d'une application d'entreprise complète, notre équipe est prête à vous assister à chaque étape.",
+        "customSolutionsIntro": "Vous avez besoin d'une solution personnalisée ? Contactez-nous pour discuter de vos exigences de projet. Notre équipe travaillera avec vous pour créer un plan personnalisé qui correspond à votre budget et à votre calendrier.",
+        "customSolutionsTitle": "Solutions Personnalisées",
+        "customSolutionsDescription": "Nos solutions personnalisées sont adaptées à vos besoins spécifiques. Nous proposons :",
+        "customSolutionsList": [
+            "Tarification personnalisée basée sur les exigences de votre projet",
+            "Conditions de contrat flexibles",
+            "Support et maintenance prioritaires",
+            "Fonctionnalités et intégrations personnalisées"
+        ],
+        "contactCTA": "Contactez-nous dès aujourd'hui pour commencer à travailler sur votre solution personnalisée."
+    },
+    "service": {
+        "basicTitle": "Basique",
+        "basicDescription": "Pour les petits projets et un usage personnel. Inclut les fonctionnalités essentielles.",
+        "intermediateTitle": "Intermédiaire",
+        "intermediateDescription": "Parfait pour les entreprises en croissance nécessitant plus de ressources et de flexibilité.",
+        "advancedTitle": "Avancé",
+        "advancedDescription": "Outils avancés et personnalisation pour des applications plus grandes.",
+        "enterpriseTitle": "Entreprise",
+        "enterpriseDescription": "Solutions à grande échelle pour les entreprises nécessitant une équipe dédiée.",
+        "seePricing": "Voir les Tarifs"
+    },
+    "pricingPage": {
+        "plansTitle": "Plans Tarifs",
+        "introText1": "Choisissez le plan qui correspond à vos besoins. Nous proposons des tarifs flexibles pour tous types d'applications, des petits projets aux solutions d'entreprise à grande échelle.",
+        "customPlansTitle": "Plans Personnalisés",
+        "customPlansText1": "Besoin d'un plan personnalisé ? <a href=\"/contact\">Contactez-nous</a> pour discuter de vos exigences de projet.",
+        "customPlansText2": "Notre équipe travaillera avec vous pour créer un plan personnalisé qui correspond à votre budget et à vos délais.",
+        "customPlansText3": "Les plans personnalisés incluent :",
+        "customPlansList1": "Tarification personnalisée basée sur vos exigences de projet",
+        "customPlansList2": "Conditions de contrat flexibles",
+        "customPlansList3": "Support et maintenance prioritaires",
+        "customPlansList4": "Fonctionnalités et intégrations personnalisées",
+        "customPlansText4": "Contactez-nous dès aujourd'hui pour commencer à élaborer votre plan personnalisé."
+    },
+    "pricing": {
+        "basic": {
+            "title": "Basique",
+            "priceRange": "500 $ - 1000 $",
+            "contractDuration": "Contrat de 1 mois",
+            "buttonText": "Commencer",
+            "features": [
+                "Projets de petite taille",
+                "Fonctionnalités et fonctionnalités essentielles",
+                "Support par e-mail",
+                "Jusqu'à 2 révisions"
+            ],
+            "support": {
+                "title": "Support :",
+                "details": "Support par e-mail pendant les heures ouvrables,<br /> Maintenance de 1 mois après le lancement."
+            }
+        },
+        "intermediate": {
+            "title": "Intermédiaire",
+            "priceRange": "1000 $ - 3000 $",
+            "contractDuration": "Contrat de 2-3 mois",
+            "buttonText": "Commencer",
+            "features": [
+                "Projets de taille moyenne",
+                "Fonctionnalités et intégrations avancées",
+                "Support par e-mail et chat prioritaire",
+                "Jusqu'à 5 révisions"
+            ],
+            "support": {
+                "title": "Support :",
+                "details": "Support prioritaire pendant les heures ouvrables,<br /> Maintenance de 3 mois après le lancement."
+            }
+        },
+        "advanced": {
+            "title": "Avancé",
+            "priceRange": "3000 $ - 5000 $",
+            "contractDuration": "Contrat de 3-6 mois",
+            "buttonText": "Commencer",
+            "features": [
+                "Projets de grande taille",
+                "Fonctionnalités personnalisées, intégrations et design",
+                "Équipe de support dédiée",
+                "Jusqu'à 10 révisions"
+            ],
+            "support": {
+                "title": "Support :",
+                "details": "Support complet pendant les heures ouvrables,<br /> Maintenance de 6 mois après le lancement."
+            }
+        },
+        "enterprise": {
+            "title": "Entreprise",
+            "priceRange": "Personnalisée",
+            "contractDuration": "Durée du contrat personnalisée",
+            "buttonText": "Commencer",
+            "features": [
+                "Projets au niveau entreprise",
+                "Développement et conseil full-stack",
+                "Support dédié continu",
+                "Révisions illimitées"
+            ],
+            "support": {
+                "title": "Support :",
+                "details": "Support 24/7 et maintenance complète après le lancement pendant la durée du contrat."
+            }
+        }
+    },
+    "aboutPage": {
+        "aboutMe": {
+            "title": "À Propos de Moi",
+            "intro": "Bonjour, je suis Jean-Michel Bérubé, un développeur full-stack bilingue basé à Montréal, Québec. Je me spécialise dans les solutions logicielles sur mesure avec une expertise en DevOps, Docker, réseautage, outils d'IA et surveillance. Avec un AEC en Analyste Programmeur de LaSalle College, j'ai développé une solide base en développement logiciel.",
+            "experience": "Mon expérience s'étend à plusieurs industries, de la gestion informatique aux travaux créatifs en photographie et courts-métrages. Je suis passionné par la résolution de problèmes, l'innovation et l'utilisation des outils d'IA comme OpenAI et Copilot pour créer des solutions uniques et efficaces. En tant que développeur logiciel indépendant, je suis toujours à la recherche de nouveaux défis et de moyens d'améliorer mes compétences."
+        },
+        "contact": {
+            "title": "Contact",
+            "links": {
+                "github": "GitHub",
+                "linkedin": "LinkedIn",
+                "portfolio": "Mon Portfolio"
+            }
+        },
+        "values": {
+            "title": "Mes Valeurs",
+            "text": "Je suis engagé envers l'intégrité, l'innovation et la livraison de solutions logicielles de haute qualité. Je crois en l'apprentissage continu, la collaboration et la promotion de la créativité dans mes projets. Ces valeurs me guident dans la fourniture du meilleur service possible aux clients et aux parties prenantes."
+        },
+        "skills": {
+            "title": "Compétences",
+            "intro": "Au fil des ans, j'ai perfectionné mes compétences dans diverses technologies, y compris :",
+            "list": [
+                "React, JavaScript, Python, SQL (MS SQL, PL/SQL, MySQL)",
+                "DevOps & Cloud (Docker, Réseautage, Prometheus, Grafana)",
+                "Outils d'IA & Intégrations (OpenAI, Copilot)",
+                "Git, GitHub, MySQL, Firebase, FastAPI"
+            ]
+        },
+        "location": {
+            "title": "Localisation",
+            "text": "Basé à Montréal, Québec, je suis ouvert aux opportunités à distance et locales. N'hésitez pas à me contacter pour une collaboration ou pour discuter de nouveaux projets !"
+        }
+    },
+    "contactPage": {
+        "infoText": "Bienvenue sur notre page de contact. N'hésitez pas à nous contacter pour toute question, demande d'information ou assistance. Nous sommes là pour vous aider.",
+        "additionalInfo": {
+            "title": "Vous avez un projet en tête ?",
+            "text": "Si vous avez un projet ou une idée et souhaitez savoir comment nous pouvons vous aider, visitez notre <a href=\"/service\" class=\"services-link\"> Page des Services</a> pour en savoir plus sur les solutions que nous proposons et comment nous pouvons donner vie à votre vision."
+        }
+    },
+    "error404": "Erreur 404",
+    "sorryPageNotFound": "Désolé, la page que vous recherchez n'existe pas.",
+    "returnHomeOrContact": "Vous pouvez retourner à la page d'accueil ou consulter notre page de contact si vous avez besoin d'aide.",
+    "enterprise": {
+        "title": "Plan Entreprise",
+        "introText1": "Le Plan Entreprise est conçu pour les grandes organisations ou projets avec des exigences étendues. Il offre des fonctionnalités avancées et des personnalisations pour soutenir des besoins complexes et évoluer efficacement.",
+        "introText2": "Le Plan Entreprise est idéal pour les entreprises qui ont besoin de solutions robustes et flexibles. Il comprend des outils complets et un support dédié pour garantir une intégration et un fonctionnement sans faille.",
+        "featuresTitle": "Principales caractéristiques :",
+        "feature1": "Personnalisation avancée : Adaptez la solution à vos besoins spécifiques avec des options étendues.",
+        "feature2": "Scalabilité : Évoluez facilement avec un soutien pour de grands volumes et des exigences complexes.",
+        "feature3": "Support dédié : Obtenez un support prioritaire et une gestion de compte dédiée pour résoudre les problèmes rapidement.",
+        "additionalInfo": "Ce plan est parfait pour les grandes entreprises recherchant des fonctionnalités et un support de premier ordre. Contactez-nous pour une consultation détaillée et pour explorer comment nous pouvons vous aider à atteindre vos objectifs."
+    }
+  }

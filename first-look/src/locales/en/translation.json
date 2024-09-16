@@ -1,0 +1,221 @@
+{
+    "home": {
+        "title": "Aperçu",
+        "welcome": "Welcome to our website! We are happy to have you here."
+    },
+    "header": {
+        "logo": "Aperçu",
+        "services": "Services",
+        "pricing": "Pricing",
+        "portfolio": "Portfolio",
+        "about": "About",
+        "contact": "Contact"
+    },
+    "footer": {
+        "title": "Aperçu",
+        "home": "Home",
+        "services": "Services",
+        "pricing": "Pricing",
+        "about": "About Us",
+        "contact": "Contact Us",
+        "copyright": "© {{year}} All rights reserved."
+    },
+    "contactForm": {
+        "contactTitle": "Contact",
+        "description": "You can also connect with me through my social media profiles:",
+        "socialLinks": {
+            "github": "GitHub",
+            "linkedin": "LinkedIn",
+            "portfolio": "Portfolio"
+        },
+        "location": "Location: Montreal, Quebec",
+        "formTitle": "Contact Us",
+        "subjectPlaceholder": "Subject",
+        "firstNamePlaceholder": "First Name",
+        "lastNamePlaceholder": "Last Name",
+        "emailPlaceholder": "Email",
+        "phonePlaceholder": "Phone Number",
+        "notesPlaceholder": "Notes",
+        "submitButton": "Submit",
+        "sending": "Sending...",
+        "successMessage": "Form successfully submitted",
+        "errorMessage": "Form submission failed",
+        "inquirySubject": "Inquiry about {{planName}}"
+    },
+    "Contact": {
+        "contactTitle": "Contact Us"
+    },
+    "homePage": {
+        "welcomeTitle": "Welcome to Our Full-Stack Development Services",
+        "welcomeText1": "We specialize in creating customized full-stack applications tailored to your business needs. Our team of experts is dedicated to delivering high-quality solutions from concept to deployment.",
+        "welcomeText2": "Whether you're looking to build a new application or enhance an existing one, we offer a range of services to help you achieve your goals efficiently and effectively.",
+        "servicesTitle": "Our Services",
+        "service1": "Custom Full-Stack Development: Tailored solutions for web and mobile applications.",
+        "service2": "Consultation: Expert advice to define your project requirements and goals.",
+        "service3": "UI/UX Design: Creating user-friendly and visually appealing interfaces.",
+        "service4": "Integration: Seamlessly connecting your application with third-party services.",
+        "service5": "Ongoing Support: Continuous maintenance and support to ensure your application runs smoothly.",
+        "getStartedTitle": "Get Started",
+        "getStartedText": "Ready to start your project? Contact us today to discuss your needs and get a free consultation.",
+        "contactButton": "Contact Us",
+        "serviceButton": "Our Services",
+        "pricingButton": "Pricing"
+    },
+    "servicePage": {
+        "title": "Our Services",
+        "intro": "Welcome to our service page! We offer a range of solutions to help you build and maintain your digital presence. Whether you need a basic website or a full-scale enterprise application, our team is ready to assist you at every step.",
+        "customSolutionsIntro": "Need a custom solution? Contact us to discuss your project requirements. Our team will work with you to create a custom plan that fits your budget and timeline.",
+        "customSolutionsTitle": "Custom Solutions",
+        "customSolutionsDescription": "Our custom solutions are tailored to your specific needs. We offer:",
+        "customSolutionsList": [
+            "Custom pricing based on your project requirements",
+            "Flexible contract terms",
+            "Priority support and maintenance",
+            "Custom features and integrations"
+        ],
+        "contactCTA": "Get in touch with us today to get started on your custom solution."
+    },
+    "service": {
+        "basicTitle": "Basic",
+        "basicDescription": "For small projects and personal use. Includes essential features.",
+        "intermediateTitle": "Intermediate",
+        "intermediateDescription": "Perfect for growing businesses needing more resources and flexibility.",
+        "advancedTitle": "Advanced",
+        "advancedDescription": "Advanced tools and customization for larger applications.",
+        "enterpriseTitle": "Enterprise",
+        "enterpriseDescription": "Full-scale solutions for businesses requiring a dedicated team.",
+        "seePricing": "See Pricing"
+    },
+    "pricingPage": {
+        "plansTitle": "Pricing Plans",
+        "introText1": "Choose the right plan for your needs. We offer flexible pricing for all types of applications, from small projects to large-scale enterprise solutions.",
+        "customPlansTitle": "Custom Plans",
+        "customPlansText1": "Need a custom plan? <a href=\"/contact\">Contact us</a> to discuss your project requirements.",
+        "customPlansText2": "Our team will work with you to create a custom plan that fits your budget and timeline.",
+        "customPlansText3": "Custom plans include:",
+        "customPlansList1": "Custom pricing based on your project requirements",
+        "customPlansList2": "Flexible contract terms",
+        "customPlansList3": "Priority support and maintenance",
+        "customPlansList4": "Custom features and integrations",
+        "customPlansText4": "Get in touch with us today to get started on your custom plan."
+    },
+    "pricing": {
+        "basic": {
+            "title": "Basic",
+            "priceRange": "$500 - $1000",
+            "contractDuration": "1-month contract",
+            "buttonText": "Get Started",
+            "features": [
+                "Small scale projects",
+                "Essential features and functionality",
+                "Email support",
+                "Up to 2 revisions"
+            ],
+            "support": {
+                "title": "Support:",
+                "details": "Email support during business hours,<br /> 1-month post-launch maintenance."
+            }
+        },
+        "intermediate": {
+            "title": "Intermediate",
+            "priceRange": "$1000 - $3000",
+            "contractDuration": "2-3 month contract",
+            "buttonText": "Get Started",
+            "features": [
+                "Medium scale projects",
+                "Advanced features and integrations",
+                "Priority email and chat support",
+                "Up to 5 revisions"
+            ],
+            "support": {
+                "title": "Support:",
+                "details": "Priority support during business hours,<br /> 3-month post-launch maintenance."
+            }
+        },
+        "advanced": {
+            "title": "Advanced",
+            "priceRange": "$3000 - $5000",
+            "contractDuration": "3-6 month contract",
+            "buttonText": "Get Started",
+            "features": [
+                "Large scale projects",
+                "Custom features, integrations, and design",
+                "Dedicated support team",
+                "Up to 10 revisions"
+            ],
+            "support": {
+                "title": "Support:",
+                "details": "Full support during business hours,<br /> 6-month post-launch maintenance."
+            }
+        },
+        "enterprise": {
+            "title": "Enterprise",
+            "priceRange": "Custom pricing",
+            "contractDuration": "Custom contract duration",
+            "buttonText": "Get Started",
+            "features": [
+                "Enterprise-level projects",
+                "Full-stack development and consulting",
+                "Ongoing dedicated support",
+                "Unlimited revisions"
+            ],
+            "support": {
+                "title": "Support:",
+                "details": "24/7 support and full post-launch maintenance for the contract duration."
+            }
+        }
+    },
+    "aboutPage": {
+        "aboutMe": {
+            "title": "About Me",
+            "intro": "Hi, I'm Jean-Michel Bérubé, a bilingual full-stack developer based in Montreal, Quebec. I specialize in custom software solutions with expertise in DevOps, Docker, networking, AI tools, and monitoring. With an AEC in Programmer Analyst from LaSalle College, I have developed a strong foundation in software development.",
+            "experience": "My experience spans across multiple industries, from IT management to creative work in photography and short films. I'm passionate about problem-solving, innovation, and leveraging AI tools like OpenAI and Copilot to create unique and effective solutions. As a self-employed software developer, I am always looking for new challenges and ways to improve my skills."
+        },
+        "contact": {
+            "title": "Contact",
+            "links": {
+                "github": "GitHub",
+                "linkedin": "LinkedIn",
+                "portfolio": "My Portfolio"
+            }
+        },
+        "values": {
+            "title": "My Values",
+            "text": "I am committed to integrity, innovation, and delivering high-quality software solutions. I believe in continuous learning, collaboration, and fostering creativity in my projects. These values guide me in providing the best possible service to clients and stakeholders."
+        },
+        "skills": {
+            "title": "Skills",
+            "intro": "Over the years, I’ve honed my skills in various technologies, including:",
+            "list": [
+                "React, JavaScript, Python, SQL (MS SQL, PL/SQL, MySQL)",
+                "DevOps & Cloud (Docker, Networking, Prometheus, Grafana)",
+                "AI Tools & Integrations (OpenAI, Copilot)",
+                "Git, GitHub, MySQL, Firebase, FastAPI"
+            ]
+        },
+        "location": {
+            "title": "Location",
+            "text": "Based in Montreal, Quebec, I'm open to both remote and local opportunities. Feel free to reach out for collaboration or to discuss new projects!"
+        }
+    },
+    "contactPage": {
+        "infoText": "Welcome to our contact page. Feel free to reach out to us for any questions, information requests, or assistance. We are here to help.",
+        "additionalInfo": {
+            "title": "Have a Plan in Mind?",
+            "text": "If you have a project or idea and want to know how we can assist you, visit our <a href=\"/service\" class=\"services-link\"> Services Page</a> to learn more about the solutions we offer and how we can bring your vision to life."
+        }
+    },
+  "error404": "Error 404",
+  "sorryPageNotFound": "Sorry, the page you are looking for does not exist.",
+  "returnHomeOrContact": "You might want to return to the home page or check out our contact page if you need assistance.",
+  "enterprise": {
+    "title": "Enterprise Plan",
+    "introText1": "The Enterprise Plan is designed for large organizations or projects with extensive requirements. It offers advanced features and customizations to support complex needs and scale efficiently.",
+    "introText2": "The Enterprise Plan is ideal for businesses that need robust solutions and flexibility. It includes comprehensive tools and dedicated support to ensure seamless integration and operation.",
+    "featuresTitle": "Key Features:",
+    "feature1": "Advanced Customization: Tailor the solution to your specific needs with extensive options.",
+    "feature2": "Scalability: Easily scale your operations with support for large volumes and complex requirements.",
+    "feature3": "Dedicated Support: Get priority support and dedicated account management to resolve issues quickly.",
+    "additionalInfo": "This plan is perfect for large enterprises looking for top-tier features and support. Contact us for a detailed consultation and to explore how we can assist in achieving your goals."
+}
+ }
