@@ -217,5 +217,199 @@
         "feature2": "Scalabilité : Évoluez facilement avec un soutien pour de grands volumes et des exigences complexes.",
         "feature3": "Support dédié : Obtenez un support prioritaire et une gestion de compte dédiée pour résoudre les problèmes rapidement.",
         "additionalInfo": "Ce plan est parfait pour les grandes entreprises recherchant des fonctionnalités et un support de premier ordre. Contactez-nous pour une consultation détaillée et pour explorer comment nous pouvons vous aider à atteindre vos objectifs."
+    },
+    "services": {
+        "basic": {
+            "title": "Plan de Base",
+            "description": "Le Plan de Base est conçu pour les individus ou les petits projets nécessitant des fonctionnalités essentielles. Il offre des outils fondamentaux pour vous aider à commencer avec une approche efficace et rationalisée.",
+            "features": [
+                "Conception simple et intuitive",
+                "Fonctionnalités de base pour répondre aux besoins essentiels",
+                "Configuration et utilisation faciles"
+            ],
+            "imageAlt1": "Version Web du Plan de Base",
+            "descriptionMobile": "Le Plan de Base est parfait pour ceux qui recherchent une solution simple avec des fonctionnalités essentielles. La version mobile assure une expérience fluide en déplacement.",
+            "mobileFeatures": [
+                "Conception réactive pour les appareils mobiles",
+                "Optimisé pour les performances et l'utilisabilité",
+                "Expérience cohérente sur toutes les plateformes"
+            ],
+            "featuresTitle": "Fonctionnalités Clés :",
+            "keyFeatures": {
+                "simpleDesign": {
+                    "label": "Conception Simple",
+                    "description": "Interface claire et facile à naviguer."
+                },
+                "coreFunctionality": {
+                    "label": "Fonctionnalité de Base",
+                    "description": "Outils essentiels pour commencer rapidement."
+                },
+                "responsiveLayout": {
+                    "label": "Disposition Réactive",
+                    "description": "Optimisé pour les appareils web et mobiles."
+                }
+            },
+            "additionalInfo": "Ce plan est idéal pour les individus ou les projets à petite échelle qui nécessitent une solution simple et efficace. À mesure que vos besoins évoluent, des options de mise à niveau sont disponibles. Pour plus d'informations ou de soutien, n'hésitez pas à nous contacter."
+        },
+       "intermediate": {
+            "title": "Plan Intermédiaire",
+            "description": "Le Plan Intermédiaire est conçu pour les applications de chat et les projets nécessitant des fonctionnalités avancées et des intégrations fluides. Ce plan comprend :",
+            "features": [
+                {
+                    "label": "Authentification Google",
+                    "description": "Authentification sécurisée et facile des utilisateurs utilisant les services de connexion de Google."
+                },
+                {
+                    "label": "Intégration OpenAI",
+                    "description": "Exploitez l’IA puissante d’OpenAI pour fournir des fonctionnalités de chat intelligentes et interactives."
+                },
+                {
+                    "label": "API Backend Python",
+                    "description": "Construisez un backend robuste avec Python pour gérer des logiques complexes et les interactions utilisateur."
+                },
+                {
+                    "label": "Base de Données MySQL",
+                    "description": "Stockage et gestion des données fiables avec MySQL pour gérer les données utilisateur et les historiques de chat."
+                },
+                {
+                    "label": "Sécurité Avancée",
+                    "description": "Mettez en œuvre des mesures de sécurité solides pour protéger les données utilisateur et garantir une expérience utilisateur sécurisée."
+                }
+            ],
+            "imageAlt1": "Version Web du Plan Intermédiaire",
+            "descriptionMobile": "Ce plan offre une solution complète pour développer des applications de chat avancées. Avec l'authentification Google pour des connexions sécurisées et l'API OpenAI pour des fonctionnalités de chat sophistiquées, associées à un backend Python et à une base de données MySQL, vous disposerez de tous les outils nécessaires pour une application haute performance et sécurisée.",
+            "mobileFeatures": [
+                {
+                    "label": "Authentification Google",
+                    "description": "Simplifiez les connexions des utilisateurs avec le système d'authentification sécurisé de Google."
+                },
+                {
+                    "label": "Intégration OpenAI",
+                    "description": "Intégrez les capacités d’IA d’OpenAI pour créer des interactions de chat dynamiques et engageantes."
+                },
+                {
+                    "label": "API Backend Python",
+                    "description": "Utilisez Python pour construire un backend puissant qui soutient les fonctionnalités de votre application de chat."
+                },
+                {
+                    "label": "Base de Données MySQL",
+                    "description": "Gérez les données utilisateur et les historiques de chat efficacement avec une base de données MySQL fiable."
+                },
+                {
+                    "label": "Sécurité Avancée",
+                    "description": "Assurez la protection des données utilisateur avec des protocoles et des mesures de sécurité avancés."
+                }
+            ],
+            "featuresTitle": "Fonctionnalités Clés :",
+            "keyFeatures": {
+                "googleAuth": {
+                    "label": "Authentification Google",
+                    "description": "Simplifiez les connexions des utilisateurs avec le système d'authentification sécurisé de Google."
+                },
+                "openAI": {
+                    "label": "Intégration OpenAI",
+                    "description": "Intégrez les capacités d’IA d’OpenAI pour créer des interactions de chat dynamiques et engageantes."
+                },
+                "pythonAPI": {
+                    "label": "API Backend Python",
+                    "description": "Utilisez Python pour construire un backend puissant qui soutient les fonctionnalités de votre application de chat."
+                },
+                "mysqlDB": {
+                    "label": "Base de Données MySQL",
+                    "description": "Gérez les données utilisateur et les historiques de chat efficacement avec une base de données MySQL fiable."
+                },
+                "advancedSecurity": {
+                    "label": "Sécurité Avancée",
+                    "description": "Assurez la protection des données utilisateur avec des protocoles et des mesures de sécurité avancés."
+                }
+            },
+            "additionalInfo": "Ce plan est idéal pour développer des applications de chat avec des fonctionnalités avancées et des intégrations sécurisées. Contactez-nous pour en savoir plus sur la façon dont nous pouvons adapter ce plan pour répondre à vos besoins spécifiques et pour commencer votre projet."
+        },
+        "advanced": {
+            "title": "Plan Avancé",
+            "description": "Le Plan Avancé est conçu pour des applications de médias sociaux complètes, comme un clone de Twitter. Ce plan comprend toutes les fonctionnalités essentielles pour construire une plateforme de médias sociaux entièrement équipée avec des fonctionnalités et des intégrations avancées :",
+            "features": [
+                {
+                    "label": "Gestion des Utilisateurs",
+                    "description": "Gestion efficace des comptes utilisateurs, des profils et des paramètres."
+                },
+                {
+                    "label": "Système de Messagerie",
+                    "description": "Capacités de messagerie en temps réel pour une communication fluide entre les utilisateurs."
+                },
+                {
+                    "label": "Tweets et Publications",
+                    "description": "Fonctionnalité pour créer, gérer et interagir avec des tweets et des publications."
+                },
+                {
+                    "label": "J'aime et Abonnés",
+                    "description": "Fonctionnalités pour gérer les interactions des utilisateurs telles que les j'aime et les relations d'abonnement."
+                }
+            ],
+            "imageAlt1": "Version Web du Plan Avancé",
+            "descriptionMobile": "Ce plan offre une solution complète pour construire une plateforme de médias sociaux entièrement équipée. Avec une gestion avancée des utilisateurs, une messagerie en temps réel et des fonctionnalités d'interaction riches, soutenues par un backend robuste et un design moderne, votre application offrira une expérience utilisateur exceptionnelle.",
+            "mobileFeatures": [
+                {
+                    "label": "Gestion des Utilisateurs",
+                    "description": "Gestion fluide des profils et comptes utilisateurs."
+                },
+                {
+                    "label": "Système de Messagerie",
+                    "description": "Communication en temps réel entre les utilisateurs."
+                },
+                {
+                    "label": "Tweets et Publications",
+                    "description": "Création et interaction avec le contenu."
+                },
+                {
+                    "label": "J'aime et Abonnés",
+                    "description": "Gérer l'engagement et les connexions des utilisateurs."
+                },
+                {
+                    "label": "Design Réactif",
+                    "description": "Un design moderne et adaptable pour tous les appareils."
+                },
+                {
+                    "label": "Backend FastAPI",
+                    "description": "Gestion efficace de l'API et logique côté serveur."
+                },
+                {
+                    "label": "Intégration Python",
+                    "description": "Fonctionnalité côté serveur avec Python."
+                },
+                {
+                    "label": "Frontend React",
+                    "description": "Interface utilisateur riche et interactive."
+                },
+                {
+                    "label": "Base de Données MySQL",
+                    "description": "Gestion des données fiable et évolutive."
+                }
+            ],
+            "featuresTitle": "Fonctionnalités Clés :",
+            "keyFeatures": {
+                "modernDesign": {
+                    "label": "Design Moderne",
+                    "description": "Design réactif et visuellement attrayant pour une expérience utilisateur optimale sur tous les appareils."
+                },
+                "fastAPI": {
+                    "label": "Backend FastAPI",
+                    "description": "Backend haute performance pour un traitement efficace des données et des interactions API."
+                },
+                "pythonIntegration": {
+                    "label": "Intégration Python",
+                    "description": "Utilisation de Python pour la logique et le traitement côté backend."
+                },
+                "reactFrontend": {
+                    "label": "Frontend React",
+                    "description": "Frontend interactif et dynamique construit avec React pour une expérience utilisateur riche."
+                },
+                "mysqlDB": {
+                    "label": "Base de Données MySQL",
+                    "description": "Solution de stockage de données fiable et évolutive."
+                }
+            },
+            "additionalInfo": "Ce Plan Avancé est parfait pour construire une plateforme de médias sociaux sophistiquée avec toutes les fonctionnalités et intégrations nécessaires. Contactez-nous pour discuter de la manière dont nous pouvons adapter ce plan à vos besoins spécifiques et commencer à créer votre application idéale."
+        } 
     }
   }

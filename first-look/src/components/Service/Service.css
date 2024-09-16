@@ -79,3 +79,11 @@
 .pricing-link:hover {
     text-decoration: underline;
 }
+
+@media screen and (max-width: 768px) {
+    .service-card {
+        width: 100%;
+        direction: row;
+    }
+    
+}

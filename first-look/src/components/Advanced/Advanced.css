@@ -58,3 +58,26 @@
     font-size: 16px;
     line-height: 1.6;
 }
+
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .intro-text {
+        margin-right: 0;
+    }
+
+    .basic-image-1 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .basic-image-2 {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .additional-info {
+        margin: auto;
+    }
+}

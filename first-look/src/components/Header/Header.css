@@ -59,6 +59,13 @@
   background-color: #e0e0e0;
 }
 
+.text-logo {
+  font-size: 4rem;
+  /* not style */
+  font-weight: 700;
+  color: #000;
+  text-decoration: none;
+}
 /* Media queries for responsiveness */
 @media only screen and (max-width: 1300px) {
   .header-container {
@@ -78,7 +85,7 @@
     padding: 0.5rem;
     display: flex;
     justify-content: center;
-    
+    text-decoration: none;
   }
 }
 
@@ -89,7 +96,7 @@
   }
 
   .left-container {
-    padding: 1rem;
+    padding: 0rem;
   }
 
   .right-container {
@@ -102,6 +109,10 @@
 
   .header .link {
     padding: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+  }
+
+  .text-logo {
+    font-size: 3rem;
   }
 }

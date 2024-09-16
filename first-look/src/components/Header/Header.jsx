@@ -18,7 +18,8 @@ const Header = () => {
     <header className="header">
       <div className="header-container">
         <div className="left-container">
-          <a href="/" className="link"><h2 className='text-logo'>{t('header.logo')}</h2></a>
+          {/* <a href="/" className="link"><h2 className='text-logo'>{t('header.logo')}</h2></a> */}
+          <Link to="/" className="Link"><h2 className='text-logo'>{t('header.logo')}</h2></Link>
         </div>
         <div className="right-container">
           <Link to="/service" className="link">{t('header.services')}</Link>

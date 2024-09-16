@@ -205,17 +205,211 @@
             "text": "If you have a project or idea and want to know how we can assist you, visit our <a href=\"/service\" class=\"services-link\"> Services Page</a> to learn more about the solutions we offer and how we can bring your vision to life."
         }
     },
-  "error404": "Error 404",
-  "sorryPageNotFound": "Sorry, the page you are looking for does not exist.",
-  "returnHomeOrContact": "You might want to return to the home page or check out our contact page if you need assistance.",
-  "enterprise": {
-    "title": "Enterprise Plan",
-    "introText1": "The Enterprise Plan is designed for large organizations or projects with extensive requirements. It offers advanced features and customizations to support complex needs and scale efficiently.",
-    "introText2": "The Enterprise Plan is ideal for businesses that need robust solutions and flexibility. It includes comprehensive tools and dedicated support to ensure seamless integration and operation.",
-    "featuresTitle": "Key Features:",
-    "feature1": "Advanced Customization: Tailor the solution to your specific needs with extensive options.",
-    "feature2": "Scalability: Easily scale your operations with support for large volumes and complex requirements.",
-    "feature3": "Dedicated Support: Get priority support and dedicated account management to resolve issues quickly.",
-    "additionalInfo": "This plan is perfect for large enterprises looking for top-tier features and support. Contact us for a detailed consultation and to explore how we can assist in achieving your goals."
+    "error404": "Error 404",
+    "sorryPageNotFound": "Sorry, the page you are looking for does not exist.",
+    "returnHomeOrContact": "You might want to return to the home page or check out our contact page if you need assistance.",
+    "enterprise": {
+        "title": "Enterprise Plan",
+        "introText1": "The Enterprise Plan is designed for large organizations or projects with extensive requirements. It offers advanced features and customizations to support complex needs and scale efficiently.",
+        "introText2": "The Enterprise Plan is ideal for businesses that need robust solutions and flexibility. It includes comprehensive tools and dedicated support to ensure seamless integration and operation.",
+        "featuresTitle": "Key Features:",
+        "feature1": "Advanced Customization: Tailor the solution to your specific needs with extensive options.",
+        "feature2": "Scalability: Easily scale your operations with support for large volumes and complex requirements.",
+        "feature3": "Dedicated Support: Get priority support and dedicated account management to resolve issues quickly.",
+        "additionalInfo": "This plan is perfect for large enterprises looking for top-tier features and support. Contact us for a detailed consultation and to explore how we can assist in achieving your goals."
+    },
+    "services": {
+        "basic": {
+            "title": "Basic Plan",
+            "description": "The Basic Plan is tailored for individuals or small projects requiring essential features. It offers fundamental tools to help you get started with an efficient and streamlined approach.",
+            "features": [
+                "Simple and intuitive design",
+                "Core functionalities to meet basic needs",
+                "Easy setup and use"
+            ],
+            "imageAlt1": "Web Version of Basic Plan",
+            "descriptionMobile": "The Basic Plan is perfect for those looking for a straightforward solution with essential features. The mobile version ensures a seamless experience on the go.",
+            "mobileFeatures": [
+                "Responsive design for mobile devices",
+                "Optimized for performance and usability",
+                "Consistent experience across platforms"
+            ],
+            "featuresTitle": "Key Features:",
+            "keyFeatures": {
+                "simpleDesign": {
+                    "label": "Simple Design",
+                    "description": "Clean and easy-to-navigate interface."
+                },
+                "coreFunctionality": {
+                    "label": "Core Functionality",
+                    "description": "Essential tools to get started quickly."
+                },
+                "responsiveLayout": {
+                    "label": "Responsive Layout",
+                    "description": "Optimized for both web and mobile devices."
+                }
+            },
+            "additionalInfo": "This plan is ideal for individuals or small-scale projects that require a straightforward and efficient solution. As your needs evolve, upgrade options are available. For further information or support, please don't hesitate to contact us."
+        },
+        "intermediate": {
+            "title": "Intermediate Plan",
+            "description": "The Intermediate Plan is designed for chat applications and projects that require advanced features and seamless integrations. This plan includes:",
+            "features": [
+                {
+                    "label": "Google Authentication",
+                    "description": "Secure and easy user authentication using Google’s login services."
+                },
+                {
+                    "label": "OpenAI Integration",
+                    "description": "Leverage OpenAI’s powerful AI to provide intelligent and interactive chat functionalities."
+                },
+                {
+                    "label": "Python Backend API",
+                    "description": "Build a robust backend with Python to handle complex logic and user interactions."
+                },
+                {
+                    "label": "MySQL Database",
+                    "description": "Reliable data storage and management with MySQL for handling user data and chat histories."
+                },
+                {
+                    "label": "Advanced Security",
+                    "description": "Implement strong security measures to protect user data and ensure a safe user experience."
+                }
+            ],
+            "imageAlt1": "Intermediate Plan Web Version",
+            "descriptionMobile": "This plan provides a comprehensive solution for developing advanced chat applications. With Google authentication for secure logins and OpenAI’s API for sophisticated chat features, paired with a Python backend and MySQL database, you’ll have all the tools needed for a high-performance and secure application.",
+            "mobileFeatures": [
+                {
+                    "label": "Google Authentication",
+                    "description": "Simplify user logins with Google’s secure authentication system."
+                },
+                {
+                    "label": "OpenAI Integration",
+                    "description": "Integrate OpenAI’s AI capabilities to create dynamic and engaging chat interactions."
+                },
+                {
+                    "label": "Python Backend API",
+                    "description": "Utilize Python to build a powerful backend that supports your chat application’s functionality."
+                },
+                {
+                    "label": "MySQL Database",
+                    "description": "Manage user data and chat histories efficiently with a reliable MySQL database."
+                },
+                {
+                    "label": "Advanced Security",
+                    "description": "Ensure the protection of user data with advanced security protocols and measures."
+                }
+            ],
+            "featuresTitle": "Key Features:",
+            "keyFeatures": {
+                "googleAuth": {
+                    "label": "Google Authentication",
+                    "description": "Simplify user logins with Google’s secure authentication system."
+                },
+                "openAI": {
+                    "label": "OpenAI Integration",
+                    "description": "Integrate OpenAI’s AI capabilities to create dynamic and engaging chat interactions."
+                },
+                "pythonAPI": {
+                    "label": "Python Backend API",
+                    "description": "Utilize Python to build a powerful backend that supports your chat application’s functionality."
+                },
+                "mysqlDB": {
+                    "label": "MySQL Database",
+                    "description": "Manage user data and chat histories efficiently with a reliable MySQL database."
+                },
+                "advancedSecurity": {
+                    "label": "Advanced Security",
+                    "description": "Ensure the protection of user data with advanced security protocols and measures."
+                }
+            },
+            "additionalInfo": "This plan is ideal for developing chat applications with advanced features and secure integrations. Contact us to learn more about how we can tailor this plan to meet your specific needs and to get started on your project."
+        },
+        "advanced": {
+            "title": "Advanced Plan",
+            "description": "The Advanced Plan is designed for comprehensive social media applications, like a Twitter clone. This plan includes all essential functionalities to build a fully-featured social media platform with advanced features and integrations:",
+            "features": [
+                {
+                    "label": "User Management",
+                    "description": "Efficient handling of user accounts, profiles, and settings."
+                },
+                {
+                    "label": "Messaging System",
+                    "description": "Real-time messaging capabilities for seamless communication between users."
+                },
+                {
+                    "label": "Tweets and Posts",
+                    "description": "Functionality for creating, managing, and interacting with tweets and posts."
+                },
+                {
+                    "label": "Likes and Followers",
+                    "description": "Features to manage user interactions such as likes and follower relationships."
+                }
+            ],
+            "imageAlt1": "Advanced Plan Web Version",
+            "descriptionMobile": "This plan offers a comprehensive solution for building a fully-featured social media platform. With advanced user management, real-time messaging, and rich interaction features, supported by a robust backend and modern design, your application will deliver an exceptional user experience.",
+            "mobileFeatures": [
+                {
+                    "label": "User Management",
+                    "description": "Seamless handling of user profiles and accounts."
+                },
+                {
+                    "label": "Messaging System",
+                    "description": "Real-time communication between users."
+                },
+                {
+                    "label": "Tweets and Posts",
+                    "description": "Creation and interaction with content."
+                },
+                {
+                    "label": "Likes and Followers",
+                    "description": "Manage user engagement and connections."
+                },
+                {
+                    "label": "Responsive Design",
+                    "description": "A modern and adaptable design for all devices."
+                },
+                {
+                    "label": "FastAPI Backend",
+                    "description": "Efficient API management and server-side logic."
+                },
+                {
+                    "label": "Python Integration",
+                    "description": "Server-side functionality with Python."
+                },
+                {
+                    "label": "React Frontend",
+                    "description": "Rich and interactive user interface."
+                },
+                {
+                    "label": "MySQL Database",
+                    "description": "Reliable and scalable data management."
+                }
+            ],
+            "featuresTitle": "Key Features:",
+            "keyFeatures": {
+                "modernDesign": {
+                    "label": "Modern Design",
+                    "description": "Responsive and visually appealing design for an optimal user experience on all devices."
+                },
+                "fastAPI": {
+                    "label": "FastAPI Backend",
+                    "description": "High-performance backend for efficient data processing and API interactions."
+                },
+                "pythonIntegration": {
+                    "label": "Python Integration",
+                    "description": "Utilizes Python for backend logic and processing."
+                },
+                "reactFrontend": {
+                    "label": "React Frontend",
+                    "description": "Interactive and dynamic frontend built with React for a rich user experience."
+                },
+                "mysqlDB": {
+                    "label": "MySQL Database",
+                    "description": "Reliable and scalable data storage solution."
+                }
+            },
+            "additionalInfo": "This Advanced Plan is perfect for building a sophisticated social media platform with all the necessary features and integrations. Contact us to discuss how we can tailor this plan to your specific project needs and get started on creating your ideal application."
+        }
+    }
 }
- }

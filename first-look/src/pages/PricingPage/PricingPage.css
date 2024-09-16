@@ -61,3 +61,18 @@ h1 {
     color: #555;
     max-width: 90%;
 }
+
+@media screen and (max-width: 768px) {
+    .pricing-intro {
+        padding: 10px;
+    }
+
+    .pricing-section {
+        padding: 10px;
+    }
+
+    .pricing-card {
+        width: 100%;
+    }
+    
+}

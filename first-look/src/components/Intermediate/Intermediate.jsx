@@ -1,37 +1,47 @@
-// src/components/Intermediate/Intermediate.jsx
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './Intermediate.css';
 import intermediate from '../../intermediate.png'; 
 import intermediate2 from '../../intermediate2.png'; 
+
 const Intermediate = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="intermediate-container">
-            <h2>Intermediate</h2>
+            <h2>{t('services.intermediate.title')}</h2>
             <div className="content-wrapper">
                 <p className="intro-text">
-                    The Basic Plan is designed for individuals or small projects needing fundamental features.
-                    It provides essential tools to get you started with a streamlined approach.
+                    {t('services.intermediate.description')}
+                    <ul>
+                        {t('services.intermediate.features', { returnObjects: true }).map((feature, index) => (
+                            <li key={index}><strong>{feature.label}:</strong> {feature.description}</li>
+                        ))}
+                    </ul>
                 </p>
-                <img src={intermediate} alt="Basic Plan" className="basic-image-1" />
+                <img src={intermediate} alt={t('services.intermediate.imageAlt1')} className="basic-image-1" />
             </div>
             <div className="content-wrapper">
-                <img src={intermediate2} alt="Basic Plan" className="basic-image-2" />
+                <img src={intermediate2} alt={t('services.intermediate.imageAlt2')} className="basic-image-2" />
                 <p className="intro-text">
-                    The Basic Plan is designed for individuals or small projects needing fundamental features.
-                    It provides essential tools to get you started with a streamlined approach.
+                    {t('services.intermediate.descriptionMobile')}
+                    <ul>
+                        {t('services.intermediate.mobileFeatures', { returnObjects: true }).map((feature, index) => (
+                            <li key={index}><strong>{feature.label}:</strong> {feature.description}</li>
+                        ))}
+                    </ul>
                 </p>
             </div>
             <div className="features">
-                <h3>Key Features:</h3>
+                <h3>{t('services.intermediate.featuresTitle')}</h3>
                 <ul>
-                    <li><strong>Feature 1:</strong> Comprehensive feature description that explains the benefit and usage.</li>
-                    <li><strong>Feature 2:</strong> Another important feature with its details and how it adds value.</li>
-                    <li><strong>Feature 3:</strong> An additional feature that supports your basic needs with examples.</li>
+                    {Object.values(t('services.intermediate.keyFeatures', { returnObjects: true })).map((feature, index) => (
+                        <li key={index}><strong>{feature.label}:</strong> {feature.description}</li>
+                    ))}
                 </ul>
             </div>
             <p className="additional-info">
-                This plan is ideal for those starting out or for small-scale needs. Upgrade options are available
-                as your requirements grow. For detailed information or assistance, feel free to reach out.
+                {t('services.intermediate.additionalInfo')}
             </p>
         </div>
     );

@@ -1,36 +1,51 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import './Basic.css';
-import basicImage from '../../image.png'; // Path to your image
+import basic from '../../basic.png';
+import basic2 from '../../basic2.png';
 
 const Basic = () => {
+    const { t } = useTranslation();
+
     return (
         <div className="basic-container">
-            <h2>Basic Plan</h2>
+            <h2>{t('services.basic.title')}</h2>
             <div className="content-wrapper">
                 <p className="intro-text">
-                    The Basic Plan is designed for individuals or small projects needing fundamental features.
-                    It provides essential tools to get you started with a streamlined approach.
+                    {t('services.basic.description')}
+                    <br />
+                    <br />
+                    <ul>
+                        <li>{t('services.basic.features.0')}</li>
+                        <li>{t('services.basic.features.1')}</li>
+                        <li>{t('services.basic.features.2')}</li>
+                    </ul>
                 </p>
-                <img src={basicImage} alt="Basic Plan" className="basic-image-1" />
+                <img src={basic} alt={t('services.basic.imageAlt1')} className="basic-image-1" />
             </div>
             <div className="content-wrapper">
-                <img src={basicImage} alt="Basic Plan" className="basic-image-2" />
+                <img src={basic2} alt={t('services.basic.imageAlt2')} className="basic-image-2" />
                 <p className="intro-text">
-                    The Basic Plan is designed for individuals or small projects needing fundamental features.
-                    It provides essential tools to get you started with a streamlined approach.
+                    {t('services.basic.descriptionMobile')}
+                    <br />
+                    <br />
+                    <ul>
+                        <li>{t('services.basic.mobileFeatures.0')}</li>
+                        <li>{t('services.basic.mobileFeatures.1')}</li>
+                        <li>{t('services.basic.mobileFeatures.2')}</li>
+                    </ul>
                 </p>
             </div>
             <div className="features">
-                <h3>Key Features:</h3>
+                <h3>{t('services.basic.featuresTitle')}</h3>
                 <ul>
-                    <li><strong>Feature 1:</strong> Comprehensive feature description that explains the benefit and usage.</li>
-                    <li><strong>Feature 2:</strong> Another important feature with its details and how it adds value.</li>
-                    <li><strong>Feature 3:</strong> An additional feature that supports your basic needs with examples.</li>
+                    <li><strong>{t('services.basic.keyFeatures.simpleDesign.label')}:</strong> {t('services.basic.keyFeatures.simpleDesign.description')}</li>
+                    <li><strong>{t('services.basic.keyFeatures.coreFunctionality.label')}:</strong> {t('services.basic.keyFeatures.coreFunctionality.description')}</li>
+                    <li><strong>{t('services.basic.keyFeatures.responsiveLayout.label')}:</strong> {t('services.basic.keyFeatures.responsiveLayout.description')}</li>
                 </ul>
             </div>
             <p className="additional-info">
-                This plan is ideal for those starting out or for small-scale needs. Upgrade options are available
-                as your requirements grow. For detailed information or assistance, feel free to reach out.
+                {t('services.basic.additionalInfo')}
             </p>
         </div>
     );
