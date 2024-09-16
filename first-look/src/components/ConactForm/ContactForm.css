@@ -2,14 +2,15 @@
     display: flex;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px 0 40px 0;
+    padding: 10px 0 10px 0;
   }
   
   .left-info {
     flex: 1;
     padding: 20px;
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #ddd;    
   }
+
   
   .contact-box {
     flex: 2;

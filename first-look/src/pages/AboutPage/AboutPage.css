@@ -1,0 +1,126 @@
+/* General container for the entire about page */
+.about-page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Main content of the page */
+  .about-main-content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+  }
+  
+  /* Styling for the section headings */
+  .about-section h2,
+  .contact-section h3,
+  .values-section h3,
+  .skills-section h3,
+  .location-section h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  /* Styling for text inside sections */
+  .about-section p,
+  .values-section p,
+  .skills-section p,
+  .location-section p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  /* Contact section styling */
+  .contact-section ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contact-section ul li {
+    margin: 10px 0;
+  }
+  
+  .contact-section ul li a {
+    font-size: 18px;
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .contact-section ul li a:hover {
+    color: #0056b3;
+  }
+  
+  /* Values section styling */
+  .values-section p {
+    text-align: left;
+  }
+  
+  /* Skills section styling */
+  .skills-section ul {
+    list-style: disc;
+    padding-left: 20px;
+  }
+  
+  .skills-section ul li {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Styling for individual sections */
+  .about-section,
+  .contact-section,
+  .values-section,
+  .skills-section,
+  .location-section {
+    margin-bottom: 40px;
+  }
+  
+  /* Location section styling */
+  .location-section {
+    font-style: italic;
+    color: #666;
+  }
+  
+  /* Footer positioning at the bottom */
+  footer {
+    margin-top: auto;
+    padding: 20px;
+    background-color: #333;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .about-main-content {
+      padding: 20px 10px;
+    }
+  
+    .about-section h2,
+    .contact-section h3,
+    .values-section h3,
+    .skills-section h3,
+    .location-section h3 {
+      font-size: 24px;
+    }
+  
+    .about-section p,
+    .values-section p,
+    .skills-section p,
+    .location-section p {
+      font-size: 14px;
+    }
+  
+    .contact-section ul li a {
+      font-size: 16px;
+    }
+  }

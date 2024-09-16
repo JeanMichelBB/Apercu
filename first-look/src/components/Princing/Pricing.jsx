@@ -3,12 +3,11 @@ import './Pricing.css';
 
 const Pricing = () => {
     const handleClick = (planName) => {
-        alert(`You selected the ${planName} plan!`);
+        window.location.href = `/contact?plan=${encodeURIComponent(planName)}`;
     };
 
     return (
         <div className="pricing-container">
-            <h1>Our Pricing Plans</h1>
             <div className="pricing-wrapper">
                 <div className="pricing-grid">
                     {/* Basic Plan */}

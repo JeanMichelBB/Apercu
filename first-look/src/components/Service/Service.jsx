@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Service.css';
+import Basic from '../../components/Basic/Basic';
+import Intermediate from '../../components/Intermediate/Intermediate';
+import Advanced from '../../components/Advanced/Advanced';
+import Enterprise from '../../components/Enterprise/Enterprise';
 
 const Service = () => {
     const [activeService, setActiveService] = useState(null);
+    const detailsContainerRef = useRef(null);
 
     const handleCardClick = (service) => {
-        // Toggle the service details
         setActiveService(service === activeService ? null : service);
     };
+
+    useEffect(() => {
+        if (detailsContainerRef.current) {
+            // Add/remove 'expanded' class based on activeService
+            if (activeService) {
+                detailsContainerRef.current.classList.add('expanded');
+                detailsContainerRef.current.classList.remove('collapsed');
+            } else {
+                detailsContainerRef.current.classList.add('collapsed');
+                detailsContainerRef.current.classList.remove('expanded');
+            }
+        }
+    }, [activeService]);
 
     return (
         <div className="service-container">
@@ -41,24 +58,25 @@ const Service = () => {
                     <p>Full-scale solutions for businesses requiring a dedicated team.</p>
                 </div>
             </div>
-            <div className="service-details-container">
+            <div 
+                className="service-details-container" 
+                ref={detailsContainerRef}
+            >
                 <div className={`service-details ${activeService === 'basic' ? 'active' : ''}`}>
-                    <h2>Basic</h2>
-                    <p>Detailed information about the Basic service.</p>
+                    <Basic />
                 </div>
                 <div className={`service-details ${activeService === 'intermediate' ? 'active' : ''}`}>
-                    <h2>Intermediate</h2>
-                    <p>Detailed information about the Intermediate service.</p>
+                    <Intermediate />
                 </div>
                 <div className={`service-details ${activeService === 'advanced' ? 'active' : ''}`}>
-                    <h2>Advanced</h2>
-                    <p>Detailed information about the Advanced service.</p>
+                    <Advanced />
                 </div>
                 <div className={`service-details ${activeService === 'enterprise' ? 'active' : ''}`}>
-                    <h2>Enterprise</h2>
-                    <p>Detailed information about the Enterprise service.</p>
+                    <Enterprise />
                 </div>
             </div>
+            {/* see pricing */}
+            <a href="/pricing" className="pricing-link">See Pricing</a>
         </div>
     );
 }

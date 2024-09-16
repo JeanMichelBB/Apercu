@@ -4,8 +4,35 @@
     font-size: 1.2rem; /* Set the font size */
     line-height: 2rem; /* Set the line height */
     padding: 5rem; /* Set the padding */
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  
+  .additional-info {
+    margin: 100px;
+    padding: 15px;
   }
   
+  .additional-info h2 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+  }
+  
+  .additional-info p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  
+  .services-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .services-link:hover {
+    text-decoration: underline;
+  }
   @media only screen and (max-width: 768px) {
     .info-text {
       padding: 2rem; /* Adjust the padding for smaller screens */

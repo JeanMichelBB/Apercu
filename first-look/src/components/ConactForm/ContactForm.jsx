@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import './ContactForm.css'; // Import the CSS file
 import { apiKey, apiUrl } from '../../api';
 
@@ -12,16 +13,26 @@ const useCharacterLimit = (initialValue, limit) => {
       setValue(newValue);
     }
   };
-  
 
   const getValue = () => value;
 
-  return [getValue, handleChange];
+  return [getValue, handleChange, setValue]; // Return setValue to manually update
 };
 
 const ContactForm = () => {
+  const location = useLocation();
+  const [planName, setPlanName] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const plan = params.get('plan');
+    if (plan) {
+      setPlanName(plan); // Set planName if it's found in the URL
+    }
+  }, [location.search]);
+
   // State variables for form fields
-  const [getSubject, setSubject] = useCharacterLimit('', 50);
+  const [getSubject, setSubject, resetSubject] = useCharacterLimit('', 50);
   const [getFirstName, setFirstName] = useCharacterLimit('', 50);
   const [getLastName, setLastName] = useCharacterLimit('', 50);
   const [getEmail, setEmail] = useCharacterLimit('', 50);
@@ -30,6 +41,13 @@ const ContactForm = () => {
   const [honeypot, setHoneypot] = useState(''); // State for the honeypot field
   const [loading, setLoading] = useState(false); // State for loading effect
   const [submissionMessage, setSubmissionMessage] = useState(null); // State for submission message
+
+  // Set initial subject value with plan name if available
+  useEffect(() => {
+    if (planName) {
+      setSubject(`Inquiry about ${planName}`);
+    }
+  }, [planName, setSubject]);
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
@@ -59,7 +77,7 @@ const ContactForm = () => {
       });
       console.log('Form submission successful:', response.data);
       // Optionally, reset the form fields after successful submission
-      setSubject('');
+      resetSubject(''); // Reset the subject field
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -76,12 +94,18 @@ const ContactForm = () => {
 
   return (
     <div className="contact-container">
-      <div className="left-info">
-        <h2>Heures d'ouverture</h2>
-        <p>Lundi - Vendredi: 9h - 17h</p>
-        <p>Samedi: 10h - 14h</p>
-        <p>Dimanche: Fermé</p>
-      </div>
+  <div className="left-info">
+    <h2>Contact</h2>
+    <p>
+      You can also connect with me through my social media profiles:
+    </p>
+    <p>
+      <a href="https://github.com/jeanmichelbb" target="_blank" rel="noopener noreferrer">GitHub</a> | 
+      <a href="https://www.linkedin.com/in/jeanmichelbb" target="_blank" rel="noopener noreferrer">LinkedIn</a> | 
+      <a href="https://jeanmichelbb.github.io/" target="_blank" rel="noopener noreferrer">Portfolio</a>
+    </p>
+    <p>Location: Montréal, Quebec</p>
+  </div>
 
       <div className="contact-box">
         <h2>Contactez-nous</h2>
