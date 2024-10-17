@@ -6,7 +6,6 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import { apiKey, apiUrl } from '../../api';
 
-
 const LoginPage = ({ setToken }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -29,32 +28,32 @@ const LoginPage = ({ setToken }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
         // Check if honeypot field is filled
         if (honeypot) {
-            // If honeypot field is filled, assume it's a bot submission and return without further processing
-            return;
+            return; // Return without further processing if honeypot is filled
         }
+    
         try {
-            const response = await axios.post(`${apiUrl}/login`, null, {
-                params: {
-                    username: username,
-                    password: password
-                },
+            // Build the request URL with query parameters
+            const url = `${apiUrl}/login?email=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    
+            const response = await axios.post(url, {}, { // Send an empty object as the body
                 headers: {
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'access-token': apiKey,
                 }
             });
+            
             const token = response.data.token;
             setToken(token); // Set the token in parent component's state
             navigate('/admin');
         } catch (error) {
-            setError('Invalid username or password');
+            console.error(error); // Log the error for debugging
+            setError('Invalid email or password');
         }
     };
     
-
     return (
         <div>
             <Header />
@@ -62,12 +61,34 @@ const LoginPage = ({ setToken }) => {
                 <div className="container">
                     <h1 className="heading">Page de connexion</h1>
                     <p className="text">Connectez-vous pour accéder à votre compte</p>
-                    <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={handleUsernameChange} className="input" />
-                    <input type="password" placeholder="Mot de passe" value={password} onChange={handlePasswordChange} className="input" />
-                    <input type="text" placeholder="Honeypot" value={honeypot} onChange={handleHoneypotChange} className="honeypot" /> {/* Add honeypot field */}
-                    <a href="/forget-password" className="link">Mot de passe oublié ?</a>
-                    <button onClick={handleSubmit} className="button">Se connecter</button>
-                    {error && <p className="error">{error}</p>}
+                    <form onSubmit={handleSubmit}> {/* Wrap input fields in a form */}
+                        <input 
+                            type="text" 
+                            placeholder="Nom d'utilisateur" 
+                            value={username} 
+                            onChange={handleUsernameChange} 
+                            className="input" 
+                            autoComplete="username" // Add autocomplete for username
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Mot de passe" 
+                            value={password} 
+                            onChange={handlePasswordChange} 
+                            className="input" 
+                            autoComplete="current-password" // Add autocomplete for password
+                        />
+                        <input 
+                            type="text" 
+                            placeholder="Honeypot" 
+                            value={honeypot} 
+                            onChange={handleHoneypotChange} 
+                            className="honeypot" 
+                        /> {/* Add honeypot field */}
+                        <a href="/forget-password" className="link">Mot de passe oublié ?</a>
+                        <button type="submit" className="button">Se connecter</button>
+                        {error && <p className="error">{error}</p>}
+                    </form>
                 </div>
             </div>
             <Footer />

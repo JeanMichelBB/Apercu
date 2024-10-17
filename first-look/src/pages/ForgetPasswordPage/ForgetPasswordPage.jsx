@@ -26,17 +26,18 @@ const ForgetPasswordPage = () => {
         if (honeypot) { // Check if honeypot value is filled
             return;
         }
+    
         try {
             const response = await axios.post(`${apiUrl}/forget-password`, null, {
                 params: {
-                    username: email,
+                    email: email, // Change 'username' to 'email' as per the working cURL command
                 },
                 headers: {
-                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'access-token': apiKey,
                 }
             });
+            
             setMessage(response.data.message);
             setError('');
         } catch (error) {
@@ -44,7 +45,7 @@ const ForgetPasswordPage = () => {
             setError('Admin user not found');
         }
     };
-
+    
     return (
         <div>
             <Header />

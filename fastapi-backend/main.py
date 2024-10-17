@@ -49,6 +49,7 @@ class Email(Base):
     __tablename__ = "emails"
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()), unique=True)
     email = Column(String(100))
+    password = Column(String(100))
     created_at = Column(DateTime, default=func.now())
     
 class AdminUser(Base):
@@ -63,18 +64,17 @@ Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-# Check if the AdminUser table is empty
-existing_admin_users = session.query(AdminUser).all()
+# Check if the Email table is empty
+existing_emails = session.query(Email).all()
 
-if not existing_admin_users:
-    # If the AdminUser table is empty, add the admin user
+if not existing_emails:
+    # If the Email table is empty, add an admin email user
     hashed_password = bcrypt.hashpw(ADMIN_PASSWORD.encode(), bcrypt.gensalt())  # Hash the password
-    admin_user = AdminUser(username=ADMIN_USERNAME, password=hashed_password)
-    session.add(admin_user)
+    admin_email_user = Email(email=ADMIN_USERNAME, password=hashed_password.decode())  # Use ADMIN_USERNAME as the email
+    session.add(admin_email_user)
     session.commit()
-
+    
 session.close()
-
 
 
 app = FastAPI()
@@ -244,42 +244,21 @@ async def delete_email(email_id: str):
     else:
         return {"message": "Email not found"}, 404
     
-@app.get("/admin-users")
-async def get_admin_users():
-    db = SessionLocal()
-    admin_users = db.query(AdminUser).all()
-    db.close()
-    return admin_users
-
-@app.put("/update-admin-user")
-async def update_admin_user(old_username: str, old_password: str, new_password: str, new_username: str):
-    db = SessionLocal()
-    admin_user = db.query(AdminUser).filter(AdminUser.username == old_username).first()
-    if admin_user and bcrypt.checkpw(old_password.encode(), admin_user.password.encode()):
-        admin_user.username = new_username
-        hashed_password = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt())  # Hash the new password
-        admin_user.password = hashed_password.decode()  # Store the hashed password as a string
-        db.commit()
-        db.close()
-        return {"message": "Admin user updated successfully"}
-    else:
-        return {"message": "Admin user not found or password incorrect"}, 404
-    
 @app.post("/forget-password")
-async def forget_password(username: str):
+async def forget_password(email: str):
     db = SessionLocal()
-    admin_user = db.query(AdminUser).filter(AdminUser.username == username).first()
-    if admin_user:
+    user = db.query(Email).filter(Email.email == email).first()
+    if user:
         # Generate a temporary password
         temp_password = str(uuid4())[:8]
         # Hash the temporary password and store it
         hashed_password = bcrypt.hashpw(temp_password.encode(), bcrypt.gensalt())
-        admin_user.password = hashed_password.decode()
+        user.password = hashed_password.decode()
         db.commit()  # Commit the changes to the database
         db.close()
         # Send the temporary password to the user's email
         message = f"Subject: Forget Password\n\nYou requested a password reset. Your temporary password is: {temp_password}"
-        sendEmail(username, "Forget Password", message)
+        sendEmail(email, "Forget Password", message)
         return {"message": "Temporary password sent to your email"}
     else:
         db.close()
@@ -288,9 +267,9 @@ async def forget_password(username: str):
 
 
 # Authentication
-def authenticate(username, password):
+def authenticate(email, password):
     with SessionLocal() as db:
-        user = db.query(AdminUser).filter(AdminUser.username == username).first()
+        user = db.query(Email).filter(Email.email == email).first()
         if user:
             hashed_password = user.password.encode()
             if bcrypt.checkpw(password.encode(), hashed_password):
@@ -298,10 +277,10 @@ def authenticate(username, password):
     return False
 
 # Token Generation
-def generate_token(username):
+def generate_token(email):
     payload = {
-        'username': username,
-        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30) # Token expiration time
+        'email': email,
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)  # Token expiration time
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     return token
@@ -310,24 +289,20 @@ def generate_token(username):
 async def get_current_user(token: Optional[str] = Header(...)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-        username = payload.get("username")
-        if not username:
+        email = payload.get("email")
+        if not email:
             raise HTTPException(status_code=401, detail="Invalid token")
-        # You can add additional checks here if needed
-        return username
+        return email
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
 @app.post("/login")
-async def login(username: str, password: str):
-    # Check if the username and password are correct
-    if authenticate(username, password):
-        # Generate a token for the authenticated user
-        token = generate_token(username)
+async def login(email: str, password: str):
+    if authenticate(email, password):
+        token = generate_token(email)
         return {"token": token}
     else:
-        # Return an error if authentication fails
-        raise HTTPException(status_code=401, detail="Invalid username or password")
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
 # Use the dependency function in your protected endpoints
 @app.get("/protected-page")
