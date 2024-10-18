@@ -258,13 +258,14 @@ async def forget_password(email: str):
         db.close()
         # Send the temporary password to the user's email
         message = f"Subject: Forget Password\n\nYou requested a password reset. Your temporary password is: {temp_password}"
-        sendEmail(email, "Forget Password", message)
+        try:
+            sendEmail(email, "Forget Password", message)
+        except Exception as e:
+            print("Something went wrong while sending the email...", e)
         return {"message": "Temporary password sent to your email"}
     else:
         db.close()
         return {"message": "Admin user not found"}, 404
-
-
 
 # Authentication
 def authenticate(email, password):
