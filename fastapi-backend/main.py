@@ -12,7 +12,7 @@ import jwt
 import datetime
 from dotenv import load_dotenv
 from uuid import uuid4
-from text_mail import sendEmail
+from text_mail import sendEmail, testEmail
 from sqlalchemy.dialects.postgresql import VARCHAR
 from typing import Optional
 from jwt import PyJWTError
@@ -175,7 +175,7 @@ async def submit_form(request: Request, form_data: ContactForm):
         try:
             sendEmail(email.email, form_data.subject, message)
         except Exception as e:
-            print("Something went wrong...", e)
+            print("submit-form: Something went wrong while sending the email...", e)
 
     return {"message": "Form submission successful"}
 
@@ -261,7 +261,7 @@ async def forget_password(email: str):
         try:
             sendEmail(email, "Forget Password", message)
         except Exception as e:
-            print("Something went wrong while sending the email...", e)
+            print("forget-password: Something went wrong while sending the email...", e)
         return {"message": "Temporary password sent to your email"}
     else:
         db.close()
@@ -308,4 +308,28 @@ async def login(email: str, password: str):
 # Use the dependency function in your protected endpoints
 @app.get("/protected-page")
 async def protected_page(current_user: str = Depends(get_current_user)):
-    return {"message": f"Welcome, {current_user}!"}
+    return {"message": f"{current_user}"}
+
+@app.get("/test-email")
+async def test_email():
+    success, error_message = testEmail()  # Get both the success status and error message
+    
+    if success:
+        return {"message": "Email connection test successful"}
+    else:
+        return {"message": "Email connection failed", "error": error_message}, 500  # Include the error message in the response
+    
+@app.get("/update-admin-user")
+async def update_admin_user(email: str, oldPassword: str, newPassword: str):
+    db = SessionLocal()
+    user = db.query(Email).filter(Email.email == email).first()
+    if user:
+        hashed_password = user.password.encode()
+        if bcrypt.checkpw(oldPassword.encode(), hashed_password):
+            hashed_new_password = bcrypt.hashpw(newPassword.encode(), bcrypt.gensalt())
+            user.password = hashed_new_password.decode()
+            db.commit()
+            db.close()
+            return {"message": "Admin user updated successfully"}
+    db.close()
+    return {"message": "Admin user not found"}, 404

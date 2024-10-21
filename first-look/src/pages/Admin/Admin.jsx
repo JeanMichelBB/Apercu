@@ -125,7 +125,7 @@ const Admin = ({ token }) => {
   return (
     <div className="container">
       <Header />
-      <EditPassword />
+      <EditPassword email={message} />
       <EmailService />
       <h2>Contacts</h2>
       <div className="contact-list">

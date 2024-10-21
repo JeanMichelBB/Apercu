@@ -3,41 +3,18 @@ import axios from "axios";
 import "./EditPassword.css";
 import { apiKey, apiUrl } from '../../api';
 
-const EditPassword = () => {
-    const [oldEmail, setOldEmail] = useState("");
+const EditPassword = ({ email }) => {
     const [oldPassword, setOldPassword] = useState("");
-    const [newEmail, setNewEmail] = useState("");
-    const [confirmNewEmail, setConfirmNewEmail] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleOldEmailChange = (e) => {
-        setOldEmail(e.target.value);
-    };
-
-    const handleOldPasswordChange = (e) => {
-        setOldPassword(e.target.value);
-    };
-
-    const handleNewEmailChange = (e) => {
-        setNewEmail(e.target.value);
-    };
-
-    const handleConfirmNewEmailChange = (e) => {
-        setConfirmNewEmail(e.target.value);
-    };
-
-    const handleNewPasswordChange = (e) => {
-        setNewPassword(e.target.value);
-    };
-
-    const handleConfirmNewPasswordChange = (e) => {
-        setConfirmNewPassword(e.target.value);
-    };
+    const handleOldPasswordChange = (e) => setOldPassword(e.target.value);
+    const handleNewPasswordChange = (e) => setNewPassword(e.target.value);
+    const handleConfirmNewPasswordChange = (e) => setConfirmNewPassword(e.target.value);
 
     const validateInputs = () => {
-        if (!oldEmail || !oldPassword || !newEmail || !confirmNewEmail || !newPassword || !confirmNewPassword) {
+        if (!oldPassword || !newPassword || !confirmNewPassword) {
             setMessage("All fields are required");
             return false;
         }
@@ -52,48 +29,45 @@ const EditPassword = () => {
             return false;
         }
 
-        if (newEmail !== confirmNewEmail) {
-            setMessage("New email and confirmed email do not match");
-            return false;
-        }
-
         return true;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateInputs()) {
-            return;
-        }
+        console.log("Form submitted"); // Log form submission
+        console.log(email); // Log email
+        if (!validateInputs()) return;
 
         try {
-            const response = await axios.put(`${apiUrl}/update-admin-user`, null, {
+            const response = await axios.get(`${apiUrl}/update-admin-user`, {
                 params: {
-                    old_username: oldEmail,
-                    old_password: oldPassword,
-                    new_password: newPassword,
-                    new_username: newEmail,
+                    email: email,
+                    oldPassword: oldPassword,
+                    newPassword: newPassword,
                 },
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',
                     'access-token': apiKey,
-                }
+                },
             });
+
             setMessage(response.data.message);
+            console.log("Admin user updated successfully:", response.data);
         } catch (error) {
             setMessage("Failed to update admin user");
             console.error("Error updating admin user:", error);
+            console.log("Request Data:", error.request); // Log request data
+            if (error.response) {
+                console.error("Response Data:", error.response.data); // Log response data if available
+            }
         }
     };
 
     return (
         <div>
             <h1>Modifier le mot de passe</h1>
-            <input type="text" placeholder="Ancienne adresse e-mail" value={oldEmail} onChange={handleOldEmailChange} />
+            <p>Modifier le mot de passe pour: {email}</p>
             <input type="password" placeholder="Ancien mot de passe" value={oldPassword} onChange={handleOldPasswordChange} />
-            <input type="text" placeholder="Nouvelle adresse e-mail" value={newEmail} onChange={handleNewEmailChange} />
-            <input type="text" placeholder="Confirmer la nouvelle adresse e-mail" value={confirmNewEmail} onChange={handleConfirmNewEmailChange} />
             <input type="password" placeholder="Nouveau mot de passe" value={newPassword} onChange={handleNewPasswordChange} />
             <input type="password" placeholder="Confirmer le nouveau mot de passe" value={confirmNewPassword} onChange={handleConfirmNewPasswordChange} />
             <button onClick={handleSubmit}>Enregistrer</button>
