@@ -119,3 +119,4 @@ To run Aperçu locally for development, follow these steps.
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
 - [UVicorn](https://www.uvicorn.org/) for the ASGI server
 - [Visual Studio Code](https://code.visualstudio.com/) for the code editor
+
