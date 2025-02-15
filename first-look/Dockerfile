@@ -27,10 +27,10 @@ COPY --from=build /app/dist /usr/share/nginx/html
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 # Pass environment variables (if needed)
-ARG REACT_APP_API_URL
-ARG REACT_APP_API_KEY
-ENV REACT_APP_API_URL=$REACT_APP_API_URL
-ENV REACT_APP_API_KEY=$REACT_APP_API_KEY
+ARG VITE_APP_API_URL
+ARG VITE_APP_API_KEY
+ENV VITE_APP_API_URL=${VITE_APP_API_URL}
+ENV VITE_APP_API_KEY=${VITE_APP_API_KEY}
 
 # Expose port 80 to the outside world
 EXPOSE 80

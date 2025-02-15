@@ -39,3 +39,6 @@ jobs:
           push: true
           tags: |
             jeanmichelbb/ap-fe:latest
+          build-args: |
+            VITE_APP_API_URL=${{ secrets.VITE_APP_API_URL }}
+            VITE_APP_API_KEY=${{ secrets.VITE_APP_API_KEY }}
