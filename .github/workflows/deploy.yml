@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main 
+    paths:
+      - 'fastapi-backend/**'
+      - 'first-look/**'
 
 jobs:
   deploy:

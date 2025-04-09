@@ -1,5 +1,7 @@
 # Aperçu
 
+![Apercu Banner](apercuweb.jpg)
+
 **Aperçu** is a web application designed to give clients an insight into my work, services, and expertise. This app offers an easy-to-navigate interface where clients can learn more about the services I provide, view pricing details, and find out more about my background and skills.
 
 ## Features
