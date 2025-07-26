@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import './ContactForm.css'; // Import the CSS file
-import { apiKey, apiUrl } from '../../api';
+import { apiKey, apiUrl } from '../../api'; // Import API key and URL from config
 import { useTranslation } from 'react-i18next'; // Import the hook for translation
 
 const useCharacterLimit = (initialValue, limit) => {
