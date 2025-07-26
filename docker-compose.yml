@@ -4,7 +4,7 @@ services:
     build:
       context: ./first-look
     ports:
-      - "3001:3000"
+      - "3001:3001"
 
   fastapi-backend:
     build:
