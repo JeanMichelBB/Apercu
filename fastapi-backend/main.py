@@ -4,8 +4,8 @@ from fastapi.openapi.utils import get_openapi
 from starlette.responses import JSONResponse
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
-import subprocess
 import bcrypt
+import pymysql
 import jwt
 import os
 
@@ -18,13 +18,27 @@ from routers.auth import SECRET_KEY
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_ROOT_PASSWORD = os.getenv("DB_ROOT_PASSWORD")
+
+
+def init_database():
+    conn = pymysql.connect(host=DB_HOST, user="root", password=DB_ROOT_PASSWORD)
+    with conn.cursor() as cursor:
+        cursor.execute(f"CREATE DATABASE IF NOT EXISTS `{DB_NAME}`")
+        cursor.execute(f"CREATE USER IF NOT EXISTS '{DB_USER}'@'%' IDENTIFIED BY '{DB_PASSWORD}'")
+        cursor.execute(f"GRANT ALL PRIVILEGES ON `{DB_NAME}`.* TO '{DB_USER}'@'%'")
+        cursor.execute("FLUSH PRIVILEGES")
+    conn.close()
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # 1. Start MySQL and set up DB/user
-    script = os.path.join(os.path.dirname(__file__), "dev.sh")
-    subprocess.run(["bash", script], check=False)
+    # 1. Ensure database and user exist
+    init_database()
 
     # 2. Create tables
     Base.metadata.create_all(bind=engine)
