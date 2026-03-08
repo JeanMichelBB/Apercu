@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./EditPassword.css";
-import { apiKey, apiUrl } from '../../api';
+import { apiUrl } from '../../api';
 
-const EditPassword = ({ email }) => {
+const EditPassword = ({ email, token }) => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -47,7 +47,7 @@ const EditPassword = ({ email }) => {
                 },
                 headers: {
                     'Accept': 'application/json',
-                    'access-token': apiKey,
+                    'access-token': token,
                 },
             });
 

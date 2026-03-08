@@ -17,7 +17,6 @@ services:
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
       - FROM_EMAIL=${FROM_EMAIL}
       - FROM_PASSWORD=${FROM_PASSWORD}
-      - SECRET_KEY=${SECRET_KEY}
 
     volumes:
       - ./.env:/app/.env

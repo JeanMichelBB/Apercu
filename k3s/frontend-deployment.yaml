@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apercu-frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apercu-frontend
+  template:
+    metadata:
+      labels:
+        app: apercu-frontend
+    spec:
+      containers:
+        - name: apercu-frontend
+          image: jeanmichelbb/ap-fe:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apercu-frontend
+spec:
+  selector:
+    app: apercu-frontend
+  ports:
+    - port: 80
+      targetPort: 80

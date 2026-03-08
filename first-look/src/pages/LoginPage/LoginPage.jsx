@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './LoginPage.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiKey, apiUrl } from '../../api';
+import { apiUrl } from '../../api';
 
 const LoginPage = ({ setToken }) => {
     const [username, setUsername] = useState('');
@@ -38,12 +38,7 @@ const LoginPage = ({ setToken }) => {
             // Build the request URL with query parameters
             const url = `${apiUrl}/login?email=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
     
-            const response = await axios.post(url, {}, { // Send an empty object as the body
-                headers: {
-                    'Accept': 'application/json',
-                    'access-token': apiKey,
-                }
-            });
+            const response = await axios.post(url);
             
             const token = response.data.token;
             setToken(token); // Set the token in parent component's state

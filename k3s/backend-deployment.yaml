@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apercu-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apercu-backend
+  template:
+    metadata:
+      labels:
+        app: apercu-backend
+    spec:
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysql 3306; do echo "Waiting for MySQL..."; sleep 3; done']
+      containers:
+        - name: apercu-backend
+          image: jeanmichelbb/ap-be:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: apercu-backend-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apercu-backend
+spec:
+  selector:
+    app: apercu-backend
+  ports:
+    - port: 8000
+      targetPort: 8000

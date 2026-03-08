@@ -3,7 +3,7 @@ import axios from 'axios';
 import './ForgetPasswordPage.css'; 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiKey, apiUrl } from '../../api';
+import { apiUrl } from '../../api';
 
 
 const ForgetPasswordPage = () => {
@@ -29,13 +29,7 @@ const ForgetPasswordPage = () => {
     
         try {
             const response = await axios.post(`${apiUrl}/forget-password`, null, {
-                params: {
-                    email: email, // Change 'username' to 'email' as per the working cURL command
-                },
-                headers: {
-                    'Accept': 'application/json',
-                    'access-token': apiKey,
-                }
+                params: { email },
             });
             
             setMessage(response.data.message);

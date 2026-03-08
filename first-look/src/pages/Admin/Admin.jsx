@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import './Admin.css'; // Import the CSS file
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiKey, apiUrl } from '../../api';
+import { apiUrl } from '../../api';
 
 
 const Admin = ({ token }) => {
@@ -21,9 +21,7 @@ const Admin = ({ token }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/protected-page`, {
-          headers: { token: token,
-            "access-token": apiKey,
-           }
+          headers: { "access-token": token }
         });
         setMessage(response.data.message);
       } catch (error) {
@@ -38,9 +36,7 @@ const Admin = ({ token }) => {
     try {
       // Make a GET request to fetch contacts from the backend
       const response = await axios.get(`${apiUrl}/contacts`, {
-        headers: { token: token,
-          "access-token": apiKey,
-         }
+        headers: { "access-token": token }
       });
       // Update the state with the fetched contacts
       setContacts(response.data);
@@ -55,9 +51,7 @@ const Admin = ({ token }) => {
       try {
         // Make a DELETE request to delete a contact
         await axios.delete(`${apiUrl}/delete-contact/${contactId}`, {
-          headers: {
-            "access-token": apiKey,
-           }
+          headers: { "access-token": token }
         });
         // Refetch contacts after deletion
         fetchContacts();
@@ -73,9 +67,7 @@ const Admin = ({ token }) => {
       try {
         // Make a DELETE request to delete all contacts
         await axios.delete(`${apiUrl}/delete-all-contacts`, {
-          headers: {
-            "access-token": apiKey,
-           }
+          headers: { "access-token": token }
         });
         // Refetch contacts after deletion
         fetchContacts();
@@ -99,9 +91,7 @@ const Admin = ({ token }) => {
     try {
       // Make a PUT request to update the edited contact
       await axios.put(`${apiUrl}/update-contact/${editedContact.id}`, editedContact, {
-        headers: {
-          "access-token": apiKey,
-          }
+        headers: { "access-token": token }
       });
       // Refetch contacts after update
       fetchContacts();
@@ -125,8 +115,8 @@ const Admin = ({ token }) => {
   return (
     <div className="container">
       <Header />
-      <EditPassword email={message} />
-      <EmailService />
+      <EditPassword email={message} token={token} />
+      <EmailService token={token} />
       <h2>Contacts</h2>
       <div className="contact-list">
         {contacts.map((contact) => (

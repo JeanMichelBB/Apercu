@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import './ContactForm.css'; // Import the CSS file
-import { apiKey, apiUrl } from '../../api'; // Import API key and URL from config
+import { apiUrl } from '../../api'; // Import API key and URL from config
 import { useTranslation } from 'react-i18next'; // Import the hook for translation
 
 const useCharacterLimit = (initialValue, limit) => {
@@ -73,11 +73,7 @@ const ContactForm = () => {
       };
 
       // Make a POST request with the formatted form data
-      const response = await axios.post(`${apiUrl}/submit-form`, formData, {
-        headers: {
-          'access-token': apiKey,
-        },
-      });
+      const response = await axios.post(`${apiUrl}/submit-form`, formData);
       console.log('Form submission successful:', response.data);
       // Optionally, reset the form fields after successful submission
       resetSubject(''); // Reset the subject field

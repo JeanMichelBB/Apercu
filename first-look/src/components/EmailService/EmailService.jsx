@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './EmailService.css';
-import { apiKey, apiUrl } from '../../api';
+import { apiUrl } from '../../api';
 
 
-const EmailService = () => {
+const EmailService = ({ token }) => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
@@ -19,7 +19,7 @@ const EmailService = () => {
     try {
       const response = await axios.get(`${apiUrl}/emails`, {
         headers: { 
-          'access-token': apiKey 
+          'access-token': token 
         }
       });
       setEmails(response.data);
@@ -42,7 +42,7 @@ const EmailService = () => {
           headers: {
             'accept': 'application/json',
             'Content-Type': 'application/json',
-            'access-token': apiKey,
+            'access-token': token,
           }
         }
       );
@@ -64,7 +64,7 @@ const EmailService = () => {
     try {
       await axios.delete(`${apiUrl}/delete-email/${emailId}`, {
         headers: {
-          'access-token': apiKey,
+          'access-token': token,
         },
       });
       setSuccessMessage('Email deleted successfully!');

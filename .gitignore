@@ -10,6 +10,7 @@
 
 .env
 .env*
+k3s/secrets/
 .DS_Store
 .env.local
 .env.development.local
@@ -21,3 +22,6 @@ yarn-debug.log*
 yarn-error.log*
 
 node_modules/
+CLAUDE.md
+.gitignore
+.claude/settings.local.json
