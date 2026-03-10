@@ -1,16 +1,15 @@
 /* ServicePage.css */
 
 .service-intro {
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.6;
-    color: #333; /* Dark gray for readability */
+    color: #000;
     margin: 20px 0;
     padding: 10px 200px;
-   
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
     margin-top: 20px;
     text-align: center;
 }
@@ -19,6 +18,4 @@ h1 {
     .service-intro {
         padding: 10px;
     }
-    
-    
 }

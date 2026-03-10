@@ -1,11 +1,11 @@
 .no-page-container {
-    min-height: 100vh; /* Ensure the container takes up full viewport height */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
 .no-page-content {
-    flex: 1; /* Allow this section to expand and take up available space */
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,21 +20,15 @@
 }
 
 .no-page-content p {
-    font-size: 1.2em;
+    font-size: 1.1em;
     margin-bottom: 20px;
 }
 
 .no-page-content a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.no-page-content a:hover {
+    color: #000;
     text-decoration: underline;
 }
 
-.footer {
-    padding: 20px;
-    background-color: #f8f9fa;
-    text-align: center;
+.no-page-content a:hover {
+    text-decoration: none;
 }

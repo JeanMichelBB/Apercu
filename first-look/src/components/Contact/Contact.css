@@ -5,9 +5,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 10vh; /* Adjust the height as needed */
-    background-size: cover;
-    background-position: 100% 55%;
+    height: 10vh;
     color: #000;
-  }
-  
+    border-bottom: 1px solid #e0e0e0;
+}

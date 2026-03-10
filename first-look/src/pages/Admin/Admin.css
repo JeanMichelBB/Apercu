@@ -2,48 +2,60 @@
 
 .container {
   text-align: center;
-  font-size: 1.2rem;
-  line-height: 2rem;
-  word-wrap: break-word; /* Add word-wrap property */
+  font-size: 1rem;
+  line-height: 1.8;
+  word-wrap: break-word;
+  padding: 20px;
 }
 
 .contact-list {
   list-style-type: none;
   padding: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 .contact {
-  height: 10hv;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   cursor: pointer;
-  overflow: hidden; /* Hide overflow to prevent content from showing when closed */
-  border-bottom: 1px solid #ccc; /* Add border between contacts */
-  transition: background-color 0.5s ease; /* Add transition for background color change */
-  transition: height 0.5s ease; /* Add transition for height change */
+  overflow: hidden;
+  border-bottom: 1px solid #000;
+  transition: height 0.3s ease;
+  padding: 12px 0;
 }
 
 .contact.active {
-  background-color: #f0f0f0; /* Change background color when contact is active */
-  height: auto; /* Set height to auto when contact is active */
+  background-color: #f5f5f5;
 }
 
 .contact-details {
-  margin-top: 10px; /* Add margin to contact details */
-  padding: 10px; /* Add padding to contact details */
-  transition: opacity 0.5s ease; /* Add transition for opacity change */
-  opacity: 0; /* Hide contact details by default */
+  margin-top: 10px;
+  padding: 10px;
+  transition: opacity 0.3s ease;
+  opacity: 0;
 }
 
 .contact.active .contact-details {
-  opacity: 1; /* Show contact details when contact is active */
+  opacity: 1;
 }
 
 .button-container {
-  margin-top: 10px; /* Add margin to button container */
+  margin-top: 10px;
 }
 
 .button-container button {
-  margin-right: 10px; /* Add margin between buttons */
+  margin-right: 10px;
+  padding: 6px 14px;
+  background: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.button-container button:hover {
+  background: #333;
 }
 
 .contact-list p {

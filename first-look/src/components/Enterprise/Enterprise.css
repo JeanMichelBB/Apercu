@@ -5,7 +5,7 @@
 }
 
 .enterprise-title {
-    font-size: 2em;
+    font-size: 1.5em;
     margin-bottom: 20px;
 }
 
@@ -27,8 +27,8 @@
 }
 
 .enterprise-intro-text {
-    font-size: 1.1em;
-    line-height: 1.5;
+    font-size: 1em;
+    line-height: 1.6;
 }
 
 .enterprise-features {
@@ -36,20 +36,32 @@
 }
 
 .features-title {
-    font-size: 1.5em;
+    font-size: 1.25em;
     margin-bottom: 10px;
 }
 
 .features-list {
-    list-style: none;
-    padding: 0;
+    list-style: disc;
+    padding-left: 20px;
 }
 
 .features-list li {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .enterprise-additional-info {
     font-size: 1em;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+    .enterprise-content-wrapper,
+    .enterprise-content-wrapper.reverse {
+        flex-direction: column;
+    }
+
+    .enterprise-image {
+        max-width: 100%;
+        margin: 10px 0;
+    }
 }

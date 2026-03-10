@@ -1,55 +1,45 @@
 /* ContactPage.css */
 .info-text {
     text-align: center;
-    font-size: 1.2rem; /* Set the font size */
-    line-height: 2rem; /* Set the line height */
-    padding: 5rem; /* Set the padding */
-    margin: 20px;
-    padding: 10px;
-    text-align: center;
-  }
+    font-size: 1rem;
+    line-height: 1.8;
+    padding: 2rem;
+}
 
-  
-  .additional-info {
-    margin: 100px;
+.additional-info {
+    margin: 40px auto;
     padding: 15px;
-  }
-  
-  .additional-info h2 {
-    font-size: 1.6em;
+    max-width: 800px;
+}
+
+.additional-info h2 {
+    font-size: 1.3rem;
     margin-bottom: 10px;
-  }
-  
-  .additional-info p {
+    border-bottom: 1px solid #000;
+    padding-bottom: 8px;
+}
+
+.additional-info p {
     margin-bottom: 10px;
-    line-height: 1.5;
-  }
-  
-  .services-link {
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .services-link:hover {
+    line-height: 1.6;
+}
+
+.services-link {
+    color: #000;
     text-decoration: underline;
-  }
-  @media only screen and (max-width: 768px) {
+}
+
+.services-link:hover {
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 768px) {
     .info-text {
-      padding: 2rem; /* Adjust the padding for smaller screens */
-      font-size: 1rem; /* Adjust the font size for smaller screens */
+        padding: 1rem;
+        font-size: 0.95rem;
     }
-  }
 
-  /* Media query for medium screens */
-  @media only screen and (min-width: 769px) and (max-width: 1024px) {
-    .info-text {
-      padding: 3rem; /* Adjust the padding for medium screens */
+    .additional-info {
+        margin: 20px;
     }
-  }
-
-  /* Media query for larger screens */
-
-  @media only screen and (min-width: 1025px) {
-    .info-text {
-      padding: 5rem;    }
-  }
+}

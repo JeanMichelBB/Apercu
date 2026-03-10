@@ -4,39 +4,29 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 40vh; /* Adjust the height as needed */
+  height: 40vh;
   background-size: cover;
   background-position: 50% 50%;
   color: #fff;
-  font-size: 2rem; /* Set your desired font size */
+  font-size: 2rem;
   background-image: url('../../back-unsplash.jpg');
+  background-color: #000;
 }
 
 .home h1 {
   margin: 0;
-  color: none;
 }
 
-/* Media query for smaller screens */
 @media only screen and (max-width: 768px) {
   .home {
-    height: 20vh; /* Adjust the height for smaller screens */
-    font-size: 0.8rem; /* Adjust the font size for smaller screens */
+    height: 25vh;
+    font-size: 1.2rem;
   }
 }
 
-/* Media query for medium screens */
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
+@media only screen and (min-width: 769px) {
   .home {
-    height: 50vh; /* Adjust the height for medium screens */
-    font-size: 1.8rem; /* Adjust the font size for medium screens */
-  }
-}
-
-/* Media query for larger screens */
-@media only screen and (min-width: 1025px) {
-  .home {
-    height: 50vh; /* Adjust the height for larger screens */
-    font-size: 2rem; /* Adjust the font size for larger screens */
+    height: 45vh;
+    font-size: 2rem;
   }
 }

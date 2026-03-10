@@ -1,6 +1,6 @@
 .basic-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #fff;
     max-width: 90%;
     margin: 0 auto;
 }
@@ -19,20 +19,18 @@
 .intro-text {
     flex: 1;
     margin-right: 20px;
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.6;
 }
 
 .basic-image-1 {
     width: 50%;
     height: auto;
-    border-radius: 8px;
 }
 
 .basic-image-2 {
     width: 20%;
     height: auto;
-    border-radius: 8px;
 }
 
 .features {
@@ -41,7 +39,7 @@
 
 .features h3 {
     margin-bottom: 10px;
-    color: #333;
+    color: #000;
 }
 
 .features ul {
@@ -51,11 +49,11 @@
 
 .features li {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .additional-info {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 1.6;
 }
 
@@ -68,16 +66,9 @@
         margin-right: 0;
     }
 
-    .basic-image-1 {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
+    .basic-image-1,
     .basic-image-2 {
         width: 100%;
         margin-bottom: 20px;
-    }
-    .additional-info {
-        margin: auto;
     }
 }
