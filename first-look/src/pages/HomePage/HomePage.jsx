@@ -1,41 +1,52 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next'; // Import the hook for translation
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import Home from '../../components/Home/Home';
 import './HomePage.css';
 
 function HomePage() {
-  const { t } = useTranslation(); // Use the translation hook
-
   return (
     <div className="home-page">
       <Header />
-      <Home />
-      <div className="home-intro-section">
-        <h1>{t('homePage.welcomeTitle')}</h1>
-        <p>{t('homePage.welcomeText1')}</p>
-        <p>{t('homePage.welcomeText2')}</p>
-      </div>
-      <div className="home-service-details">
-        <h2>{t('homePage.servicesTitle')}</h2>
-        <ul className='home-service-list'>
-          <li><strong>{t('homePage.service1')}</strong></li>
-          <li><strong>{t('homePage.service2')}</strong></li>
-          <li><strong>{t('homePage.service3')}</strong></li>
-          <li><strong>{t('homePage.service4')}</strong></li>
-          <li><strong>{t('homePage.service5')}</strong></li>
-        </ul>
-      </div>
-      <div className="home-contact-info">
-        <h2>{t('homePage.getStartedTitle')}</h2>
-        <p>{t('homePage.getStartedText')}</p>
-        <div className="link-buttons">
-          <a href="/contact" className="contact-button">{t('homePage.contactButton')}</a>
-          <a href="/service" className="service-button">{t('homePage.serviceButton')}</a>
-          <a href="/pricing" className="pricing-button">{t('homePage.pricingButton')}</a>
+
+      <section className="home-hero">
+        <h1 className="home-hero-title">Discover &amp; Attend Events</h1>
+        <p className="home-hero-sub">
+          Find conferences, workshops, and meetups — or create your own and reach your audience.
+        </p>
+        <div className="home-hero-ctas">
+          <Link to="/events" className="home-cta-primary">Browse Events</Link>
+          <Link to="/register" className="home-cta-secondary">Host an Event</Link>
         </div>
-      </div>
+      </section>
+
+      <section className="home-how">
+        <h2 className="home-how-title">How it works</h2>
+        <div className="home-how-steps">
+          <div className="home-step">
+            <span className="home-step-number">01</span>
+            <h3>Browse</h3>
+            <p>Explore upcoming events filtered by date, location, or topic.</p>
+          </div>
+          <div className="home-step">
+            <span className="home-step-number">02</span>
+            <h3>Register</h3>
+            <p>Create a free account and register for the events you want to attend.</p>
+          </div>
+          <div className="home-step">
+            <span className="home-step-number">03</span>
+            <h3>Attend</h3>
+            <p>Show up, connect with speakers and attendees, and grow your network.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-organizer">
+        <h2>Want to host an event?</h2>
+        <p>Create an organizer account and submit your event for review. Once approved it goes live to all attendees.</p>
+        <Link to="/register" className="home-cta-primary">Get Started as Organizer</Link>
+      </section>
+
       <Footer />
     </div>
   );

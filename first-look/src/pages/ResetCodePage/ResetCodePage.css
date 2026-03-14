@@ -1,0 +1,22 @@
+.otp-inputs {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.otp-digit {
+  width: 2.75rem;
+  height: 3rem;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+  border: 1px solid #000;
+  outline: none;
+  caret-color: transparent;
+}
+
+.otp-digit:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.15);
+}

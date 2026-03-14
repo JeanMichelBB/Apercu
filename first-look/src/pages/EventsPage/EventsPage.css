@@ -1,0 +1,158 @@
+.events-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.events-container {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.events-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.events-search {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.events-search-input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid #000;
+  font-size: 1rem;
+  outline: none;
+}
+
+.events-search-input:focus {
+  outline: 2px solid #000;
+}
+
+.events-search-btn {
+  padding: 0.6rem 1.5rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.events-search-btn:hover {
+  background: #333;
+}
+
+.events-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.events-error {
+  color: #c00;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid #000;
+  text-decoration: none;
+  color: #000;
+  transition: background 0.15s;
+}
+
+.event-card:hover {
+  background: #f5f5f5;
+}
+
+.event-card-date {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.event-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.event-card-location {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.event-card-desc {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.event-card-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.events-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pagination-info {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 900px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .events-title {
+    font-size: 1.75rem;
+  }
+}

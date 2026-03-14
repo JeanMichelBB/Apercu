@@ -1,62 +1,52 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next'; // Import the useTranslation hook
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import './AboutPage.css';
 
 function AboutPage() {
-  const { t } = useTranslation();
-
   return (
     <div className="about-page-container">
       <Header />
 
       <main className="about-main-content">
         <section className="about-section">
-          <h2>{t('aboutPage.aboutMe.title')}</h2>
-          <p>{t('aboutPage.aboutMe.intro')}</p>
-          <p>{t('aboutPage.aboutMe.experience')}</p>
+          <h2>About Aperçu</h2>
+          <p>
+            Aperçu is an open event management platform that connects event organizers with attendees.
+            Whether you're hosting a small workshop or a large conference, Aperçu gives you the tools
+            to publish your event, manage registrations, and reach a wider audience.
+          </p>
+          <p>
+            For attendees, Aperçu makes it easy to discover upcoming events, register in a few clicks,
+            and keep track of everything in one place.
+          </p>
         </section>
 
-        <section className="contact-section">
-          <h3>{t('aboutPage.contact.title')}</h3>
-          <ul>
-            <li>
-              <a href="https://github.com/jeanmichelbb" target="_blank" rel="noopener noreferrer">
-                {t('aboutPage.contact.links.github')}
-              </a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/jeanmichelbb" target="_blank" rel="noopener noreferrer">
-                {t('aboutPage.contact.links.linkedin')}
-              </a>
-            </li>
-            <li>
-              <a href="https://jeanmichelbb.github.io/" target="_blank" rel="noopener noreferrer">
-                {t('aboutPage.contact.links.portfolio')}
-              </a>
-            </li>
+        <section className="about-section">
+          <h2>For Attendees</h2>
+          <ul className="about-list">
+            <li>Browse published events by date and location</li>
+            <li>Register for events with a free account</li>
+            <li>Manage and cancel your registrations at any time</li>
+            <li>Follow speakers and read related blog posts</li>
           </ul>
         </section>
 
-        <section className="values-section">
-          <h3>{t('aboutPage.values.title')}</h3>
-          <p>{t('aboutPage.values.text')}</p>
-        </section>
-
-        <section className="skills-section">
-          <h3>{t('aboutPage.skills.title')}</h3>
-          <p>{t('aboutPage.skills.intro')}</p>
-          <ul>
-            {t('aboutPage.skills.list', { returnObjects: true }).map((skill, index) => (
-              <li key={index}>{skill}</li>
-            ))}
+        <section className="about-section">
+          <h2>For Organizers</h2>
+          <ul className="about-list">
+            <li>Create an organizer account and submit your events</li>
+            <li>Events go through a quick review before going live</li>
+            <li>Track registrations from your organizer dashboard</li>
+            <li>Edit or cancel events at any time</li>
           </ul>
         </section>
 
-        <section className="location-section">
-          <h3>{t('aboutPage.location.title')}</h3>
-          <p>{t('aboutPage.location.text')}</p>
+        <section className="about-section">
+          <h2>Contact</h2>
+          <p>
+            Questions or feedback? Use the <a href="/contact">contact page</a> to reach out — we read everything.
+          </p>
         </section>
       </main>
 

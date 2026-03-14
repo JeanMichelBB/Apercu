@@ -1,0 +1,120 @@
+.my-reg-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-reg-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.my-reg-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 2.5rem;
+}
+
+.my-reg-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.my-reg-error {
+  color: #c00;
+}
+
+.my-reg-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 3rem 0;
+  color: #555;
+}
+
+.my-reg-browse-btn {
+  padding: 0.65rem 1.5rem;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.my-reg-browse-btn:hover {
+  background: #333;
+}
+
+.my-reg-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.my-reg-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #000;
+}
+
+.my-reg-card-wrapper:first-child {
+  border-top: 1px solid #000;
+}
+
+.my-reg-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: #000;
+}
+
+
+.my-reg-card:hover .my-reg-card-title {
+  text-decoration: underline;
+}
+
+.my-reg-card-date {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.my-reg-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.my-reg-card-location {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}
+
+.my-reg-card-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.my-reg-cancel-btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  background: #fff;
+  color: #c00;
+  border: 1px solid #c00;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.my-reg-cancel-btn:hover {
+  background: #c00;
+  color: #fff;
+}

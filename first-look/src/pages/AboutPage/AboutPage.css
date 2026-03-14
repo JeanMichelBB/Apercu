@@ -71,6 +71,19 @@
     line-height: 1.6;
 }
 
+.about-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    font-size: 1rem;
+    color: #000;
+    line-height: 1.8;
+}
+
+.about-section a {
+    color: #000;
+    text-decoration: underline;
+}
+
 .about-section,
 .contact-section,
 .values-section,

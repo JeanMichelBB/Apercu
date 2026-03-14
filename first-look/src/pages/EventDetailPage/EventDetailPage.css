@@ -1,0 +1,117 @@
+.event-detail-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-detail-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.event-detail-back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  padding: 0;
+  margin-bottom: 2rem;
+  color: #000;
+  text-decoration: underline;
+}
+
+.event-detail-back:hover {
+  color: #555;
+}
+
+.event-detail-header {
+  border-bottom: 1px solid #000;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.event-detail-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.event-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.event-detail-body {
+  margin-bottom: 2.5rem;
+}
+
+.event-detail-description {
+  font-size: 1rem;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.event-detail-register {
+  border-top: 1px solid #000;
+  padding-top: 2rem;
+}
+
+.event-detail-btn {
+  padding: 0.75rem 2rem;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.event-detail-btn:hover {
+  background: #333;
+}
+
+.event-detail-btn-cancel {
+  background: #fff;
+  color: #c00;
+  border: 1px solid #c00;
+}
+
+.event-detail-btn-cancel:hover {
+  background: #c00;
+  color: #fff;
+}
+
+.event-detail-success {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a7a1a;
+}
+
+.event-detail-error {
+  font-size: 0.95rem;
+  color: #c00;
+  margin-top: 0.5rem;
+}
+
+.event-detail-status {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+@media (max-width: 600px) {
+  .event-detail-title {
+    font-size: 1.6rem;
+  }
+
+  .event-detail-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

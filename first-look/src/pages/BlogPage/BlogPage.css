@@ -1,0 +1,114 @@
+.blog-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-container {
+  flex: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  width: 100%;
+}
+
+.blog-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+.blog-status {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.blog-error {
+  color: #c00;
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid #000;
+  text-decoration: none;
+  color: #000;
+}
+
+.blog-card:first-child {
+  border-top: 1px solid #000;
+}
+
+.blog-card:hover .blog-card-title {
+  text-decoration: underline;
+}
+
+.blog-card-date {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.blog-card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.blog-card-excerpt {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+  margin: 0;
+}
+
+.blog-card-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.pagination-btn {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #000;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #000;
+  color: #fff;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pagination-info {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 600px) {
+  .blog-title {
+    font-size: 1.75rem;
+  }
+}

@@ -1,94 +1,87 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './LoginPage.css'; // Import the CSS file
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import { apiUrl } from '../../api';
+import api from '../../services/api';
+import './LoginPage.css';
 
 const LoginPage = ({ setToken }) => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [honeypot, setHoneypot] = useState(''); // Add honeypot state
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const redirect = new URLSearchParams(window.location.search).get('redirect');
 
-    const [error, setError] = useState('');
-    const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
-    const handleUsernameChange = (e) => {
-        setUsername(e.target.value);
-    };
+    try {
+      // Try user login first, fall back to admin login
+      let token;
+      let role;
+      try {
+        const res = await api.userLogin({ email, password });
+        token = res.data.token;
+        role = JSON.parse(atob(token.split('.')[1])).role;
+      } catch {
+        const res = await api.adminLogin(email, password);
+        token = res.data.token;
+        role = 'admin';
+      }
 
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
+      localStorage.setItem('token', token);
+      setToken(token);
+      window.location.href = redirect ?? (role === 'admin' ? '/admin' : '/');
+    } catch {
+      setError('Invalid email or password');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const handleHoneypotChange = (e) => { // Add handler for honeypot field
-        setHoneypot(e.target.value);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        // Check if honeypot field is filled
-        if (honeypot) {
-            return; // Return without further processing if honeypot is filled
-        }
-    
-        try {
-            // Build the request URL with query parameters
-            const url = `${apiUrl}/login?email=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
-    
-            const response = await axios.post(url);
-            
-            const token = response.data.token;
-            setToken(token); // Set the token in parent component's state
-            navigate('/admin');
-        } catch (error) {
-            console.error(error); // Log the error for debugging
-            setError('Invalid email or password');
-        }
-    };
-    
-    return (
-        <div>
-            <Header />
-            <div className="login">
-                <div className="container">
-                    <h1 className="heading">Page de connexion</h1>
-                    <p className="text">Connectez-vous pour accéder à votre compte</p>
-                    <form onSubmit={handleSubmit}> {/* Wrap input fields in a form */}
-                        <input 
-                            type="text" 
-                            placeholder="Nom d'utilisateur" 
-                            value={username} 
-                            onChange={handleUsernameChange} 
-                            className="input" 
-                            autoComplete="username" // Add autocomplete for username
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Mot de passe" 
-                            value={password} 
-                            onChange={handlePasswordChange} 
-                            className="input" 
-                            autoComplete="current-password" // Add autocomplete for password
-                        />
-                        <input 
-                            type="text" 
-                            placeholder="Honeypot" 
-                            value={honeypot} 
-                            onChange={handleHoneypotChange} 
-                            className="honeypot" 
-                        /> {/* Add honeypot field */}
-                        <a href="/forget-password" className="link">Mot de passe oublié ?</a>
-                        <button type="submit" className="button">Se connecter</button>
-                        {error && <p className="error">{error}</p>}
-                    </form>
-                </div>
-            </div>
-            <Footer />
+  return (
+    <div>
+      <Header />
+      <div className="login">
+        <div className="container">
+          <h1 className="heading">Sign In</h1>
+          <p className="text">Welcome back</p>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input"
+              required
+              autoComplete="email"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input"
+              required
+              autoComplete="current-password"
+            />
+            <a href="/forget-password" className="link">Forgot password?</a>
+            <button type="submit" className="button" disabled={loading}>
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+            {error && <p className="error">{error}</p>}
+          </form>
+          <p style={{ marginTop: '1rem', fontSize: '0.9rem' }}>
+            Don't have an account? <Link to={`/register${redirect ? `?redirect=${redirect}` : ''}`} style={{ color: '#000', fontWeight: 600 }}>Sign Up</Link>
+          </p>
         </div>
-    );
-}
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 export default LoginPage;

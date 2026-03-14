@@ -12,9 +12,11 @@ import os
 load_dotenv()
 
 from database.engine import engine, SessionLocal, Base
-from database.models import Contact, Email, AdminUser
+from database.models import Contact, Email, AdminUser, User, Event, Speaker, EventSpeaker, Registration, BlogPost
 from routers import contacts, emails, auth
+from routers import events, speakers, posts, users
 from routers.auth import SECRET_KEY
+from seed import seed_if_empty
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
@@ -49,6 +51,9 @@ async def lifespan(app: FastAPI):
         hashed_password = bcrypt.hashpw(ADMIN_PASSWORD.encode(), bcrypt.gensalt())
         session.add(Email(email=ADMIN_USERNAME, password=hashed_password.decode()))
         session.commit()
+
+    # 4. Seed sample data if database is empty
+    seed_if_empty(session)
     session.close()
 
     yield
@@ -57,14 +62,39 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
+PUBLIC_EXACT = {"/docs", "/openapi.json", "/login", "/submit-form", "/forget-password", "/auth/register", "/auth/user-login", "/auth/forgot-password", "/auth/verify-reset-code", "/auth/reset-password"}
+PUBLIC_PREFIXES_GET = ("/speakers", "/posts")
+
+
+def _is_public_event_get(path: str) -> bool:
+    # Allow GET /events and GET /events/{id} but not organizer/admin sub-paths
+    if path == "/events":
+        return True
+    parts = path.split("/")
+    # /events/{id} — exactly 3 parts, no sub-path
+    if len(parts) == 3 and parts[1] == "events":
+        return True
+    return False
+
+
 @app.middleware("http")
 async def auth_middleware(request: Request, call_next):
-    if request.url.path not in ["/docs", "/openapi.json", "/login", "/submit-form", "/forget-password"]:
+    path = request.url.path
+    method = request.method
+
+    is_public = (
+        path in PUBLIC_EXACT
+        or (method == "GET" and path.startswith(PUBLIC_PREFIXES_GET))
+        or (method == "GET" and _is_public_event_get(path))
+    )
+
+    if not is_public:
         token = request.headers.get("access-token")
         try:
             jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         except Exception:
             return JSONResponse(status_code=403, content={"detail": "Could not validate credentials"})
+
     response = await call_next(request)
     return response
 
@@ -99,3 +129,7 @@ app.add_middleware(
 app.include_router(contacts.router)
 app.include_router(emails.router)
 app.include_router(auth.router)
+app.include_router(events.router)
+app.include_router(speakers.router)
+app.include_router(posts.router)
+app.include_router(users.router)
