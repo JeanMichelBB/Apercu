@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 
-const EMPTY = { title: '', description: '', location: '', date: '', capacity: '' };
+const EMPTY = { title: '', description: '', location: '', date: '', capacity: '', image_url: '' };
 
 function OrganizerCreateEvent() {
   const { id } = useParams(); // present when editing
@@ -21,6 +21,7 @@ function OrganizerCreateEvent() {
           location: e.location,
           date: e.date ? e.date.slice(0, 16) : '',
           capacity: e.capacity ?? '',
+          image_url: e.image_url ?? '',
         });
       });
     }
@@ -63,6 +64,7 @@ function OrganizerCreateEvent() {
         <input name="location" placeholder="Location" value={form.location} onChange={handleChange} required />
         <input name="date" type="datetime-local" value={form.date} onChange={handleChange} required />
         <input name="capacity" type="number" placeholder="Capacity (optional)" value={form.capacity} onChange={handleChange} min="1" />
+        <input name="image_url" type="url" placeholder="Image URL (optional — leave blank for auto)" value={form.image_url} onChange={handleChange} />
         {error && <p style={{ color: '#c00', margin: 0, fontSize: '0.9rem' }}>{error}</p>}
         <div className="admin-form-actions">
           <button type="submit" className="btn btn-primary" disabled={loading}>

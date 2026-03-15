@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import api from '../../services/api';
+import LazyImage from '../../components/LazyImage/LazyImage';
 import './EventDetailPage.css';
 
 function EventDetailPage() {
@@ -13,16 +14,18 @@ function EventDetailPage() {
   const [error, setError] = useState('');
   const [registered, setRegistered] = useState(false);
   const [actionMsg, setActionMsg] = useState('');
+  const [speakers, setSpeakers] = useState([]);
 
   const isLoggedIn = !!localStorage.getItem('token');
 
   useEffect(() => {
-    const fetches = [api.getEvent(id)];
+    const fetches = [api.getEvent(id), api.getEventSpeakers(id)];
     if (isLoggedIn) fetches.push(api.isRegistered(id));
 
-    Promise.allSettled(fetches).then(([eventRes, regRes]) => {
+    Promise.allSettled(fetches).then(([eventRes, speakersRes, regRes]) => {
       if (eventRes.status === 'fulfilled') setEvent(eventRes.value.data);
       else setError('Event not found.');
+      if (speakersRes?.status === 'fulfilled') setSpeakers(speakersRes.value.data);
       if (regRes?.status === 'fulfilled') setRegistered(regRes.value.data.registered);
       setLoading(false);
     });
@@ -67,6 +70,12 @@ function EventDetailPage() {
       <div className="event-detail-container">
         <button className="event-detail-back" onClick={() => navigate('/events')}>← Back to Events</button>
 
+        <LazyImage
+          className="event-detail-banner"
+          src={event.image_url || `https://picsum.photos/seed/${event.id}/1200/400`}
+          alt={event.title}
+        />
+
         <div className="event-detail-header">
           <h1 className="event-detail-title">{event.title}</h1>
           <div className="event-detail-meta">
@@ -75,6 +84,20 @@ function EventDetailPage() {
             {event.capacity && <span>👥 Capacity: {event.capacity}</span>}
           </div>
         </div>
+
+        {speakers.length > 0 && (
+          <div className="event-detail-speakers">
+            <h2 className="event-detail-speakers-title">Speakers</h2>
+            <div className="event-detail-speakers-list">
+              {speakers.map((s) => (
+                <Link to={`/speakers/${s.id}`} key={s.id} className="event-detail-speaker">
+                  <img src={s.photo_url} alt={s.name} className="event-detail-speaker-photo" />
+                  <span className="event-detail-speaker-name">{s.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="event-detail-body">
           <p className="event-detail-description">{event.description}</p>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import api from '../../services/api';
@@ -30,7 +31,7 @@ function SpeakersPage() {
 
         <div className="speakers-grid">
           {speakers.map((speaker) => (
-            <div key={speaker.id} className="speaker-card">
+            <Link to={`/speakers/${speaker.id}`} key={speaker.id} className="speaker-card">
               {speaker.photo_url ? (
                 <img src={speaker.photo_url} alt={speaker.name} className="speaker-photo" />
               ) : (
@@ -38,7 +39,8 @@ function SpeakersPage() {
               )}
               <h2 className="speaker-name">{speaker.name}</h2>
               <p className="speaker-bio">{speaker.bio}</p>
-            </div>
+              <span className="speaker-profile-link">View profile →</span>
+            </Link>
           ))}
         </div>
       </div>

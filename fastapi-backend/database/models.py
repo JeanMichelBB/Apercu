@@ -51,6 +51,7 @@ class Event(Base):
     capacity = Column(Integer)
     status = Column(String(20), default="draft")  # draft | pending | published
     organizer_id = Column(String(36), ForeignKey("users.id"), nullable=True)
+    image_url = Column(String(500), nullable=True)
     created_at = Column(DateTime, default=func.now())
 
 
@@ -60,6 +61,8 @@ class Speaker(Base):
     name = Column(String(100))
     bio = Column(Text)
     photo_url = Column(String(500))
+    status = Column(String(20), default="approved")  # pending | approved
+    created_by = Column(String(36), ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=func.now())
 
 
@@ -77,10 +80,19 @@ class Registration(Base):
     created_at = Column(DateTime, default=func.now())
 
 
+class SpeakerPost(Base):
+    __tablename__ = "speaker_posts"
+    speaker_id = Column(String(36), ForeignKey("speakers.id"), primary_key=True)
+    post_id = Column(String(36), ForeignKey("blog_posts.id"), primary_key=True)
+
+
 class BlogPost(Base):
     __tablename__ = "blog_posts"
     id = Column(String(36), primary_key=True, default=lambda: str(uuid4()), unique=True)
     title = Column(String(200))
     content = Column(Text)
     published = Column(Boolean, default=False)
+    status = Column(String(20), default="draft")  # draft | pending | published
+    image_url = Column(String(500), nullable=True)
+    created_by = Column(String(36), ForeignKey("users.id"), nullable=True)
     created_at = Column(DateTime, default=func.now())

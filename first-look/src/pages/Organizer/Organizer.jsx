@@ -23,6 +23,8 @@ function Organizer() {
           <p className="organizer-sidebar-title">Organizer</p>
           <NavLink to="/organizer" end className={({ isActive }) => 'organizer-nav-link' + (isActive ? ' active' : '')}>My Events</NavLink>
           <NavLink to="/organizer/create" className={({ isActive }) => 'organizer-nav-link' + (isActive ? ' active' : '')}>Create Event</NavLink>
+          <NavLink to="/organizer/speakers" className={({ isActive }) => 'organizer-nav-link' + (isActive ? ' active' : '')}>My Speakers</NavLink>
+          <NavLink to="/organizer/posts" className={({ isActive }) => 'organizer-nav-link' + (isActive ? ' active' : '')}>My Blog Posts</NavLink>
           <div className="organizer-sidebar-divider" />
           <button className="organizer-nav-link organizer-nav-signout" onClick={signOut}>Sign Out</button>
         </nav>

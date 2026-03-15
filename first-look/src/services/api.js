@@ -61,6 +61,41 @@ const api = {
   getSpeaker: (id) =>
     axios.get(`${BASE_URL}/speakers/${id}`),
 
+  getSpeakerEvents: (id) =>
+    axios.get(`${BASE_URL}/speakers/${id}/events`),
+
+  getSpeakerPosts: (id) =>
+    axios.get(`${BASE_URL}/speakers/${id}/posts`),
+
+  getPostSpeakers: (id) =>
+    axios.get(`${BASE_URL}/posts/${id}/speakers`),
+
+  getEventSpeakers: (id) =>
+    axios.get(`${BASE_URL}/events/${id}/speakers`),
+
+  addEventSpeaker: (eventId, speakerId) =>
+    axios.post(`${BASE_URL}/events/${eventId}/speakers/${speakerId}`, {}, { headers: authHeaders() }),
+
+  removeEventSpeaker: (eventId, speakerId) =>
+    axios.delete(`${BASE_URL}/events/${eventId}/speakers/${speakerId}`, { headers: authHeaders() }),
+
+  // Organizer speaker actions
+  submitSpeaker: (data) =>
+    axios.post(`${BASE_URL}/speakers/submit`, data, { headers: authHeaders() }),
+
+  getMySpeakers: () =>
+    axios.get(`${BASE_URL}/speakers/organizer/my-speakers`, { headers: authHeaders() }),
+
+  // Admin speaker actions
+  getAllSpeakersAdmin: () =>
+    axios.get(`${BASE_URL}/speakers/admin/all`, { headers: authHeaders() }),
+
+  approveSpeaker: (id) =>
+    axios.put(`${BASE_URL}/speakers/${id}/approve`, {}, { headers: authHeaders() }),
+
+  rejectSpeaker: (id) =>
+    axios.put(`${BASE_URL}/speakers/${id}/reject`, {}, { headers: authHeaders() }),
+
   createSpeaker: (data) =>
     axios.post(`${BASE_URL}/speakers`, data, { headers: authHeaders() }),
 
@@ -80,6 +115,9 @@ const api = {
   getAllPosts: () =>
     axios.get(`${BASE_URL}/posts/all`, { headers: authHeaders() }),
 
+  getMyPosts: () =>
+    axios.get(`${BASE_URL}/posts/organizer/my-posts`, { headers: authHeaders() }),
+
   createPost: (data) =>
     axios.post(`${BASE_URL}/posts`, data, { headers: authHeaders() }),
 
@@ -88,6 +126,18 @@ const api = {
 
   deletePost: (id) =>
     axios.delete(`${BASE_URL}/posts/${id}`, { headers: authHeaders() }),
+
+  approvePost: (id) =>
+    axios.put(`${BASE_URL}/posts/${id}/approve`, {}, { headers: authHeaders() }),
+
+  rejectPost: (id) =>
+    axios.put(`${BASE_URL}/posts/${id}/reject`, {}, { headers: authHeaders() }),
+
+  addPostSpeaker: (postId, speakerId) =>
+    axios.post(`${BASE_URL}/posts/${postId}/speakers/${speakerId}`, {}, { headers: authHeaders() }),
+
+  removePostSpeaker: (postId, speakerId) =>
+    axios.delete(`${BASE_URL}/posts/${postId}/speakers/${speakerId}`, { headers: authHeaders() }),
 
   // Registrations (admin)
   getAllRegistrations: () =>

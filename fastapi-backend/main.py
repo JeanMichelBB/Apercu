@@ -37,22 +37,45 @@ def init_database():
     conn.close()
 
 
+def migrate_database():
+    """Add any missing columns to existing tables without touching existing data."""
+    conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
+    with conn.cursor() as cursor:
+        migrations = [
+            ("speakers",   "status",     "ALTER TABLE speakers ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'approved'"),
+            ("speakers",   "created_by", "ALTER TABLE speakers ADD COLUMN created_by VARCHAR(36) NULL"),
+            ("blog_posts", "status",     "ALTER TABLE blog_posts ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'draft'"),
+            ("blog_posts", "created_by", "ALTER TABLE blog_posts ADD COLUMN created_by VARCHAR(36) NULL"),
+        ]
+        for table, column, alter_sql in migrations:
+            cursor.execute(f"SHOW COLUMNS FROM `{table}` LIKE '{column}'")
+            if not cursor.fetchone():
+                cursor.execute(alter_sql)
+        # Migrate existing published blog posts to status='published'
+        cursor.execute("UPDATE blog_posts SET status = 'published' WHERE published = 1 AND status = 'draft'")
+    conn.commit()
+    conn.close()
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # 1. Ensure database and user exist
     init_database()
 
-    # 2. Create tables
+    # 2. Create new tables
     Base.metadata.create_all(bind=engine)
 
-    # 3. Seed admin user if Email table is empty
+    # 3. Add any missing columns to existing tables
+    migrate_database()
+
+    # 4. Seed admin user if Email table is empty
     session = SessionLocal()
     if not session.query(Email).all():
         hashed_password = bcrypt.hashpw(ADMIN_PASSWORD.encode(), bcrypt.gensalt())
         session.add(Email(email=ADMIN_USERNAME, password=hashed_password.decode()))
         session.commit()
 
-    # 4. Seed sample data if database is empty
+    # 5. Seed sample data if database is empty
     seed_if_empty(session)
     session.close()
 
@@ -67,12 +90,14 @@ PUBLIC_PREFIXES_GET = ("/speakers", "/posts")
 
 
 def _is_public_event_get(path: str) -> bool:
-    # Allow GET /events and GET /events/{id} but not organizer/admin sub-paths
+    # Allow GET /events and GET /events/{id} and GET /events/{id}/speakers
     if path == "/events":
         return True
     parts = path.split("/")
-    # /events/{id} — exactly 3 parts, no sub-path
-    if len(parts) == 3 and parts[1] == "events":
+    if len(parts) >= 3 and parts[1] == "events":
+        # Block organizer/admin sub-paths
+        if len(parts) > 3 and parts[3] in ("organizer", "admin", "registrations", "is-registered", "register"):
+            return False
         return True
     return False
 
@@ -93,7 +118,15 @@ async def auth_middleware(request: Request, call_next):
         try:
             jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         except Exception:
-            return JSONResponse(status_code=403, content={"detail": "Could not validate credentials"})
+            origin = request.headers.get("origin", "*")
+            return JSONResponse(
+                status_code=403,
+                content={"detail": "Could not validate credentials"},
+                headers={
+                    "Access-Control-Allow-Origin": origin,
+                    "Access-Control-Allow-Credentials": "true",
+                },
+            )
 
     response = await call_next(request)
     return response

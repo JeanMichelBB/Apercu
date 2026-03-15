@@ -40,6 +40,7 @@ class EventCreate(BaseModel):
     date: datetime
     capacity: Optional[int] = None
     status: Optional[str] = "draft"
+    image_url: Optional[str] = None
 
 
 class EventUpdate(BaseModel):
@@ -49,6 +50,7 @@ class EventUpdate(BaseModel):
     date: Optional[datetime] = None
     capacity: Optional[int] = None
     status: Optional[str] = None
+    image_url: Optional[str] = None
 
 
 class SpeakerCreate(BaseModel):
@@ -61,12 +63,14 @@ class BlogPostCreate(BaseModel):
     title: str
     content: str
     published: bool = False
+    image_url: Optional[str] = None
 
 
 class BlogPostUpdate(BaseModel):
     title: Optional[str] = None
     content: Optional[str] = None
     published: Optional[bool] = None
+    image_url: Optional[str] = None
 
 
 class ChangePassword(BaseModel):

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Query
 from database.engine import SessionLocal
-from database.models import Event, Registration, User
+from database.models import Event, Registration, User, Speaker, EventSpeaker
 from schemas import EventCreate, EventUpdate
 from routers.auth import require_admin, require_organizer, get_current_user
 from typing import Optional
@@ -22,7 +22,26 @@ async def list_events(
             query = query.filter(Event.title.ilike(f"%{search}%"))
         total = query.count()
         events = query.order_by(Event.date).offset((page - 1) * limit).limit(limit).all()
-        return {"total": total, "page": page, "limit": limit, "items": [_serialize(e) for e in events]}
+
+        # Batch-load speakers for all returned events
+        event_ids = [e.id for e in events]
+        links = db.query(EventSpeaker).filter(EventSpeaker.event_id.in_(event_ids)).all()
+        speaker_ids = list({l.speaker_id for l in links})
+        speakers_map = {
+            s.id: s for s in db.query(Speaker).filter(
+                Speaker.id.in_(speaker_ids), Speaker.status == "approved"
+            ).all()
+        }
+        event_speakers: dict[str, list] = {e.id: [] for e in events}
+        for link in links:
+            s = speakers_map.get(link.speaker_id)
+            if s:
+                event_speakers[link.event_id].append(s)
+
+        return {
+            "total": total, "page": page, "limit": limit,
+            "items": [_serialize(e, event_speakers.get(e.id, [])) for e in events],
+        }
 
 
 @router.get("/my/registrations")
@@ -44,6 +63,52 @@ async def get_event(event_id: str):
         if not event:
             raise HTTPException(status_code=404, detail="Event not found")
         return _serialize(event)
+
+
+@router.get("/{event_id}/speakers")
+async def get_event_speakers(event_id: str):
+    with SessionLocal() as db:
+        links = db.query(EventSpeaker).filter(EventSpeaker.event_id == event_id).all()
+        speaker_ids = [l.speaker_id for l in links]
+        speakers = db.query(Speaker).filter(Speaker.id.in_(speaker_ids)).order_by(Speaker.name).all()
+        return [{"id": s.id, "name": s.name, "bio": s.bio, "photo_url": s.photo_url or f"https://i.pravatar.cc/150?u={s.id}"} for s in speakers]
+
+
+@router.post("/{event_id}/speakers/{speaker_id}")
+async def add_event_speaker(event_id: str, speaker_id: str, organizer: dict = Depends(require_organizer)):
+    organizer_id = organizer.get("user_id")
+    with SessionLocal() as db:
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
+            raise HTTPException(status_code=404, detail="Event not found")
+        if organizer.get("role") != "admin" and event.organizer_id != organizer_id:
+            raise HTTPException(status_code=403, detail="Not your event")
+        speaker = db.query(Speaker).filter(Speaker.id == speaker_id, Speaker.status == "approved").first()
+        if not speaker:
+            raise HTTPException(status_code=404, detail="Speaker not found")
+        exists = db.query(EventSpeaker).filter_by(event_id=event_id, speaker_id=speaker_id).first()
+        if exists:
+            raise HTTPException(status_code=400, detail="Speaker already linked")
+        db.add(EventSpeaker(event_id=event_id, speaker_id=speaker_id))
+        db.commit()
+        return {"detail": "Speaker added"}
+
+
+@router.delete("/{event_id}/speakers/{speaker_id}")
+async def remove_event_speaker(event_id: str, speaker_id: str, organizer: dict = Depends(require_organizer)):
+    organizer_id = organizer.get("user_id")
+    with SessionLocal() as db:
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
+            raise HTTPException(status_code=404, detail="Event not found")
+        if organizer.get("role") != "admin" and event.organizer_id != organizer_id:
+            raise HTTPException(status_code=403, detail="Not your event")
+        link = db.query(EventSpeaker).filter_by(event_id=event_id, speaker_id=speaker_id).first()
+        if not link:
+            raise HTTPException(status_code=404, detail="Speaker not linked")
+        db.delete(link)
+        db.commit()
+        return {"detail": "Speaker removed"}
 
 
 # ── Organizer ─────────────────────────────────────────────────────────────────
@@ -248,7 +313,7 @@ async def all_registrations(admin=Depends(require_admin)):
         ]
 
 
-def _serialize(event: Event) -> dict:
+def _serialize(event: Event, speakers: list = []) -> dict:
     return {
         "id": event.id,
         "title": event.title,
@@ -258,5 +323,10 @@ def _serialize(event: Event) -> dict:
         "capacity": event.capacity,
         "status": event.status,
         "organizer_id": event.organizer_id,
+        "image_url": event.image_url,
         "created_at": event.created_at.isoformat() if event.created_at else None,
+        "speakers": [
+            {"id": s.id, "name": s.name, "photo_url": s.photo_url or f"https://i.pravatar.cc/150?u={s.id}"}
+            for s in speakers
+        ],
     }

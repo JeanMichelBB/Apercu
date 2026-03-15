@@ -1,74 +1,101 @@
 .footer {
-    padding: 2rem 0 1rem 0;
-    background: #fff;
-    border-top: 1px solid #000;
-    text-align: center;
+  background: #1a1a1a;;
+  border-top: none;
+  padding: 4rem 2rem 0;
 }
 
-.title {
-    font-size: 1.5rem;
-    margin: 0;
-    text-align: left;
-    padding-left: 4rem;
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid #333;
 }
 
-.content {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 4rem;
-    padding-top: 1rem;
+/* Brand column */
+.footer-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  margin-bottom: 0.75rem;
 }
 
-.left-content {
-    flex: 1;
-    text-align: left;
+.footer-tagline {
+  font-size: 0.9rem;
+  color: #bbb;
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+  max-width: 240px;
 }
 
-.right-content {
-    flex: 1;
-    text-align: left;
+.footer-portfolio-note {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0;
+  max-width: 240px;
+  line-height: 1.5;
 }
 
-.link {
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: #000;
-    display: block;
-    margin: 0.5rem 0;
+/* Nav columns */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
-.link:hover {
-    text-decoration: underline;
+.footer-col-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin: 0 0 0.5rem;
 }
 
-.copy-right {
-    margin-top: 2rem;
-    padding: 1rem 0;
-    font-size: 0.85rem;
-    color: #555;
+.footer-link {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #999;
+  transition: color 0.15s;
 }
 
-.section {
-    border-left: 1px solid #000;
-    height: 80px;
-    margin: 0 2rem;
+.footer-link:hover {
+  color: #fff;
+  text-decoration: none;
 }
 
-@media only screen and (max-width: 768px) {
-    .title {
-        padding-left: 1.5rem;
-    }
-
-    .content {
-        padding-left: 1.5rem;
-        padding-right: 1.5rem;
-    }
+/* Bottom bar */
+.footer-bottom {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.25rem 0;
+  font-size: 0.8rem;
+  color: #555;
 }
 
-@media only screen and (min-width: 769px) and (max-width: 1024px) {
-    .title {
-        font-size: 1.25rem;
-    }
+@media (max-width: 900px) {
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .footer-tagline,
+  .footer-portfolio-note {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 540px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }

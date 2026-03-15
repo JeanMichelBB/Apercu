@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from database.engine import SessionLocal, engine, Base
-from database.models import Event, Speaker, EventSpeaker, BlogPost, Registration
+from database.models import Event, Speaker, EventSpeaker, BlogPost, SpeakerPost, Registration
 from datetime import datetime
 
 
@@ -49,6 +49,7 @@ def _build_events():
     return [
         Event(
             title="Tech Summit Montreal 2026",
+            image_url="https://picsum.photos/seed/techsummit/800/400",
             description=(
                 "Join us for the biggest tech conference in Montreal. "
                 "Three days of talks, workshops, and networking with industry leaders. "
@@ -63,6 +64,7 @@ def _build_events():
         ),
         Event(
             title="DevOps & Kubernetes Workshop",
+            image_url="https://picsum.photos/seed/devops/800/400",
             description=(
                 "A full-day hands-on workshop covering Kubernetes from zero to production. "
                 "You will learn how to containerize applications, write Helm charts, set up CI/CD pipelines, "
@@ -76,6 +78,7 @@ def _build_events():
         ),
         Event(
             title="AI & The Future of Work",
+            image_url="https://picsum.photos/seed/aiwork/800/400",
             description=(
                 "A panel discussion exploring how artificial intelligence is reshaping industries and job markets. "
                 "Our speakers will share real-world examples of AI adoption, the skills employers are looking for, "
@@ -89,6 +92,7 @@ def _build_events():
         ),
         Event(
             title="Startup Pitch Night",
+            image_url="https://picsum.photos/seed/startup/800/400",
             description=(
                 "Ten early-stage startups pitch their ideas to a panel of investors and industry experts. "
                 "Come support the next generation of entrepreneurs and vote for your favourite pitch.\n\n"
@@ -101,6 +105,7 @@ def _build_events():
         ),
         Event(
             title="Winter Hackathon 2026",
+            image_url="https://picsum.photos/seed/hackathon/800/400",
             description=(
                 "48 hours to build something amazing. Form a team or join solo — we'll help you find teammates. "
                 "Prizes totalling $10,000 across three categories: Best UX, Best Technical Achievement, and Most Impactful."
@@ -117,6 +122,7 @@ def _build_posts():
     return [
         BlogPost(
             title="Why Kubernetes is the New Standard for Deployment",
+            image_url="https://picsum.photos/seed/kubernetes/800/400",
             content=(
                 "Over the past five years, Kubernetes has gone from an experimental Google project to the de facto "
                 "standard for deploying containerized applications. But what makes it so compelling?\n\n"
@@ -132,6 +138,7 @@ def _build_posts():
         ),
         BlogPost(
             title="5 Things We Learned Organizing Tech Summit Montreal",
+            image_url="https://picsum.photos/seed/techsummit5/800/400",
             content=(
                 "After months of planning, Tech Summit Montreal 2025 brought together over 400 attendees, "
                 "22 speakers, and more coffee than we'd care to admit. Here's what we learned.\n\n"
@@ -153,6 +160,7 @@ def _build_posts():
         ),
         BlogPost(
             title="Announcing Our 2026 Speaker Lineup",
+            image_url="https://picsum.photos/seed/speakers2026/800/400",
             content=(
                 "We are thrilled to announce the first wave of speakers for Tech Summit Montreal 2026.\n\n"
                 "This year's theme is 'Building for Scale' — and our lineup reflects exactly that. "
@@ -165,6 +173,7 @@ def _build_posts():
         ),
         BlogPost(
             title="Call for Proposals: Tech Summit Montreal 2026",
+            image_url="https://picsum.photos/seed/cfp2026/800/400",
             content=(
                 "We are now accepting proposals for Tech Summit Montreal 2026.\n\n"
                 "We are looking for talks in the following areas:\n"
@@ -213,6 +222,21 @@ def _insert(db):
     for p in posts:
         db.add(p)
     db.commit()
+    for p in posts:
+        db.refresh(p)
+
+    # speakers[2]=Aisha → Kubernetes post; speakers[1]=James → Summit post + Lineup + CFP
+    # speakers[3]=Lucas → AI post (not a blog post but makes sense thematically)
+    post_links = [
+        (speakers[2].id, posts[0].id),  # Aisha → Why Kubernetes
+        (speakers[1].id, posts[1].id),  # James → 5 Things We Learned
+        (speakers[0].id, posts[1].id),  # Marie → 5 Things We Learned
+        (speakers[1].id, posts[2].id),  # James → Announcing Speaker Lineup
+        (speakers[1].id, posts[3].id),  # James → Call for Proposals
+    ]
+    for speaker_id, post_id in post_links:
+        db.add(SpeakerPost(speaker_id=speaker_id, post_id=post_id))
+    db.commit()
 
     published_events = sum(1 for e in events if e.status == "published")
     published_posts = sum(1 for p in posts if p.published)
@@ -220,6 +244,33 @@ def _insert(db):
     print(f"  {len(speakers)} speakers")
     print(f"  {len(events)} events ({published_events} published)")
     print(f"  {len(posts)} blog posts ({published_posts} published)")
+
+
+def _seed_speaker_post_links(db):
+    """Link speakers to posts by matching known names — safe to call on existing data."""
+    speakers = {s.name: s for s in db.query(Speaker).all()}
+    posts = {p.title: p for p in db.query(BlogPost).all()}
+
+    name_links = [
+        ("Aisha Tremblay",  "Why Kubernetes is the New Standard for Deployment"),
+        ("James Carter",    "5 Things We Learned Organizing Tech Summit Montreal"),
+        ("Marie Dupont",    "5 Things We Learned Organizing Tech Summit Montreal"),
+        ("James Carter",    "Announcing Our 2026 Speaker Lineup"),
+        ("James Carter",    "Call for Proposals: Tech Summit Montreal 2026"),
+    ]
+    added = 0
+    for speaker_name, post_title in name_links:
+        s = speakers.get(speaker_name)
+        p = posts.get(post_title)
+        if not s or not p:
+            continue
+        exists = db.query(SpeakerPost).filter_by(speaker_id=s.id, post_id=p.id).first()
+        if not exists:
+            db.add(SpeakerPost(speaker_id=s.id, post_id=p.id))
+            added += 1
+    if added:
+        db.commit()
+        print(f"🔗 Seeded {added} speaker-post link(s).")
 
 
 def seed_if_empty(db):
@@ -231,6 +282,9 @@ def seed_if_empty(db):
     )
     if already_seeded:
         print("⏭  Seed skipped — database already contains data.")
+        # Still ensure speaker-post links exist (new feature, may be missing on old DBs)
+        if db.query(SpeakerPost).count() == 0:
+            _seed_speaker_post_links(db)
         return
     print("🌱 Empty database detected — running seed...")
     _insert(db)
@@ -242,6 +296,7 @@ if __name__ == "__main__":
     db = SessionLocal()
     print("⚠️  Wiping existing seed data...")
     db.query(EventSpeaker).delete()
+    db.query(SpeakerPost).delete()
     db.query(Registration).delete()
     db.query(Event).delete()
     db.query(Speaker).delete()

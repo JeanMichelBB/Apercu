@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import api from '../../services/api';
+import LazyImage from '../../components/LazyImage/LazyImage';
 import './EventsPage.css';
 
 function EventsPage() {
@@ -62,17 +63,24 @@ function EventsPage() {
         <div className="events-grid">
           {events.map((event) => (
             <Link to={`/events/${event.id}`} key={event.id} className="event-card">
-              <div className="event-card-date">
-                {new Date(event.date).toLocaleDateString('en-CA', {
-                  year: 'numeric', month: 'short', day: 'numeric',
-                })}
+              <LazyImage
+                className="event-card-img"
+                src={event.image_url || `https://picsum.photos/seed/${event.id}/800/400`}
+                alt={event.title}
+              />
+              <div className="event-card-body">
+                <div className="event-card-date">
+                  {new Date(event.date).toLocaleDateString('en-CA', {
+                    year: 'numeric', month: 'short', day: 'numeric',
+                  })}
+                </div>
+                <h2 className="event-card-title">{event.title}</h2>
+                <p className="event-card-location">{event.location}</p>
+                <p className="event-card-desc">
+                  {event.description?.slice(0, 100)}{event.description?.length > 100 ? '...' : ''}
+                </p>
+                <span className="event-card-link">View details →</span>
               </div>
-              <h2 className="event-card-title">{event.title}</h2>
-              <p className="event-card-location">{event.location}</p>
-              <p className="event-card-desc">
-                {event.description?.slice(0, 120)}{event.description?.length > 120 ? '...' : ''}
-              </p>
-              <span className="event-card-link">View details →</span>
             </Link>
           ))}
         </div>

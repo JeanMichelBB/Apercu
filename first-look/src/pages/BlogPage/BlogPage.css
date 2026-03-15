@@ -37,12 +37,27 @@
 
 .blog-card {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 2rem 0;
+  flex-direction: row;
+  gap: 0;
   border-bottom: 1px solid #000;
   text-decoration: none;
   color: #000;
+  overflow: hidden;
+}
+
+.blog-card-img {
+  width: 220px;
+  min-width: 220px;
+  height: 160px;
+  border-right: 1px solid #000;
+}
+
+.blog-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  flex: 1;
 }
 
 .blog-card:first-child {
@@ -110,5 +125,18 @@
 @media (max-width: 600px) {
   .blog-title {
     font-size: 1.75rem;
+  }
+
+  .blog-card {
+    flex-direction: column;
+  }
+
+  .blog-card-img {
+    width: 100%;
+    min-width: unset;
+    height: 180px;
+    border-right: none;
+    border-bottom: 1px solid #000;
+    flex-shrink: 0;
   }
 }

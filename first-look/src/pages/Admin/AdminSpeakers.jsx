@@ -9,7 +9,7 @@ function AdminSpeakers() {
   const [editId, setEditId] = useState(null);
   const [error, setError] = useState('');
 
-  const load = () => api.getSpeakers().then((r) => setSpeakers(r.data)).catch(() => {});
+  const load = () => api.getAllSpeakersAdmin().then((r) => setSpeakers(r.data)).catch(() => {});
 
   useEffect(() => { load(); }, []);
 
@@ -39,16 +39,60 @@ function AdminSpeakers() {
 
   const cancelEdit = () => { setEditId(null); setForm(EMPTY_FORM); };
 
+  const handleApprove = async (id) => {
+    await api.approveSpeaker(id);
+    load();
+  };
+
+  const handleReject = async (id) => {
+    await api.rejectSpeaker(id);
+    load();
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this speaker?')) return;
     await api.deleteSpeaker(id);
     load();
   };
 
+  const pending = speakers.filter((s) => s.status === 'pending');
+  const approved = speakers.filter((s) => s.status === 'approved');
+
   return (
     <div>
       <h1 className="admin-section-title">Speakers</h1>
 
+      {/* Pending approvals */}
+      {pending.length > 0 && (
+        <>
+          <h3 style={{ marginBottom: '1rem' }}>Pending Approval ({pending.length})</h3>
+          <table className="admin-table" style={{ marginBottom: '2.5rem' }}>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Bio</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pending.map((s) => (
+                <tr key={s.id}>
+                  <td>{s.name}</td>
+                  <td>{s.bio?.slice(0, 80)}{s.bio?.length > 80 ? '...' : ''}</td>
+                  <td>
+                    <div className="btn-group">
+                      <button className="btn btn-primary" onClick={() => handleApprove(s.id)}>Approve</button>
+                      <button className="btn btn-danger" onClick={() => handleReject(s.id)}>Reject</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+
+      {/* Add/edit form */}
       <form className="admin-form" onSubmit={handleSubmit}>
         <h3>{editId ? 'Edit Speaker' : 'New Speaker'}</h3>
         <input name="name" placeholder="Full name" value={form.name} onChange={handleChange} required />
@@ -61,6 +105,7 @@ function AdminSpeakers() {
         </div>
       </form>
 
+      {/* Approved speakers */}
       <table className="admin-table">
         <thead>
           <tr>
@@ -70,10 +115,10 @@ function AdminSpeakers() {
           </tr>
         </thead>
         <tbody>
-          {speakers.length === 0 && (
-            <tr><td colSpan={3} className="admin-status">No speakers yet.</td></tr>
+          {approved.length === 0 && (
+            <tr><td colSpan={3} className="admin-status">No approved speakers yet.</td></tr>
           )}
-          {speakers.map((s) => (
+          {approved.map((s) => (
             <tr key={s.id}>
               <td>{s.name}</td>
               <td>{s.bio?.slice(0, 80)}{s.bio?.length > 80 ? '...' : ''}</td>

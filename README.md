@@ -1,124 +1,164 @@
 # Aperçu
 
-![Apercu Banner](apercuweb.jpg)
+![Aperçu Banner](apercuweb.jpg)
 
-**Aperçu** is a web application designed to give clients an insight into my work, services, and expertise. This app offers an easy-to-navigate interface where clients can learn more about the services I provide, view pricing details, and find out more about my background and skills.
+**Aperçu** is a full-stack event management platform. It lets organizers create events, manage speakers, and publish blog posts — all subject to admin approval — while the public can browse events, speaker profiles, and the blog without logging in.
 
 ## Features
 
-- **About Me**: A dedicated section that showcases my experience, background, and unique skills.
-- **Services**: Detailed descriptions of each service offered, with relevant information on what clients can expect.
-- **Pricing**: Transparent pricing details for each service, ensuring clients have clarity on costs.
-- **Contact Form**: Allows clients to reach out with inquiries directly through the app.
-- **User Authentication**: Secure login for clients to save their favorite services or track their inquiries.
+### Public
+- Browse and search upcoming events
+- View event details and linked speakers
+- Read published blog posts with author profiles
+- Speaker public profiles with their events and blog posts
+- Contact form
 
-## Technology Stack
+### Users (registered)
+- Register and log in
+- Register / cancel registration for events
+- View personal registration history
 
-- **Frontend**: React
-- **Backend**: Python FastAPI
-- **Database**: MySQL
-- **Containerization**: Docker
-- **Deployment**: Hosted on [Synology NAS](https://apercu.sacenpapier.synology.me/)
+### Organizers
+- Create and manage events (draft → pending → published)
+- Submit speakers for admin approval
+- Link approved speakers to their events
+- Write blog posts (draft → pending → published)
+- Link speakers as authors on blog posts
 
-## Installation
+### Admins
+- Approve or reject events, speakers, and blog posts
+- Full CRUD on all content
+- Manage users and roles
+- View contact form submissions
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (for frontend)
-- [Python 3.9+](https://www.python.org/) (for backend)
-- [MySQL](https://www.mysql.com/) (or another SQL-compatible database)
-- [Docker](https://www.docker.com/) (optional, for containerized deployment)
+## Tech Stack
 
-### Steps
+| Layer | Technology |
+|---|---|
+| Frontend | React 18 + Vite |
+| Backend | Python FastAPI |
+| Database | MySQL |
+| Auth | JWT (HS256) via `access-token` header |
+| Containerization | Docker / Docker Compose |
+| CI/CD | GitHub Actions → Docker Hub |
+| Deployment | k3s (Kubernetes) |
 
-## How to Run with Docker Compose
+## Project Structure
 
-To run Aperçu using Docker Compose, follow these steps.
+```
+apercu/
+├── first-look/          # React + Vite frontend
+│   └── src/
+│       ├── pages/       # Route-level components (Admin, Organizer, public)
+│       ├── components/  # Reusable UI (Header, Footer, LazyImage, …)
+│       ├── services/    # api.js — all Axios calls
+│       └── locales/     # i18n translations (en / fr)
+├── fastapi-backend/     # FastAPI backend
+│   ├── main.py          # App entry, middleware, DB init + auto-migration
+│   ├── database/        # SQLAlchemy engine + models
+│   ├── routers/         # auth, events, speakers, posts, users, contacts
+│   ├── schemas.py       # Pydantic request/response models
+│   └── seed.py          # Sample data seeded on first run
+├── docker-compose.yml
+└── .github/workflows/deploy.yml
+```
 
-### Step 1: Set Up Environment Variables
+## Environment Variables
 
-1. **Create a `.env` file in the root directory** with the following variables to set up the environment for Docker Compose:
+Create a `.env` file at the project root:
 
-   ```env
-   # Root .env
-   MYSQL_ROOT_PASSWORD=your_mysql_root_password
-   MYSQL_DATABASE=apercu_db
-   MYSQL_USER=apercu_user
-   MYSQL_PASSWORD=your_mysql_password
-    ```
-2. **Create a `backend/.env` file** with the following variables to set up the backend environment:
+```env
+# Database
+MYSQL_ROOT_PASSWORD=your_root_password
+MYSQL_DATABASE=apercu
+MYSQL_USER=apercu_user
+MYSQL_PASSWORD=your_password
 
-   ```env
-   # backend/.env
-   DATABASE_URL=mysql://apercu_user:your_mysql_password@mysql:3306/apercu_db
-   ```
+# Backend
+SQLALCHEMY_DATABASE_URL=mysql+pymysql://apercu_user:your_password@mysql:3306/apercu
+DB_HOST=mysql
+DB_NAME=apercu
+DB_USER=apercu_user
+DB_PASSWORD=your_password
+DB_ROOT_PASSWORD=your_root_password
 
-3. **Create a `frontend/.env` file** with the following variables to set up the frontend environment:
+# Auth
+SECRET_KEY=your_jwt_secret
 
-   ```env
-   # frontend/.env
-   REACT_APP_API_URL=http://localhost:8000
-   ```
-### Step 2: Build and Run the Docker Containers
+# Admin seed account
+ADMIN_USERNAME=admin@example.com
+ADMIN_PASSWORD=your_admin_password
 
-1. **Build the Docker containers** using Docker Compose:
+# Email (SMTP via Gmail)
+FROM_EMAIL=your@gmail.com
+FROM_PASSWORD=your_app_password
+```
 
-   ```bash
-   docker-compose up --build
-   ```
+Create `first-look/.env` for the frontend build:
 
-2. **Access the Aperçu app** by visiting [http://localhost:3000](http://localhost:3000) in your web browser.
+```env
+VITE_APP_API_URL=http://localhost:8001
+```
 
+## Running with Docker Compose
 
-## How to Run Locally for Development
+```bash
+docker-compose up --build
+```
 
-To run Aperçu locally for development, follow these steps.
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:3001 |
+| Backend API | http://localhost:8001 |
+| Swagger docs | http://localhost:8001/docs |
 
-### Step 1: Set Up the Backend
+## Running Locally for Development
 
-1. **Navigate to the `backend` directory**:
+**Backend:**
+```bash
+cd fastapi-backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
 
-   ```bash
-   cd backend
-   ```
-2. **Install the Python dependencies**:
+**Frontend:**
+```bash
+cd first-look
+npm install
+npm run dev
+```
 
-   ```bash
-    pip install -r requirements.txt
-    ```
-3. **Run the FastAPI server**:
+## Database Migrations
 
-   ```bash
-   uvicorn main:app --reload
-   ```
-4. **Access the FastAPI server** by visiting [http://localhost:8000/docs](http://localhost:8000/docs) in your web browser.
+No migration tool required. On every startup the backend:
 
-### Step 2: Set Up the Frontend
+1. Creates the database and user if they don't exist
+2. Creates any missing tables (`CREATE TABLE IF NOT EXISTS`)
+3. Adds any missing columns to existing tables automatically
+4. Seeds sample data on first run
 
-1. **Navigate to the `frontend` directory**:
+## CI/CD
 
-   ```bash
-   cd frontend
-   ```
-2. **Install the Node.js dependencies**:
+Pushing to `main` triggers GitHub Actions which builds and pushes Docker images to Docker Hub:
 
-   ```bash
-    npm install
-    ```
-3. **Run the React development server**:
+- `jeanmichelbb/ap-fe:latest`
+- `jeanmichelbb/ap-be:latest`
 
-   ```bash
-   npm run dev
-   ```
-4. **Access the React app** by visiting [http://localhost:3000](http://localhost:3000) in your web browser.
+## Content Status Workflows
 
-## Acknowledgements
+```
+Events:   draft → pending → published
+Speakers: pending → approved
+Posts:    draft → pending → published
+```
 
-- [Alembic](https://alembic.sqlalchemy.org/en/latest/) for database migrations
-- [Docker](https://www.docker.com/) for containerization
-- [FastAPI](https://fastapi.tiangolo.com/) for the backend framework
-- [React](https://reactjs.org/) for the frontend library
-- [SQLAlchemy](https://www.sqlalchemy.org/) for the database toolkit
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [UVicorn](https://www.uvicorn.org/) for the ASGI server
-- [Visual Studio Code](https://code.visualstudio.com/) for the code editor
+Organizers submit content for review. Admins approve or reject. Only published/approved content is visible to the public.
 
+## API Auth
+
+All endpoints require an `access-token` header with a valid JWT except:
+
+- `GET /events`, `/events/:id`, `/events/:id/speakers`
+- `GET /speakers`, `/speakers/:id`, `/speakers/:id/events`, `/speakers/:id/posts`
+- `GET /posts`, `/posts/:id`, `/posts/:id/speakers`
+- `POST /login`, `/auth/register`, `/auth/user-login`, `/auth/forgot-password`, etc.

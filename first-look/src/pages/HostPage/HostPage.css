@@ -1,0 +1,173 @@
+.host-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero */
+.host-hero {
+  text-align: center;
+  padding: 5rem 2rem 4rem;
+  border-bottom: 1px solid #000;
+}
+
+.host-hero-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.host-hero-sub {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+.host-cta {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  border: 1px solid #000;
+}
+
+.host-cta:hover {
+  background: #333;
+}
+
+/* Steps */
+.host-steps-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  width: 100%;
+}
+
+.host-steps-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 3rem;
+}
+
+.host-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.host-step {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.host-step:first-child {
+  border-top: 1px solid #eee;
+}
+
+.host-step-left {
+  flex-shrink: 0;
+  width: 3rem;
+}
+
+.host-step-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ccc;
+}
+
+.host-step-right {
+  flex: 1;
+}
+
+.host-step-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.host-step-desc {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.6;
+  margin: 0 0 0.4rem;
+}
+
+.host-step-detail {
+  font-size: 0.85rem;
+  color: #888;
+  margin: 0;
+}
+
+/* FAQ */
+.host-faq {
+  background: #f9f9f9;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 5rem 2rem;
+}
+
+.host-faq-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  max-width: 760px;
+  margin: 0 auto 3rem;
+}
+
+.host-faq-list {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.host-faq-item h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.host-faq-item p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Bottom CTA */
+.host-bottom-cta {
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.host-bottom-cta h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+
+.host-bottom-cta p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0 0 2rem;
+}
+
+@media (max-width: 600px) {
+  .host-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .host-step {
+    gap: 1rem;
+  }
+}
