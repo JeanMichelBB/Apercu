@@ -106,7 +106,7 @@ function HomePage() {
       <section className="home-organizer">
         <h2>Want to host an event?</h2>
         <p>Create an organizer account and submit your event for review. Once approved it goes live to all attendees.</p>
-        <Link to="/register" className="home-cta-primary">Get Started as Organizer</Link>
+        <Link to="/register?role=organizer" className="home-cta-primary">Get Started as Organizer</Link>
       </section>
 
       <Footer />

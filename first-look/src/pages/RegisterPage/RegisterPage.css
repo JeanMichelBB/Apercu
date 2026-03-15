@@ -1,21 +1,9 @@
-.register {
-  display: flex;
-  justify-content: center;
-  padding: 3rem 1rem;
-}
-
-.register-container {
-  border: 1px solid #000;
-  text-align: center;
-  padding: 2rem 1.5rem;
-  width: 100%;
-  max-width: 420px;
-}
+@import '../LoginPage/LoginPage.css';
 
 .register-tabs {
   display: flex;
   border: 1px solid #000;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .register-tab {
@@ -27,6 +15,7 @@
   font-size: 0.95rem;
   font-family: inherit;
   color: #555;
+  transition: background 0.15s;
 }
 
 .register-tab:first-child {

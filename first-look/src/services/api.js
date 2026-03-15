@@ -204,7 +204,7 @@ const api = {
     axios.post(`${BASE_URL}/auth/user-login`, data),
 
   adminLogin: (email, password) =>
-    axios.post(`${BASE_URL}/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`),
+    axios.post(`${BASE_URL}/login`, { email, password }),
 
   changePassword: (data) =>
     axios.put(`${BASE_URL}/auth/password`, data, { headers: authHeaders() }),

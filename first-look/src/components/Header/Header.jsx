@@ -1,24 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { isLoggedIn, isAdmin, isOrganizer, getInitial, getDisplayName, signOut } from '../../services/auth';
 import api from '../../services/api';
 import './Header.css';
 
 const Header = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Login form state
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginIconPulse, setLoginIconPulse] = useState(false);
-
-  const otherLanguage = i18n.language === 'en' ? 'fr' : 'en';
 
   useEffect(() => {
     setLoggedIn(isLoggedIn());
@@ -47,23 +45,25 @@ const Header = () => {
     return () => window.removeEventListener('openLoginDropdown', handler);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoginError('');
     setLoginLoading(true);
     try {
-      let token, role;
+      let token;
       try {
         const res = await api.userLogin({ email, password });
         token = res.data.token;
-        role = JSON.parse(atob(token.split('.')[1])).role;
       } catch {
         const res = await api.adminLogin(email, password);
         token = res.data.token;
-        role = 'admin';
       }
       localStorage.setItem('token', token);
-      // Reload current page — user stays exactly where they are
       window.location.reload();
     } catch {
       setLoginError('Invalid email or password');
@@ -72,21 +72,33 @@ const Header = () => {
     }
   };
 
+  const navLinks = [
+    { to: '/events', label: 'Events' },
+    { to: '/speakers', label: 'Speakers' },
+    { to: '/blog', label: 'Blog' },
+    { to: '/about', label: t('header.about') },
+    { to: '/contact', label: t('header.contact') },
+  ];
+
   return (
     <header className="header">
       <div className="header-container">
-        <Link to="/" className="Link"><h2 className='text-logo'>{t('header.logo')}</h2></Link>
-        <Link to="/events" className="link">Events</Link>
-        <Link to="/speakers" className="link">Speakers</Link>
-        <Link to="/blog" className="link">Blog</Link>
-        <Link to="/about" className="link">{t('header.about')}</Link>
-        <Link to="/contact" className="link">{t('header.contact')}</Link>
+        <Link to="/" className="Link"><h2 className="text-logo">{t('header.logo')}</h2></Link>
+
+        <nav className={`header-nav${mobileOpen ? ' header-nav--open' : ''}`}>
+          {navLinks.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => `link${isActive ? ' link--active' : ''}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
 
         <div className="header-auth">
-          <button className="language-button" onClick={() => i18n.changeLanguage(otherLanguage)}>
-            {otherLanguage.toUpperCase()}
-          </button>
-
           {!loggedIn && (
             <Link to="/register" className="header-signup-btn">Sign Up</Link>
           )}
@@ -175,8 +187,33 @@ const Header = () => {
               )}
             </div>
           )}
+
+          <button
+            className={`hamburger${mobileOpen ? ' hamburger--open' : ''}`}
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
       </div>
+
+      {mobileOpen && (
+        <nav className="mobile-nav">
+          {navLinks.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) => `mobile-nav-link${isActive ? ' mobile-nav-link--active' : ''}`}
+              onClick={() => setMobileOpen(false)}
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </header>
   );
 };

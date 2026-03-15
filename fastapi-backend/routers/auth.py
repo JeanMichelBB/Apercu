@@ -83,9 +83,9 @@ async def require_organizer(access_token: Optional[str] = Header(..., alias="acc
 
 
 @router.post("/login")
-async def login(email: str, password: str):
-    if authenticate(email, password):
-        token = generate_token(email, role="admin")
+async def login(body: UserLogin):
+    if authenticate(body.email, body.password):
+        token = generate_token(body.email, role="admin")
         return {"token": token}
     raise HTTPException(status_code=401, detail="Invalid email or password")
 

@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, BrowserRouter, useLocation } from 'react-router-dom';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import ContactPage from './pages/ContactPage/ContactPage';
@@ -41,6 +47,7 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
+        <ScrollToTop />
         <CookieBanner />
         <Routes>
           <Route path="*" element={<NoPage />} />

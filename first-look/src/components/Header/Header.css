@@ -1,10 +1,10 @@
 /* Header */
 .header {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   width: 100%;
   background: #FCF8F8;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .header-container {
@@ -16,45 +16,51 @@
   padding: 1rem 4rem;
 }
 
+/* Nav */
+.header-nav {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 2rem;
+}
+
 .header .link {
-  font-size: 1rem;
+  font-size: 1.05rem;
   text-decoration: none;
-  color: #000;
+  color: #444;
+  position: relative;
+  padding-bottom: 2px;
+  transition: color 0.15s;
+}
+
+.header .link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.2s ease;
 }
 
 .header .link:hover {
-  text-decoration: underline;
+  color: #000;
 }
 
-.header-signup-btn {
-  font-size: 1rem;
-  text-decoration: none;
-  color: #fff;
-  background: #000;
-  padding: 0.25rem 0.75rem;
-  border: 1px solid #000;
+.header .link:hover::after,
+.header .link--active::after {
+  width: 100%;
 }
 
-.header-signup-btn:hover {
-  background: #333;
-  border-color: #333;
+.header .link--active {
+  color: #000;
+  font-weight: 600;
 }
 
-.language-button {
-  font-size: 1rem;
-  border: 1px solid #000;
-  background-color: #fff;
-  cursor: pointer;
-  padding: 0.25rem 0.75rem;
-}
-
-.language-button:hover {
-  background-color: #000;
-  color: #fff;
-}
-
+/* Logo */
 .text-logo {
-  font-size: 2rem;
+  font-size: 2.4rem;
   font-weight: 700;
   color: #000;
   text-decoration: none;
@@ -68,28 +74,65 @@
   gap: 1rem;
 }
 
-.auth-links {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.header-signup-btn {
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #fff;
+  background: #000;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid #000;
+  transition: background 0.15s;
 }
 
+.header-signup-btn:hover {
+  background: #333;
+  border-color: #333;
+}
+
+.language-button {
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0.3rem 0.65rem;
+  color: #444;
+  transition: background 0.15s, color 0.15s;
+}
+
+.language-button:hover {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* Login icon */
 .auth-login-icon {
   display: flex;
   align-items: center;
   color: #000;
-  text-decoration: none;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  transition: opacity 0.15s;
 }
 
 .auth-login-icon:hover {
   opacity: 0.6;
 }
 
-/* Login form inside dropdown */
+.auth-login-icon--pulse {
+  animation: loginIconPulse 0.5s ease;
+}
+
+@keyframes loginIconPulse {
+  0%   { transform: scale(1);    opacity: 1; }
+  30%  { transform: scale(1.35); opacity: 0.8; }
+  60%  { transform: scale(0.9);  opacity: 1; }
+  100% { transform: scale(1);    opacity: 1; }
+}
+
+/* Login dropdown */
 .auth-login-dropdown {
   min-width: 240px;
 }
@@ -122,6 +165,7 @@
   font-size: 0.9rem;
   cursor: pointer;
   font-family: inherit;
+  transition: background 0.15s;
 }
 
 .auth-login-btn:hover:not(:disabled) {
@@ -144,7 +188,7 @@
   margin-top: 0.25rem;
 }
 
-/* Avatar circle */
+/* Avatar */
 .auth-dropdown {
   position: relative;
 }
@@ -162,6 +206,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.15s;
 }
 
 .auth-avatar:hover {
@@ -174,34 +219,18 @@
   right: 0;
   top: calc(100% + 0.5rem);
   background: #fff;
-  border: 1px solid #000;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   min-width: 180px;
   z-index: 100;
   display: flex;
   flex-direction: column;
-  animation: dropdownSlideIn 0.18s ease;
+  animation: dropdownSlideIn 0.15s ease;
 }
 
 @keyframes dropdownSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.auth-login-icon--pulse {
-  animation: loginIconPulse 0.5s ease;
-}
-
-@keyframes loginIconPulse {
-  0%   { transform: scale(1);    opacity: 1; }
-  30%  { transform: scale(1.35); opacity: 0.8; }
-  60%  { transform: scale(0.9);  opacity: 1; }
-  100% { transform: scale(1);    opacity: 1; }
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .auth-dropdown-name {
@@ -225,6 +254,7 @@
   cursor: pointer;
   text-align: left;
   width: 100%;
+  transition: background 0.1s;
 }
 
 .auth-dropdown-item:hover {
@@ -236,21 +266,104 @@
   color: #c00;
 }
 
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hamburger span {
+  display: block;
+  height: 2px;
+  background: #000;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+  transform-origin: center;
+}
+
+.hamburger--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger--open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile nav panel */
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e0e0e0;
+  padding: 0.5rem 0;
+  animation: dropdownSlideIn 0.15s ease;
+}
+
+.mobile-nav-link {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #444;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.1s;
+}
+
+.mobile-nav-link:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link--active {
+  background: #f5f5f5;
+  color: #000;
+}
+
+.mobile-nav-link--active {
+  font-weight: 600;
+}
+
+/* Responsive */
 @media only screen and (max-width: 1300px) {
   .header-container {
     padding: 1rem 2rem;
-    flex-wrap: wrap;
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 900px) {
+  .header-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
   .header-container {
-    padding: 1rem;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
   }
 
   .text-logo {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header-container {
+    padding: 0.75rem 1rem;
+  }
+
+  .text-logo {
+    font-size: 1.4rem;
   }
 }

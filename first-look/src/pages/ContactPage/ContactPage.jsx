@@ -6,12 +6,16 @@ import './ContactPage.css';
 
 function ContactPage() {
   return (
-    <div>
+    <div className="contact-page">
       <Header />
-      <div className="info-text">
-        Have a question, a suggestion, or need help with your account? Fill out the form below and we'll get back to you.
-      </div>
+
+      <section className="contact-hero">
+        <h1 className="contact-hero-title">Get in Touch</h1>
+        <p className="contact-hero-sub">Have a question or want to work together? We'd love to hear from you.</p>
+      </section>
+
       <ContactForm />
+
       <Footer />
     </div>
   );

@@ -227,6 +227,8 @@ async def delete_event(event_id: str, organizer: dict = Depends(require_organize
             raise HTTPException(status_code=404, detail="Event not found")
         if role != "admin" and event.organizer_id != organizer_id:
             raise HTTPException(status_code=403, detail="Not your event")
+        db.query(Registration).filter(Registration.event_id == event_id).delete()
+        db.query(EventSpeaker).filter(EventSpeaker.event_id == event_id).delete()
         db.delete(event)
         db.commit()
         return {"detail": "Event deleted"}
