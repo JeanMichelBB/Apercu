@@ -42,10 +42,15 @@ def migrate_database():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
     with conn.cursor() as cursor:
         migrations = [
+            ("events",     "status",     "ALTER TABLE events ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'draft'"),
+            ("events",     "organizer_id","ALTER TABLE events ADD COLUMN organizer_id VARCHAR(36) NULL"),
+            ("events",     "image_url",  "ALTER TABLE events ADD COLUMN image_url VARCHAR(500) NULL"),
+            ("events",     "created_at", "ALTER TABLE events ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP"),
             ("speakers",   "status",     "ALTER TABLE speakers ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'approved'"),
             ("speakers",   "created_by", "ALTER TABLE speakers ADD COLUMN created_by VARCHAR(36) NULL"),
             ("blog_posts", "status",     "ALTER TABLE blog_posts ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'draft'"),
             ("blog_posts", "created_by", "ALTER TABLE blog_posts ADD COLUMN created_by VARCHAR(36) NULL"),
+            ("blog_posts", "image_url",  "ALTER TABLE blog_posts ADD COLUMN image_url VARCHAR(500) NULL"),
         ]
         for table, column, alter_sql in migrations:
             cursor.execute(f"SHOW COLUMNS FROM `{table}` LIKE '{column}'")
