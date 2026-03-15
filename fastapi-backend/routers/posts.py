@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, Query, Header
 from database.engine import SessionLocal
 from database.models import BlogPost, SpeakerPost, Speaker
-from schemas import BlogPostCreate, BlogPostUpdate
+from schemas import BlogPostCreate, BlogPostUpdate, RejectionBody
 from routers.auth import require_admin, require_organizer
 from typing import Optional
 
@@ -145,13 +145,32 @@ async def approve_post(post_id: str, admin=Depends(require_admin)):
 
 
 @router.put("/{post_id}/reject")
-async def reject_post(post_id: str, admin=Depends(require_admin)):
+async def reject_post(post_id: str, body: RejectionBody, admin=Depends(require_admin)):
     with SessionLocal() as db:
         post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
         if not post:
             raise HTTPException(status_code=404, detail="Post not found")
-        post.status = "draft"
+        post.status = "rejected"
         post.published = False
+        post.rejection_reason = body.reason
+        db.commit()
+        db.refresh(post)
+        return _serialize(post)
+
+
+@router.post("/{post_id}/resubmit")
+async def resubmit_post(post_id: str, organizer: dict = Depends(require_organizer)):
+    user_id = organizer.get("user_id")
+    with SessionLocal() as db:
+        post = db.query(BlogPost).filter(BlogPost.id == post_id).first()
+        if not post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        if organizer.get("role") != "admin" and post.created_by != user_id:
+            raise HTTPException(status_code=403, detail="Not your post")
+        if post.status != "rejected":
+            raise HTTPException(status_code=400, detail="Only rejected posts can be resubmitted")
+        post.status = "pending"
+        post.rejection_reason = None
         db.commit()
         db.refresh(post)
         return _serialize(post)
@@ -206,6 +225,7 @@ def _serialize(post: BlogPost) -> dict:
         "content": post.content,
         "published": post.published,
         "status": post.status,
+        "rejection_reason": post.rejection_reason,
         "image_url": post.image_url,
         "created_by": post.created_by,
         "created_at": post.created_at.isoformat() if post.created_at else None,

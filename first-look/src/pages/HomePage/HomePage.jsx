@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LazyImage from '../../components/LazyImage/LazyImage';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 import './HomePage.css';
 
 const MOSAIC_SEEDS = ['event42', 'festival7', 'concert18', 'summit3', 'workshop99', 'meetup55'];
@@ -66,7 +66,7 @@ function HomePage() {
                     <div className="home-featured-speakers">
                       {event.speakers.map((s) => (
                         <div key={s.id} className="home-featured-speaker">
-                          <img src={s.photo_url} alt={s.name} className="home-featured-speaker-photo" />
+                          <img src={proxyImage(s.photo_url)} alt={s.name} className="home-featured-speaker-photo" />
                           <span>{s.name}</span>
                         </div>
                       ))}

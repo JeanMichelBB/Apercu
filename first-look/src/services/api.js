@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
+export function proxyImage(url) {
+  if (!url) return url;
+  return `${BASE_URL}/proxy/image?url=${encodeURIComponent(url)}`;
+}
+
 function authHeaders() {
   const token = localStorage.getItem('token');
   return token ? { 'access-token': token } : {};
@@ -24,8 +29,11 @@ const api = {
   approveEvent: (id) =>
     axios.put(`${BASE_URL}/events/${id}/approve`, {}, { headers: authHeaders() }),
 
-  rejectEvent: (id) =>
-    axios.put(`${BASE_URL}/events/${id}/reject`, {}, { headers: authHeaders() }),
+  rejectEvent: (id, reason) =>
+    axios.put(`${BASE_URL}/events/${id}/reject`, { reason }, { headers: authHeaders() }),
+
+  resubmitEvent: (id) =>
+    axios.post(`${BASE_URL}/events/${id}/resubmit`, {}, { headers: authHeaders() }),
 
   getMyEvents: () =>
     axios.get(`${BASE_URL}/events/organizer/my-events`, { headers: authHeaders() }),
@@ -93,8 +101,11 @@ const api = {
   approveSpeaker: (id) =>
     axios.put(`${BASE_URL}/speakers/${id}/approve`, {}, { headers: authHeaders() }),
 
-  rejectSpeaker: (id) =>
-    axios.put(`${BASE_URL}/speakers/${id}/reject`, {}, { headers: authHeaders() }),
+  rejectSpeaker: (id, reason) =>
+    axios.put(`${BASE_URL}/speakers/${id}/reject`, { reason }, { headers: authHeaders() }),
+
+  resubmitSpeaker: (id) =>
+    axios.post(`${BASE_URL}/speakers/${id}/resubmit`, {}, { headers: authHeaders() }),
 
   createSpeaker: (data) =>
     axios.post(`${BASE_URL}/speakers`, data, { headers: authHeaders() }),
@@ -130,14 +141,33 @@ const api = {
   approvePost: (id) =>
     axios.put(`${BASE_URL}/posts/${id}/approve`, {}, { headers: authHeaders() }),
 
-  rejectPost: (id) =>
-    axios.put(`${BASE_URL}/posts/${id}/reject`, {}, { headers: authHeaders() }),
+  rejectPost: (id, reason) =>
+    axios.put(`${BASE_URL}/posts/${id}/reject`, { reason }, { headers: authHeaders() }),
+
+  resubmitPost: (id) =>
+    axios.post(`${BASE_URL}/posts/${id}/resubmit`, {}, { headers: authHeaders() }),
 
   addPostSpeaker: (postId, speakerId) =>
     axios.post(`${BASE_URL}/posts/${postId}/speakers/${speakerId}`, {}, { headers: authHeaders() }),
 
   removePostSpeaker: (postId, speakerId) =>
     axios.delete(`${BASE_URL}/posts/${postId}/speakers/${speakerId}`, { headers: authHeaders() }),
+
+  // Comments & likes
+  getComments: (postId) =>
+    axios.get(`${BASE_URL}/posts/${postId}/comments`),
+
+  addComment: (postId, content) =>
+    axios.post(`${BASE_URL}/posts/${postId}/comments`, { content }, { headers: authHeaders() }),
+
+  deleteComment: (postId, commentId) =>
+    axios.delete(`${BASE_URL}/posts/${postId}/comments/${commentId}`, { headers: authHeaders() }),
+
+  getLikes: (postId) =>
+    axios.get(`${BASE_URL}/posts/${postId}/likes`, { headers: authHeaders() }),
+
+  toggleLike: (postId) =>
+    axios.post(`${BASE_URL}/posts/${postId}/like`, {}, { headers: authHeaders() }),
 
   // Registrations (admin)
   getAllRegistrations: () =>
@@ -181,6 +211,15 @@ const api = {
 
   forgotPassword: (email) =>
     axios.post(`${BASE_URL}/auth/forgot-password`, { email }),
+
+  resendVerification: () =>
+    axios.post(`${BASE_URL}/auth/resend-verification`, {}, { headers: authHeaders() }),
+
+  getEmailVerifiedStatus: () =>
+    axios.get(`${BASE_URL}/auth/email-verified`, { headers: authHeaders() }),
+
+  verifyEmail: (token) =>
+    axios.get(`${BASE_URL}/auth/verify-email`, { params: { token } }),
 
   verifyResetCode: (email, code) =>
     axios.post(`${BASE_URL}/auth/verify-reset-code`, { email, code }),

@@ -12,9 +12,9 @@ import os
 load_dotenv()
 
 from database.engine import engine, SessionLocal, Base
-from database.models import Contact, Email, AdminUser, User, Event, Speaker, EventSpeaker, Registration, BlogPost
+from database.models import Contact, Email, AdminUser, User, Event, Speaker, EventSpeaker, Registration, BlogPost, Comment, PostLike
 from routers import contacts, emails, auth
-from routers import events, speakers, posts, users
+from routers import events, speakers, posts, users, proxy, comments
 from routers.auth import SECRET_KEY
 from seed import seed_if_empty
 
@@ -42,6 +42,7 @@ def migrate_database():
     conn = pymysql.connect(host=DB_HOST, user=DB_USER, password=DB_PASSWORD, database=DB_NAME)
     with conn.cursor() as cursor:
         migrations = [
+            ("users",      "email_verified", "ALTER TABLE users ADD COLUMN email_verified TINYINT(1) NOT NULL DEFAULT 0"),
             ("events",     "status",     "ALTER TABLE events ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'draft'"),
             ("events",     "organizer_id","ALTER TABLE events ADD COLUMN organizer_id VARCHAR(36) NULL"),
             ("events",     "image_url",  "ALTER TABLE events ADD COLUMN image_url VARCHAR(500) NULL"),
@@ -51,6 +52,10 @@ def migrate_database():
             ("blog_posts", "status",     "ALTER TABLE blog_posts ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'draft'"),
             ("blog_posts", "created_by", "ALTER TABLE blog_posts ADD COLUMN created_by VARCHAR(36) NULL"),
             ("blog_posts", "image_url",  "ALTER TABLE blog_posts ADD COLUMN image_url VARCHAR(500) NULL"),
+            ("speakers",   "gender",           "ALTER TABLE speakers ADD COLUMN gender VARCHAR(10) NULL"),
+            ("events",     "rejection_reason", "ALTER TABLE events ADD COLUMN rejection_reason TEXT NULL"),
+            ("speakers",   "rejection_reason", "ALTER TABLE speakers ADD COLUMN rejection_reason TEXT NULL"),
+            ("blog_posts", "rejection_reason", "ALTER TABLE blog_posts ADD COLUMN rejection_reason TEXT NULL"),
         ]
         for table, column, alter_sql in migrations:
             cursor.execute(f"SHOW COLUMNS FROM `{table}` LIKE '{column}'")
@@ -90,8 +95,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-PUBLIC_EXACT = {"/docs", "/openapi.json", "/login", "/submit-form", "/forget-password", "/auth/register", "/auth/user-login", "/auth/forgot-password", "/auth/verify-reset-code", "/auth/reset-password"}
-PUBLIC_PREFIXES_GET = ("/speakers", "/posts")
+PUBLIC_EXACT = {"/docs", "/openapi.json", "/login", "/submit-form", "/forget-password", "/auth/register", "/auth/user-login", "/auth/forgot-password", "/auth/verify-reset-code", "/auth/reset-password", "/auth/verify-email"}
+PUBLIC_PREFIXES_GET = ("/speakers", "/posts", "/proxy")
 
 
 def _is_public_event_get(path: str) -> bool:
@@ -171,3 +176,5 @@ app.include_router(events.router)
 app.include_router(speakers.router)
 app.include_router(posts.router)
 app.include_router(users.router)
+app.include_router(proxy.router)
+app.include_router(comments.router)

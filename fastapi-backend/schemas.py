@@ -57,6 +57,7 @@ class SpeakerCreate(BaseModel):
     name: str
     bio: str
     photo_url: Optional[str] = None
+    gender: Optional[str] = None  # male | female | other
 
 
 class BlogPostCreate(BaseModel):
@@ -90,3 +91,11 @@ class VerifyCodeRequest(BaseModel):
 class ResetPasswordRequest(BaseModel):
     reset_token: str
     new_password: str
+
+
+class RejectionBody(BaseModel):
+    reason: str
+
+
+class CommentCreate(BaseModel):
+    content: str

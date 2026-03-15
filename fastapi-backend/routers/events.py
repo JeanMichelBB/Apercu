@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends, Query
 from database.engine import SessionLocal
 from database.models import Event, Registration, User, Speaker, EventSpeaker
-from schemas import EventCreate, EventUpdate
+from schemas import EventCreate, EventUpdate, RejectionBody
 from routers.auth import require_admin, require_organizer, get_current_user
 from typing import Optional
+from datetime import datetime as dt_datetime, timedelta
 
 router = APIRouter(prefix="/events", tags=["events"])
 
@@ -157,6 +158,19 @@ async def create_event(body: EventCreate, organizer: dict = Depends(require_orga
     role = organizer.get("role")
     with SessionLocal() as db:
         data = body.model_dump()
+        if role != "admin" and data.get("date") and data["date"] <= dt_datetime.utcnow():
+            raise HTTPException(status_code=400, detail="Event date must be in the future.")
+        # Duplicate check: same title (case-insensitive) on the same calendar day
+        if data.get("date") and data.get("title"):
+            day_start = data["date"].replace(hour=0, minute=0, second=0, microsecond=0)
+            day_end = day_start + timedelta(days=1)
+            duplicate = db.query(Event).filter(
+                Event.title.ilike(data["title"]),
+                Event.date >= day_start,
+                Event.date < day_end,
+            ).first()
+            if duplicate:
+                raise HTTPException(status_code=400, detail="An event with this title already exists on that date.")
         # Admin can set any status; organizer always submits as pending
         if role != "admin":
             data["status"] = "pending"
@@ -179,7 +193,21 @@ async def update_event(event_id: str, body: EventUpdate, organizer: dict = Depen
             raise HTTPException(status_code=403, detail="Not your event")
         if role != "admin" and event.status == "published":
             raise HTTPException(status_code=400, detail="Cannot edit a published event")
-        for field, value in body.model_dump(exclude_none=True).items():
+        updates = body.model_dump(exclude_none=True)
+        new_title = updates.get("title", event.title)
+        new_date = updates.get("date", event.date)
+        if new_date and new_title:
+            day_start = new_date.replace(hour=0, minute=0, second=0, microsecond=0)
+            day_end = day_start + timedelta(days=1)
+            duplicate = db.query(Event).filter(
+                Event.id != event_id,
+                Event.title.ilike(new_title),
+                Event.date >= day_start,
+                Event.date < day_end,
+            ).first()
+            if duplicate:
+                raise HTTPException(status_code=400, detail="An event with this title already exists on that date.")
+        for field, value in updates.items():
             # Organizers cannot change status directly
             if field == "status" and role != "admin":
                 continue
@@ -233,12 +261,31 @@ async def approve_event(event_id: str, admin=Depends(require_admin)):
 
 
 @router.put("/{event_id}/reject")
-async def reject_event(event_id: str, admin=Depends(require_admin)):
+async def reject_event(event_id: str, body: RejectionBody, admin=Depends(require_admin)):
     with SessionLocal() as db:
         event = db.query(Event).filter(Event.id == event_id).first()
         if not event:
             raise HTTPException(status_code=404, detail="Event not found")
-        event.status = "draft"
+        event.status = "rejected"
+        event.rejection_reason = body.reason
+        db.commit()
+        db.refresh(event)
+        return _serialize(event)
+
+
+@router.post("/{event_id}/resubmit")
+async def resubmit_event(event_id: str, organizer: dict = Depends(require_organizer)):
+    organizer_id = organizer.get("user_id")
+    with SessionLocal() as db:
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
+            raise HTTPException(status_code=404, detail="Event not found")
+        if organizer.get("role") != "admin" and event.organizer_id != organizer_id:
+            raise HTTPException(status_code=403, detail="Not your event")
+        if event.status != "rejected":
+            raise HTTPException(status_code=400, detail="Only rejected events can be resubmitted")
+        event.status = "pending"
+        event.rejection_reason = None
         db.commit()
         db.refresh(event)
         return _serialize(event)
@@ -282,6 +329,9 @@ async def register_for_event(event_id: str, current_user: dict = Depends(get_cur
     if not user_id:
         raise HTTPException(status_code=403, detail="User account required to register")
     with SessionLocal() as db:
+        user = db.query(User).filter(User.id == user_id).first()
+        if user and not user.email_verified:
+            raise HTTPException(status_code=403, detail="Please verify your email before registering for events.")
         event = db.query(Event).filter(Event.id == event_id, Event.status == "published").first()
         if not event:
             raise HTTPException(status_code=404, detail="Event not found")
@@ -292,6 +342,12 @@ async def register_for_event(event_id: str, current_user: dict = Depends(get_cur
             raise HTTPException(status_code=400, detail="Event is full")
         db.add(Registration(event_id=event_id, user_id=user_id))
         db.commit()
+        print(
+            f"[EMAIL] Registration confirmation → {user.email}\n"
+            f"  Hi {user.name}, you are registered for '{event.title}'\n"
+            f"  Date: {event.date.strftime('%B %d, %Y at %H:%M')}\n"
+            f"  Location: {event.location}"
+        )
         return {"detail": "Registered successfully"}
 
 
@@ -324,6 +380,7 @@ def _serialize(event: Event, speakers: list = []) -> dict:
         "status": event.status,
         "organizer_id": event.organizer_id,
         "image_url": event.image_url,
+        "rejection_reason": event.rejection_reason,
         "created_at": event.created_at.isoformat() if event.created_at else None,
         "speakers": [
             {"id": s.id, "name": s.name, "photo_url": s.photo_url or f"https://i.pravatar.cc/150?u={s.id}"}

@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LazyImage from '../../components/LazyImage/LazyImage';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 import './SpeakerDetailPage.css';
 
 function SpeakerDetailPage() {
@@ -38,7 +38,7 @@ function SpeakerDetailPage() {
 
         <div className="speaker-detail-profile">
           {speaker.photo_url ? (
-            <img src={speaker.photo_url} alt={speaker.name} className="speaker-detail-photo" />
+            <img src={proxyImage(speaker.photo_url)} alt={speaker.name} className="speaker-detail-photo" />
           ) : (
             <div className="speaker-detail-avatar">{speaker.name.charAt(0)}</div>
           )}

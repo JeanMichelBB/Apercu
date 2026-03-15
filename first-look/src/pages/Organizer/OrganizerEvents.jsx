@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 
 const STATUS_BADGE = {
   published: { label: 'Published', cls: 'badge-published' },
   pending:   { label: 'Pending Approval', cls: 'badge-pending' },
   draft:     { label: 'Draft', cls: 'badge-draft' },
+  rejected:  { label: 'Rejected', cls: 'badge-rejected' },
 };
 
 function OrganizerEvents() {
@@ -82,6 +83,11 @@ function OrganizerEvents() {
     load();
   };
 
+  const handleResubmit = async (id) => {
+    await api.resubmitEvent(id);
+    load();
+  };
+
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
@@ -122,6 +128,9 @@ function OrganizerEvents() {
                     <button className="btn btn-secondary" onClick={() => openPanel(event, 'registrations')}>
                       {selected?.id === event.id && selectedType === 'registrations' ? 'Hide' : 'Registrations'}
                     </button>
+                    {event.status === 'rejected' && (
+                      <button className="btn btn-primary" onClick={() => handleResubmit(event.id)}>Resubmit</button>
+                    )}
                     {event.status !== 'published' && (
                       <button className="btn btn-secondary" onClick={() => navigate(`/organizer/edit/${event.id}`)}>Edit</button>
                     )}
@@ -150,7 +159,7 @@ function OrganizerEvents() {
                           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginBottom: '1.25rem' }}>
                             {eventSpeakers.map((s) => (
                               <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fff', border: '1px solid #ddd', padding: '0.4rem 0.75rem' }}>
-                                <img src={s.photo_url} alt={s.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover' }} />
+                                <img src={proxyImage(s.photo_url)} alt={s.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover' }} />
                                 <span style={{ fontSize: '0.85rem' }}>{s.name}</span>
                                 <button
                                   className="btn btn-danger"
@@ -182,6 +191,16 @@ function OrganizerEvents() {
                         )}
                       </>
                     )}
+                  </td>
+                </tr>
+              )}
+
+              {/* Rejection reason */}
+              {event.status === 'rejected' && event.rejection_reason && (
+                <tr>
+                  <td colSpan={5} style={{ background: '#fff0f0', padding: '0.6rem 1rem', borderLeft: '3px solid #c00' }}>
+                    <strong style={{ fontSize: '0.85rem', color: '#c00' }}>Rejection reason: </strong>
+                    <span style={{ fontSize: '0.85rem', color: '#444' }}>{event.rejection_reason}</span>
                   </td>
                 </tr>
               )}

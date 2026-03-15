@@ -10,6 +10,8 @@ function MyRegistrationsPage() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [emailVerified, setEmailVerified] = useState(true);
+  const [resendMsg, setResendMsg] = useState('');
   const navigate = useNavigate();
 
   const load = () => {
@@ -21,6 +23,7 @@ function MyRegistrationsPage() {
 
   useEffect(() => {
     if (!isLoggedIn()) { navigate('/login'); return; }
+    api.getEmailVerifiedStatus().then((r) => setEmailVerified(r.data.email_verified)).catch(() => {});
     load();
   }, []);
 
@@ -35,6 +38,26 @@ function MyRegistrationsPage() {
       <Header />
       <div className="my-reg-container">
         <h1 className="my-reg-title">My Registrations</h1>
+
+        {!emailVerified && (
+          <div style={{ marginBottom: '1.5rem', padding: '1rem 1.25rem', background: '#fff8e1', border: '1px solid #f0a500', borderRadius: 8, fontSize: '0.9rem' }}>
+            <strong>⚠ Your email is not verified.</strong> You won't be able to register for events until you confirm your email.{' '}
+            <button
+              onClick={async () => {
+                try {
+                  await api.resendVerification();
+                  setResendMsg('A new verification link has been logged. Check the backend console.');
+                } catch {
+                  setResendMsg('Could not send. Please try again.');
+                }
+              }}
+              style={{ background: 'none', border: 'none', color: '#1a6ef5', cursor: 'pointer', textDecoration: 'underline', padding: 0, fontSize: 'inherit' }}
+            >
+              Resend verification link
+            </button>
+            {resendMsg && <p style={{ margin: '0.5rem 0 0', color: '#555' }}>{resendMsg}</p>}
+          </div>
+        )}
 
         {loading && <p className="my-reg-status">Loading...</p>}
         {error && <p className="my-reg-status my-reg-error">{error}</p>}

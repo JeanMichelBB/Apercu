@@ -27,11 +27,17 @@ function OrganizerCreateEvent() {
     }
   }, [id]);
 
+  const minDateTime = new Date(Date.now() + 60000).toISOString().slice(0, 16);
+
   const handleChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (form.date && new Date(form.date) <= new Date()) {
+      setError('Event date must be in the future.');
+      return;
+    }
     setLoading(true);
     const payload = { ...form, capacity: Number(form.capacity) || null };
     try {
@@ -62,7 +68,7 @@ function OrganizerCreateEvent() {
         <input name="title" placeholder="Event title" value={form.title} onChange={handleChange} required />
         <textarea name="description" placeholder="Description" value={form.description} onChange={handleChange} required />
         <input name="location" placeholder="Location" value={form.location} onChange={handleChange} required />
-        <input name="date" type="datetime-local" value={form.date} onChange={handleChange} required />
+        <input name="date" type="datetime-local" value={form.date} onChange={handleChange} required min={minDateTime} />
         <input name="capacity" type="number" placeholder="Capacity (optional)" value={form.capacity} onChange={handleChange} min="1" />
         <input name="image_url" type="url" placeholder="Image URL (optional — leave blank for auto)" value={form.image_url} onChange={handleChange} />
         {error && <p style={{ color: '#c00', margin: 0, fontSize: '0.9rem' }}>{error}</p>}

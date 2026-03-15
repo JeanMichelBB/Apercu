@@ -10,6 +10,7 @@ const RegisterPage = ({ setToken }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -18,6 +19,10 @@ const RegisterPage = ({ setToken }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
     setLoading(true);
     try {
       const res = await api.register({ name, email, password, role });
@@ -90,6 +95,15 @@ const RegisterPage = ({ setToken }) => {
               required
               autoComplete="new-password"
               minLength={6}
+            />
+            <input
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="input"
+              required
+              autoComplete="new-password"
             />
             <button type="submit" className="button" disabled={loading}>
               {loading ? 'Creating account...' : `Sign Up as ${role === 'user' ? 'Attendee' : 'Organizer'}`}

@@ -9,3 +9,5 @@ starlette
 PyJWT
 bcrypt
 python-dotenv
+httpx
+resend

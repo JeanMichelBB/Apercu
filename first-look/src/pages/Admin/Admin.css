@@ -214,6 +214,11 @@
   color: #fff;
 }
 
+.badge-rejected {
+  background: #c00;
+  color: #fff;
+}
+
 /* Dashboard stats */
 .admin-stats {
   display: grid;

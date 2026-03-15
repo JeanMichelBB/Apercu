@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 
 const EMPTY = { title: '', content: '', published: false, image_url: '' };
 
@@ -10,7 +10,6 @@ function OrganizerCreatePost() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Speaker linking (only when editing an existing post)
   const [linkedSpeakers, setLinkedSpeakers] = useState([]);
   const [allSpeakers, setAllSpeakers] = useState([]);
   const [selectedSpeaker, setSelectedSpeaker] = useState('');
@@ -18,13 +17,13 @@ function OrganizerCreatePost() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    api.getMySpeakers().then((r) => setAllSpeakers(r.data.filter((s) => s.status === 'approved'))).catch(() => {});
     if (id) {
       api.getMyPosts().then((r) => {
         const post = r.data.find((p) => p.id === id);
         if (post) setForm({ title: post.title, content: post.content, published: post.published, image_url: post.image_url ?? '' });
       });
       api.getPostSpeakers(id).then((r) => setLinkedSpeakers(r.data)).catch(() => {});
-      api.getMySpeakers().then((r) => setAllSpeakers(r.data.filter((s) => s.status === 'approved'))).catch(() => {});
     }
   }, [id]);
 
@@ -41,7 +40,9 @@ function OrganizerCreatePost() {
       if (id) {
         await api.updatePost(id, form);
       } else {
-        await api.createPost(form);
+        const res = await api.createPost(form);
+        const newId = res.data.id;
+        await Promise.all(linkedSpeakers.map((s) => api.addPostSpeaker(newId, s.id)));
       }
       navigate('/organizer/posts');
     } catch (err) {
@@ -53,14 +54,22 @@ function OrganizerCreatePost() {
 
   const handleAddSpeaker = async () => {
     if (!selectedSpeaker) return;
-    await api.addPostSpeaker(id, selectedSpeaker);
-    const r = await api.getPostSpeakers(id);
-    setLinkedSpeakers(r.data);
+    const speaker = allSpeakers.find((s) => s.id === selectedSpeaker);
+    if (!speaker) return;
+    if (id) {
+      await api.addPostSpeaker(id, selectedSpeaker);
+      const r = await api.getPostSpeakers(id);
+      setLinkedSpeakers(r.data);
+    } else {
+      setLinkedSpeakers((prev) => [...prev, speaker]);
+    }
     setSelectedSpeaker('');
   };
 
   const handleRemoveSpeaker = async (speakerId) => {
-    await api.removePostSpeaker(id, speakerId);
+    if (id) {
+      await api.removePostSpeaker(id, speakerId);
+    }
     setLinkedSpeakers((prev) => prev.filter((s) => s.id !== speakerId));
   };
 
@@ -94,7 +103,7 @@ function OrganizerCreatePost() {
         </div>
       </form>
 
-      {id && (
+      {allSpeakers.length > 0 && (
         <div style={{ maxWidth: 660, marginTop: '2rem' }}>
           <h3 style={{ marginBottom: '1rem' }}>Authors / Speakers</h3>
 
@@ -110,7 +119,7 @@ function OrganizerCreatePost() {
                   }}
                 >
                   <img
-                    src={s.photo_url}
+                    src={proxyImage(s.photo_url)}
                     alt={s.name}
                     style={{ width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }}
                   />
@@ -144,9 +153,7 @@ function OrganizerCreatePost() {
               </button>
             </div>
           ) : (
-            <p style={{ color: '#888', fontSize: '0.875rem', margin: 0 }}>
-              {allSpeakers.length === 0 ? 'No approved speakers yet. Submit speakers first.' : 'All your speakers are already linked.'}
-            </p>
+            <p style={{ color: '#888', fontSize: '0.875rem', margin: 0 }}>All your speakers are already linked.</p>
           )}
         </div>
       )}

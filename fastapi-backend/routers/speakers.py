@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from database.engine import SessionLocal
 from database.models import Speaker, EventSpeaker, Event, SpeakerPost, BlogPost
-from schemas import SpeakerCreate
+from schemas import SpeakerCreate, RejectionBody
 from routers.auth import require_admin, require_organizer
 
 router = APIRouter(prefix="/speakers", tags=["speakers"])
@@ -112,12 +112,31 @@ async def approve_speaker(speaker_id: str, admin=Depends(require_admin)):
 
 
 @router.put("/{speaker_id}/reject")
-async def reject_speaker(speaker_id: str, admin=Depends(require_admin)):
+async def reject_speaker(speaker_id: str, body: RejectionBody, admin=Depends(require_admin)):
     with SessionLocal() as db:
         speaker = db.query(Speaker).filter(Speaker.id == speaker_id).first()
         if not speaker:
             raise HTTPException(status_code=404, detail="Speaker not found")
+        speaker.status = "rejected"
+        speaker.rejection_reason = body.reason
+        db.commit()
+        db.refresh(speaker)
+        return _serialize(speaker)
+
+
+@router.post("/{speaker_id}/resubmit")
+async def resubmit_speaker(speaker_id: str, organizer: dict = Depends(require_organizer)):
+    user_id = organizer.get("user_id")
+    with SessionLocal() as db:
+        speaker = db.query(Speaker).filter(Speaker.id == speaker_id).first()
+        if not speaker:
+            raise HTTPException(status_code=404, detail="Speaker not found")
+        if organizer.get("role") != "admin" and speaker.created_by != user_id:
+            raise HTTPException(status_code=403, detail="Not your speaker")
+        if speaker.status != "rejected":
+            raise HTTPException(status_code=400, detail="Only rejected speakers can be resubmitted")
         speaker.status = "pending"
+        speaker.rejection_reason = None
         db.commit()
         db.refresh(speaker)
         return _serialize(speaker)
@@ -149,14 +168,23 @@ async def delete_speaker(speaker_id: str, admin=Depends(require_admin)):
 
 # ── Serializers ───────────────────────────────────────────────────────────────
 
+def _avatar(speaker: Speaker) -> str:
+    if speaker.photo_url:
+        return speaker.photo_url
+    # Append gender prefix to seed so male/female get distinct consistent avatars
+    seed = f"{speaker.gender or 'x'}-{speaker.id}"
+    return f"https://i.pravatar.cc/150?u={seed}"
+
+
 def _serialize(speaker: Speaker) -> dict:
-    photo = speaker.photo_url or f"https://i.pravatar.cc/150?u={speaker.id}"
     return {
         "id": speaker.id,
         "name": speaker.name,
         "bio": speaker.bio,
-        "photo_url": photo,
+        "photo_url": _avatar(speaker),
+        "gender": speaker.gender,
         "status": speaker.status,
+        "rejection_reason": speaker.rejection_reason,
         "created_by": speaker.created_by,
         "created_at": speaker.created_at.isoformat() if speaker.created_at else None,
     }

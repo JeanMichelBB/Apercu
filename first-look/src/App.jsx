@@ -31,6 +31,7 @@ import SpeakersPage from './pages/SpeakersPage/SpeakersPage';
 import SpeakerDetailPage from './pages/SpeakerDetailPage/SpeakerDetailPage';
 import BlogPage from './pages/BlogPage/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage/BlogDetailPage';
+import VerifyEmailPage from './pages/VerifyEmailPage/VerifyEmailPage';
 import CookieBanner from './components/CookieBanner/CookieBanner';
 import './global.css';
 
@@ -55,6 +56,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage setToken={setToken} />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/my-registrations" element={<MyRegistrationsPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/organizer" element={<Organizer />}>
             <Route index element={<OrganizerEvents />} />
             <Route path="create" element={<OrganizerCreateEvent />} />

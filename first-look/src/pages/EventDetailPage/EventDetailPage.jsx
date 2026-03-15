@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 import LazyImage from '../../components/LazyImage/LazyImage';
 import './EventDetailPage.css';
 
@@ -14,6 +14,8 @@ function EventDetailPage() {
   const [error, setError] = useState('');
   const [registered, setRegistered] = useState(false);
   const [actionMsg, setActionMsg] = useState('');
+  const [unverified, setUnverified] = useState(false);
+  const [resendMsg, setResendMsg] = useState('');
   const [speakers, setSpeakers] = useState([]);
 
   const isLoggedIn = !!localStorage.getItem('token');
@@ -45,8 +47,15 @@ function EventDetailPage() {
       await api.registerForEvent(id);
       setRegistered(true);
       setActionMsg('');
+      setUnverified(false);
     } catch (err) {
-      setActionMsg(err.response?.data?.detail || 'Registration failed.');
+      const detail = err.response?.data?.detail || 'Registration failed.';
+      if (err.response?.status === 403 && detail.includes('verify your email')) {
+        setUnverified(true);
+        setActionMsg('');
+      } else {
+        setActionMsg(detail);
+      }
     }
   };
 
@@ -91,7 +100,7 @@ function EventDetailPage() {
             <div className="event-detail-speakers-list">
               {speakers.map((s) => (
                 <Link to={`/speakers/${s.id}`} key={s.id} className="event-detail-speaker">
-                  <img src={s.photo_url} alt={s.name} className="event-detail-speaker-photo" />
+                  <img src={proxyImage(s.photo_url)} alt={s.name} className="event-detail-speaker-photo" />
                   <span className="event-detail-speaker-name">{s.name}</span>
                 </Link>
               ))}
@@ -123,6 +132,25 @@ function EventDetailPage() {
             </button>
           )}
           {actionMsg && <p className="event-detail-error" style={{ marginTop: '0.75rem' }}>{actionMsg}</p>}
+          {unverified && (
+            <div style={{ marginTop: '0.75rem', padding: '0.85rem 1rem', background: '#fff8e1', border: '1px solid #f0a500', borderRadius: 6, fontSize: '0.9rem' }}>
+              <strong>Please verify your email</strong> before registering for events.{' '}
+              <button
+                onClick={async () => {
+                  try {
+                    await api.resendVerification();
+                    setResendMsg('Verification link logged to the backend console.');
+                  } catch {
+                    setResendMsg('Could not resend. Please try again.');
+                  }
+                }}
+                style={{ background: 'none', border: 'none', color: '#1a6ef5', cursor: 'pointer', textDecoration: 'underline', padding: 0, fontSize: 'inherit' }}
+              >
+                Resend link
+              </button>
+              {resendMsg && <span style={{ marginLeft: '0.5rem', color: '#555' }}>{resendMsg}</span>}
+            </div>
+          )}
         </div>
       </div>
       <Footer />

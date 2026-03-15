@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-import api from '../../services/api';
+import api, { proxyImage } from '../../services/api';
 import './SpeakersPage.css';
 
 function SpeakersPage() {
@@ -33,7 +33,7 @@ function SpeakersPage() {
           {speakers.map((speaker) => (
             <Link to={`/speakers/${speaker.id}`} key={speaker.id} className="speaker-card">
               {speaker.photo_url ? (
-                <img src={speaker.photo_url} alt={speaker.name} className="speaker-photo" />
+                <img src={proxyImage(speaker.photo_url)} alt={speaker.name} className="speaker-photo" />
               ) : (
                 <div className="speaker-photo-placeholder">{speaker.name.charAt(0)}</div>
               )}

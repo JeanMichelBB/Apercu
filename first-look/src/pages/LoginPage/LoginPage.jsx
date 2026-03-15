@@ -58,6 +58,7 @@ const LoginPage = ({ setToken }) => {
               className="input"
               required
               autoComplete="email"
+              autoFocus
             />
             <input
               type="password"
