@@ -163,7 +163,7 @@ app.openapi = custom_openapi
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://apercu.sacenpapier.org"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
