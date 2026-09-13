@@ -12,10 +12,12 @@ import os
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client.core import GaugeMetricFamily
 from prometheus_client.registry import REGISTRY
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 
 load_dotenv()
 
 from database.engine import engine, SessionLocal, Base
+from tracing import setup_tracing
 from database.models import Contact, Email, AdminUser, User, Event, Speaker, EventSpeaker, Registration, BlogPost, Comment, PostLike
 from routers import contacts, emails, auth
 from routers import events, speakers, posts, users, proxy, comments
@@ -222,3 +224,6 @@ async def health():
 
 Instrumentator().instrument(app).expose(app, include_in_schema=False)
 REGISTRY.register(PendingModerationCollector())
+
+setup_tracing("apercu", engine=engine)
+FastAPIInstrumentor.instrument_app(app)
