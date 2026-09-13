@@ -11,3 +11,4 @@ bcrypt
 python-dotenv
 httpx
 resend
+prometheus-fastapi-instrumentator

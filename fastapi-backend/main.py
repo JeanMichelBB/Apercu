@@ -5,9 +5,13 @@ from starlette.responses import JSONResponse
 from contextlib import asynccontextmanager
 from dotenv import load_dotenv
 import bcrypt
+import logging
 import pymysql
 import jwt
 import os
+from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client.core import GaugeMetricFamily
+from prometheus_client.registry import REGISTRY
 
 load_dotenv()
 
@@ -17,6 +21,37 @@ from routers import contacts, emails, auth
 from routers import events, speakers, posts, users, proxy, comments
 from routers.auth import SECRET_KEY
 from seed import seed_if_empty
+
+logger = logging.getLogger(__name__)
+
+
+class PendingModerationCollector:
+    """Rows sitting in status='pending' across events/speakers/blog_posts.
+
+    If the admin approval flow silently breaks, this grows unbounded with
+    zero infra-level symptom -- pods stay healthy, nothing crashes.
+    """
+
+    _MODELS = {"event": Event, "speaker": Speaker, "blog_post": BlogPost}
+
+    def collect(self):
+        gauge = GaugeMetricFamily(
+            "apercu_pending_moderation_items",
+            "Rows awaiting admin moderation (status='pending'), by content type",
+            labels=["type"],
+        )
+        session = SessionLocal()
+        try:
+            for content_type, model in self._MODELS.items():
+                count = session.query(model).filter(model.status == "pending").count()
+                gauge.add_metric([content_type], count)
+        except Exception:
+            logger.exception("pending moderation metrics query failed")
+            for content_type in self._MODELS:
+                gauge.add_metric([content_type], 0)
+        finally:
+            session.close()
+        yield gauge
 
 ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")
@@ -95,7 +130,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-PUBLIC_EXACT = {"/docs", "/openapi.json", "/login", "/submit-form", "/forget-password", "/auth/register", "/auth/user-login", "/auth/forgot-password", "/auth/verify-reset-code", "/auth/reset-password", "/auth/verify-email"}
+PUBLIC_EXACT = {"/docs", "/openapi.json", "/login", "/submit-form", "/forget-password", "/auth/register", "/auth/user-login", "/auth/forgot-password", "/auth/verify-reset-code", "/auth/reset-password", "/auth/verify-email", "/metrics", "/api/health"}
 PUBLIC_PREFIXES_GET = ("/speakers", "/posts", "/proxy")
 
 
@@ -178,3 +213,12 @@ app.include_router(posts.router)
 app.include_router(users.router)
 app.include_router(proxy.router)
 app.include_router(comments.router)
+
+
+@app.get("/api/health")
+async def health():
+    return {"status": "ok"}
+
+
+Instrumentator().instrument(app).expose(app, include_in_schema=False)
+REGISTRY.register(PendingModerationCollector())
