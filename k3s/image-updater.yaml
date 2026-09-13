@@ -27,4 +27,4 @@ spec:
         method: "git:secret:argocd/git-creds-github"
         gitConfig:
           branch: main
-          writeBackTarget: "kustomization:k3s"
+          writeBackTarget: "kustomization:."
