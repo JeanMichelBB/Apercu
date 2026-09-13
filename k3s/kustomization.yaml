@@ -5,3 +5,10 @@ resources:
   - backend-deployment.yaml
   - frontend-deployment.yaml
   - ingress.yaml
+  - image-updater.yaml
+
+images:
+  - name: jeanmichelbb/ap-fe
+    newTag: latest
+  - name: jeanmichelbb/ap-be
+    newTag: latest

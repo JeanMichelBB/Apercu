@@ -1,0 +1,30 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: apercu
+  namespace: argocd
+spec:
+  applicationRefs:
+    - namePattern: apercu
+      images:
+        - alias: frontend
+          imageName: jeanmichelbb/ap-fe
+          commonUpdateSettings:
+            updateStrategy: latest
+            allowTags: "^[0-9a-f]{40}$"
+          manifestTargets:
+            kustomize:
+              name: jeanmichelbb/ap-fe
+        - alias: backend
+          imageName: jeanmichelbb/ap-be
+          commonUpdateSettings:
+            updateStrategy: latest
+            allowTags: "^[0-9a-f]{40}$"
+          manifestTargets:
+            kustomize:
+              name: jeanmichelbb/ap-be
+      writeBackConfig:
+        method: "git:secret:argocd/git-creds-github"
+        gitConfig:
+          branch: main
+          writeBackTarget: "kustomization:k3s"
