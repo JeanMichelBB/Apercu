@@ -10,16 +10,16 @@ spec:
         - alias: frontend
           imageName: jeanmichelbb/ap-fe
           commonUpdateSettings:
-            updateStrategy: latest
-            allowTags: "^[0-9a-f]{40}$"
+            updateStrategy: newest-build
+            allowTags: "regexp:^[0-9a-f]{40}$"
           manifestTargets:
             kustomize:
               name: jeanmichelbb/ap-fe
         - alias: backend
           imageName: jeanmichelbb/ap-be
           commonUpdateSettings:
-            updateStrategy: latest
-            allowTags: "^[0-9a-f]{40}$"
+            updateStrategy: newest-build
+            allowTags: "regexp:^[0-9a-f]{40}$"
           manifestTargets:
             kustomize:
               name: jeanmichelbb/ap-be
