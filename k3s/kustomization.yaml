@@ -10,8 +10,8 @@ resources:
 
 images:
   - name: jeanmichelbb/ap-fe
-    newTag: cdcdf374693b74f35a783555f9d961ed1da8c9ba
+    newTag: fae7c17c45b74bd6e5b9cbd4f12147692e52a9a6
     newName: jeanmichelbb/ap-fe
   - name: jeanmichelbb/ap-be
-    newTag: e3c8298d712ff1074ddba03cfc2c86bdb6d71a06
+    newTag: fae7c17c45b74bd6e5b9cbd4f12147692e52a9a6
     newName: jeanmichelbb/ap-be
