@@ -40,8 +40,11 @@
 | Database | MySQL |
 | Auth | JWT (HS256) via `access-token` header |
 | Containerization | Docker / Docker Compose |
-| CI/CD | GitHub Actions → Docker Hub |
-| Deployment | k3s (Kubernetes) |
+| CI/CD | GitHub Actions → Docker Hub (Trivy-scanned, multi-arch) |
+| Deployment | k3s (Kubernetes) via Kustomize + ArgoCD Image Updater |
+| Secrets | Doppler (`secrets.doppler.com` operator) |
+| Ingress | Traefik, public via Cloudflare |
+| Tracing | OpenTelemetry (OTLP), enabled when `TAILSCALE_IP_TSPI` is set |
 
 In production, this app connects to a shared MySQL instance — see [`shared-mysql`](https://github.com/JeanMichelBB/shared-mysql). It doesn't run its own database in k3s.
 
@@ -60,7 +63,17 @@ apercu/
 │   ├── database/        # SQLAlchemy engine + models
 │   ├── routers/         # auth, events, speakers, posts, users, contacts
 │   ├── schemas.py       # Pydantic request/response models
-│   └── seed.py          # Sample data seeded on first run
+│   ├── seed.py          # Sample data seeded on first run
+│   ├── tracing.py       # OpenTelemetry setup (no-op without TAILSCALE_IP_TSPI)
+│   └── dev.sh           # Local MySQL bootstrap (macOS/Homebrew)
+├── k3s/                 # Kubernetes manifests (Kustomize)
+│   ├── backend-deployment.yaml
+│   ├── frontend-deployment.yaml
+│   ├── ingress.yaml       # Traefik, public via Cloudflare
+│   ├── networkpolicy.yaml # Pod-to-pod segmentation
+│   ├── doppler-secret.yaml
+│   ├── image-updater.yaml # ArgoCD Image Updater
+│   └── kustomization.yaml
 ├── docker-compose.yml
 └── .github/workflows/deploy.yml
 ```
@@ -141,10 +154,15 @@ No migration tool required. On every startup the backend:
 
 ## CI/CD
 
-Pushing to `main` triggers GitHub Actions which builds and pushes Docker images to Docker Hub:
+Pushing to `main` (touching `first-look/` or `fastapi-backend/`) triggers GitHub Actions (`.github/workflows/deploy.yml`):
 
-- `jeanmichelbb/ap-fe:latest`
-- `jeanmichelbb/ap-be:latest`
+1. Build a scan-only image
+2. Trivy scan — fails the build on unfixed CRITICAL vulnerabilities
+3. Build and push multi-arch (`linux/amd64`, `linux/arm64`) images to Docker Hub, tagged `latest` and by commit SHA:
+   - `jeanmichelbb/ap-fe`
+   - `jeanmichelbb/ap-be`
+
+Deployment to k3s is GitOps-style: ArgoCD Image Updater (`k3s/image-updater.yaml`) watches those tags and bumps `k3s/kustomization.yaml` automatically.
 
 ## Content Status Workflows
 
