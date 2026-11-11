@@ -17,7 +17,7 @@
 /* Brand column */
 .footer-logo {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 500;
   text-decoration: none;
   color: #fff;
   display: block;
@@ -49,9 +49,7 @@
 
 .footer-col-title {
   font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-weight: 500;
   color: #fff;
   margin: 0 0 0.5rem;
 }

@@ -14,7 +14,7 @@
 
 .my-reg-title {
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0 0 2.5rem;
 }
 
@@ -87,7 +87,7 @@
 
 .my-reg-card-title {
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -99,7 +99,7 @@
 
 .my-reg-card-link {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 0.25rem;
 }
 

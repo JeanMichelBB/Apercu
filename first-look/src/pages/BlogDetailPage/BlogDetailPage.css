@@ -41,7 +41,7 @@
 
 .blog-detail-title {
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0 0 2rem;
   border-bottom: 1px solid #000;
   padding-bottom: 1.5rem;
@@ -88,20 +88,18 @@
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 500;
   flex-shrink: 0;
 }
 
 .blog-detail-author-label {
   font-size: 0.75rem;
   color: #888;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
+  }
 
 .blog-detail-author-name {
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .blog-detail-content {
@@ -161,7 +159,7 @@
 
 .blog-comments-title {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0 0 1.25rem;
 }
 
@@ -243,7 +241,7 @@
 
 .blog-comments-login a {
   color: #000;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {

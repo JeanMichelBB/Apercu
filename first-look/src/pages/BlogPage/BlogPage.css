@@ -14,7 +14,7 @@
 
 .blog-title {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 2.5rem;
 }
 
@@ -75,7 +75,7 @@
 
 .blog-card-title {
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0;
 }
 
@@ -88,7 +88,7 @@
 
 .blog-card-link {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-top: 0.25rem;
 }
 

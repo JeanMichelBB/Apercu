@@ -6,22 +6,23 @@
 
 /* Hero */
 .contact-hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #fff;
+  background: none;
+  color: #000;
+  border-bottom: 1px solid #000;
   text-align: center;
   padding: 5rem 2rem 4rem;
 }
 
 .contact-hero-title {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 500;
   margin: 0 0 1rem;
   letter-spacing: -0.5px;
 }
 
 .contact-hero-sub {
   font-size: 1.15rem;
-  color: #bbb;
+  color: #444;
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.7;

@@ -55,13 +55,13 @@
 
 .header .link--active {
   color: #000;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Logo */
 .text-logo {
   font-size: 2.4rem;
-  font-weight: 700;
+  font-weight: 500;
   color: #000;
   text-decoration: none;
 }
@@ -200,7 +200,7 @@
   background: #000;
   color: #fff;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 500;
   border: none;
   cursor: pointer;
   display: flex;
@@ -330,7 +330,7 @@
 }
 
 .mobile-nav-link--active {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Responsive */

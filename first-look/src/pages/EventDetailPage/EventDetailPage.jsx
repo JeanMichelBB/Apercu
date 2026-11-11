@@ -88,9 +88,9 @@ function EventDetailPage() {
         <div className="event-detail-header">
           <h1 className="event-detail-title">{event.title}</h1>
           <div className="event-detail-meta">
-            <span>📅 {new Date(event.date).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-            <span>📍 {event.location}</span>
-            {event.capacity && <span>👥 Capacity: {event.capacity}</span>}
+            <span>{new Date(event.date).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+            <span>{event.location}</span>
+            {event.capacity && <span>Capacity: {event.capacity}</span>}
           </div>
         </div>
 
