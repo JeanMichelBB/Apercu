@@ -13,5 +13,5 @@ images:
     newTag: fae7c17c45b74bd6e5b9cbd4f12147692e52a9a6
     newName: jeanmichelbb/ap-fe
   - name: jeanmichelbb/ap-be
-    newTag: fae7c17c45b74bd6e5b9cbd4f12147692e52a9a6
+    newTag: 081f57184ca1c6068a07146aa305a267125343ad
     newName: jeanmichelbb/ap-be
